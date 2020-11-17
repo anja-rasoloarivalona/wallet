@@ -3,25 +3,27 @@ import { Container, LoginForm } from './Login-style'
 import { withFormik } from 'formik'
 import { renderInput } from '../../functions/form'
 import { Button } from '../../components'
+import { useSelector } from 'react-redux'
 
 const Form = props => {
     const { errors, touched, handleChange, values, handleBlur, setFieldValue } = props
+    const { currentPage :  text } = useSelector(state => state.text)
 
     const inputs = [
         {   
             id: "email",
             type: "email",
             name: "email",
-            label: "Email",
-            placeholder: "Email",
+            label: text.email,
+            placeholder: text.email,
             input_type: "input",
         },
         {   
             id: "password",
             type: "password",
             name: "password",
-            label: "Password",
-            placeholder: "Password",
+            label: text.password,
+            placeholder: text.password,
             input_type: "input",
         }
     ]
@@ -38,7 +40,7 @@ const Form = props => {
                 onChange: setFieldValue
             }))}
             <Button type="submit" primary>
-                Login
+                {text.login}
             </Button>
         </LoginForm>
     )

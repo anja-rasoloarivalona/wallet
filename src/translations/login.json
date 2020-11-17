@@ -1,0 +1,14 @@
+{
+    "email": {
+        "fr": "Email",
+        "en": "Email"
+    },
+    "login": {
+        "fr": "Se connecter",
+        "en": "Login"
+    },
+    "password": {
+        "fr": "Mot de passe",
+        "en": "Password"
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "dashboard": {
+        "fr": "Tableau de bord",
+        "en": "Dashboard"
+    },
+    "login": {
+        "fr": "Se connecter",
+        "en": "Login"
+    },
+    "report": {
+        "fr": "Rapport",
+        "en": "Report"
+    },
+    "signup": {
+        "fr": "S'inscrire",
+        "en": "Signup"
+    },
+    "transactions": {
+        "fr": "Transactions",
+        "en": "Transactions"
+    }
+ 
+}

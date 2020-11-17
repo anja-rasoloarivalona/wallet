@@ -1,17 +1,30 @@
 import React from 'react'
 import { HeaderContainer, HeaderSection, HeaderSectionItem } from './Header-style'
+import { useSelector, useDispatch } from 'react-redux'
+import * as actions from '../../store/actions'
+
 
 const Header = () => {
+    const text = useSelector(state => state.text.header)
+    const { lang } = useSelector(state => state.settings)
+    const dispatch = useDispatch()
+
     const links = {
         left: [
-            {label: "Dashboard", path: "/", exact: true},
-            {label: "Transactions", path: "/transactions"},
-            {label: "Report", path: "/report"}
+            {label: text.dashboard, path: "/", exact: true},
+            {label: text.transactions, path: "/transactions"},
+            {label: text.report, path: "/report"}
         ],
         right: [
-            {label: "Login", path: "/login"},
-            {label: "Signup", path: "/signup"}
+            {label: text.login, path: "/login"},
+            {label: text.signup, path: "/signup"},
         ]
+    }
+
+    const changeLang = () => {
+        const newLang = lang === "fr" ? "en" : "fr"
+        dispatch(actions.setLang(newLang))
+
     }
     return (
         <HeaderContainer>
@@ -28,6 +41,9 @@ const Header = () => {
                     ))}
                 </HeaderSection>
             ))}
+            <div onClick={changeLang}>
+                Change
+            </div>
         </HeaderContainer>
     )
 }

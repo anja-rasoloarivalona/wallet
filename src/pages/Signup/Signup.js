@@ -4,7 +4,6 @@ import Form from './sections/Form'
 import EmailSent from './sections/EmailSent'
 
 
-
 const Signup = () => {
     const [user, setUser] = useState(null)
 

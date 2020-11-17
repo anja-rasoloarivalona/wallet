@@ -4,33 +4,35 @@ import { withFormik } from 'formik'
 import { renderInput } from '../../../functions/form'
 import { Button } from '../../../components'
 import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 const Form = props => {
     const { errors, touched, handleChange, values, handleBlur, setFieldValue } = props
+    const { currentPage: text } = useSelector(state => state.text)
     
     const inputs = [
         {
             id: "username",
             type: "text",
             name: "username",
-            label: "User name",
-            placeholder: "User name",
+            label: text.username,
+            placeholder: text.username,
             input_type: "input"
         },
         {   
             id: "email",
             type: "email",
             name: "email",
-            label: "Email",
-            placeholder: "Email",
+            label: text.email,
+            placeholder: text.email,
             input_type: "input",
         },
         {   
             id: "password",
             type: "password",
             name: "password",
-            label: "Password",
-            placeholder: "Password",
+            label: text.password,
+            placeholder: text.password,
             input_type: "input",
         }
     ]
@@ -48,7 +50,7 @@ const Form = props => {
                 onChange: setFieldValue
             }))}
             <Button type="submit" primary>
-                Signup
+                {text.signup}
             </Button>
         </SignupForm>
     )

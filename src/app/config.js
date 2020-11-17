@@ -2,8 +2,7 @@ import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { BrowserRouter } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
-import dotenv from "dotenv"
-dotenv.config()
+
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -23,7 +22,7 @@ const Container = styled.div`
 const Config = props => {
     const theme = useSelector(state => state.theme)
     axios.defaults.baseURL = process.env.REACT_APP_API_URL  
-      
+
     return (
         (
             <BrowserRouter>

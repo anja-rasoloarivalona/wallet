@@ -13,7 +13,6 @@ export const Container = styled.div`
 
     * {
         box-sizing: border-box;
-        font-family: Lato;
         font-size: 1.6rem;
     }
 
