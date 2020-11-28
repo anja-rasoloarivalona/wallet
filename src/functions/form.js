@@ -30,7 +30,7 @@ export const Container = styled.div`
     }
 
     .react-datepicker__input-container > input {
-        border: 1px solid ${props => props.theme.grey};
+        border: 1px solid ${props => props.theme.greyDark};
         padding: 12px 6px;
         :focus {
             outline: none;
@@ -38,7 +38,7 @@ export const Container = styled.div`
     }
 
     input::placeholder {
-        color: ${props => props.theme.grey};
+        color: ${props => props.theme.greyDark};
     }
 
     input::-webkit-outer-spin-button,
@@ -63,9 +63,10 @@ export const Label = styled.label`
     margin: auto;
     display: flex;
     align-items:center;
-    color: ${props => props.theme.grey};
+    color: ${props => props.theme.clr_text_semi_dark};
     transition: all .2s ease-in;
     opacity: 0;
+    font-size: 1.4rem;
 
 
     ${props => {
@@ -92,12 +93,12 @@ export const LabelAction = styled.div`
     right: 12px;
     font-size: 1.4rem
     :hover {
-        color: ${props => props.theme.grey}
+        color: ${props => props.theme.clr_text_semi_dark};
     }
 `
 
 export const DateInput = styled(DatePicker)`
-    border: 1px solid ${props => props.theme.grey};
+    border: 1px solid ${props => props.theme.greyDark};
     border-radius: 4px;
 `
 
@@ -105,15 +106,18 @@ export const Input = styled(Field)`
     height: 40px;
     width: 100%;
     padding-left: 10px;
-    border: 1px solid ${props => props.theme.grey};
     border-radius: 4px;
+    font-size: 1.4rem;
+    border: none;
+    border-bottom: 1px solid transparent;
 
     ::placeholder {
-        color: ${props => props.theme.grey};
+        color: ${props => props.theme.clr_text_semi_dark};
     }
 
     :focus {
         outline: none;
+        border-bottom: 1px solid ${props => props.theme.clr_primary};
     }
     :not(:placeholder-shown) + label {
         opacity: 1;
@@ -124,6 +128,7 @@ export const Input = styled(Field)`
     :-webkit-autofill:focus, 
     :-webkit-autofill:active  {
     :-webkit-box-shadow: 0 0 0 30px white inset !important;
+        background: white !important;
 
 }
     ${props => {
@@ -156,8 +161,8 @@ export const SelectValue = styled.div`
     height: 100%;
     width: 100%;
     padding: 12px 6px;
-    border: 1px solid ${props => props.theme.grey};
-    color: ${props => props.placeholder ? props.theme.grey : 'initial'};
+    border: 1px solid ${props => props.theme.greyDark};
+    color: ${props => props.placeholder ? props.theme.greyDark : 'initial'};
     border-radius: 4px;
 
 `
@@ -169,7 +174,7 @@ export const SelectList = styled.ul`
     list-style: none;
     padding: 0;
     margin: 0;
-    border: ${props => props.showList ? '1px' : '0px'} solid ${props => props.theme.grey};
+    border: ${props => props.showList ? '1px' : '0px'} solid ${props => props.theme.greyDark};
     transition: height .3s ease-in;
     height: ${props => props.showList ? 'unset' : '0px'};
     overflow: hidden;
@@ -212,12 +217,12 @@ export const InputUnit = styled.div`
 export const Error = styled.div`
     position: absolute;
     top: calc(100% + 10px);
-
+    font-size: 1.4rem;
     top: 0;
     transform: translateY(-20px);
 
     z-index: 13;
-    color: ${props => props.theme.cà.red};
+    color: ${props => props.theme.red};
 `
 export const ListContainer = styled.div`
     > div > div:first-child {
@@ -257,7 +262,7 @@ const RenderSelectInput = props => {
         props.onBlur(input.name, true)
     }
 
-    const borderStyle = `1px solid ${theme.grey}`
+    const borderStyle = `1px solid ${theme.greyDark}`
 
     const style = {
         control: (provided, state) => ({
@@ -271,7 +276,7 @@ const RenderSelectInput = props => {
         }),
         placeholder: (provided) => ({
             ...provided,
-            color: theme.grey
+            color: theme.greyDark
         }),
         menuList: (provided) => ({
             ...provided,
@@ -338,10 +343,13 @@ export const renderNormalInput = props => {
                     name={input.name}
                     placeholder={input.placeholder}
                     disabled={input.disabled}
+                    style={{...input.fiedlStyle}}
                 />
-                <Label htmlFor={input.id} style={{...input.labelStyle}}>
-                    {input.label}
-                </Label>
+                {!errors[input.name] && (
+                    <Label htmlFor={input.id} style={{...input.labelStyle}}>
+                        {input.label}
+                    </Label>
+                )}
                 {input.children && input.children()}
                 {input.unit && (
                     <InputUnit>

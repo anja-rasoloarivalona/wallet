@@ -15,7 +15,15 @@ const setText = text => {
     }
 }
 
+const setTextPathName = pathname => {
+    return {
+        type: actionTypes.SET_TEXT_PATHNAME,
+        pathname
+    }
+}
+
 export {
     initText,
-    setText
+    setText,
+    setTextPathName
 }

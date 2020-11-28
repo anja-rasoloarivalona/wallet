@@ -3,7 +3,7 @@ import { Form } from 'formik'
 
 const Container = styled.div`
     grid-column: 2 / 4;
-    height: calc(100vh - 5rem);
+    height: calc(100vh - 7.5rem);
     display: flex;
     align-items: center;
     justify-content: center;

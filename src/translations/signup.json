@@ -3,20 +3,16 @@
         "fr": "Email",
         "en": "Email"
     },
-    "login": {
-        "fr": "Se connecter",
-        "en": "Login"
-    },
     "password": {
         "fr": "Mot de passe",
         "en": "Password"
     },
-    "username": {
-        "fr": "Nom d'utilisateur",
-        "en": "Username"
-    },
     "signup": {
         "fr": "S'inscrire",
         "en": "Signup"
+    },
+    "username": {
+        "fr": "Nom d'utilisateur",
+        "en": "Username"
     }
 }

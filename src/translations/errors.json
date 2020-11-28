@@ -1,0 +1,10 @@
+{
+    "email_taken": {
+        "fr": "Cet adresse email a déjà utilisé",
+        "en": "This email address is already used"
+    },
+    "signup_failed": {
+        "fr": "Nous sommes désolés, quelque chose s'est mal passé lors de la création de votre compte. Veuillez réessayer.",
+        "en": "We are sorry, something went wrong while creating your account. Please try again."
+    }
+}

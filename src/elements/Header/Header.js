@@ -11,9 +11,9 @@ const Header = () => {
 
     const links = {
         left: [
-            {label: text.dashboard, path: "/", exact: true},
-            {label: text.transactions, path: "/transactions"},
-            {label: text.report, path: "/report"}
+            // {label: text.dashboard, path: "/", exact: true},
+            // {label: text.transactions, path: "/transactions"},
+            // {label: text.report, path: "/report"}
         ],
         right: [
             {label: text.login, path: "/login"},
@@ -41,9 +41,9 @@ const Header = () => {
                     ))}
                 </HeaderSection>
             ))}
-            <div onClick={changeLang}>
+            {/* <div onClick={changeLang}>
                 Change
-            </div>
+            </div> */}
         </HeaderContainer>
     )
 }

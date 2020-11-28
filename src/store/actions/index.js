@@ -1,8 +1,14 @@
 export {
     initText,
-    setText
+    setText,
+    setTextPathName
 } from './lexique'
 
 export {
     setLang
 } from './settings'
+
+export {
+    setError,
+    clearError
+} from './error'

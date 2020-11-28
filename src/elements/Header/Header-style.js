@@ -5,12 +5,14 @@ const HeaderContainer = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    height: 5rem;
+    height: 7.5rem;
     width: 100vw;
-    padding: 0 300px;
+    padding: 0 150px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: ${props => props.theme.clr_surface};
+    color: ${props => props.theme.clr_text};
 `
 
 const HeaderSection = styled.div`

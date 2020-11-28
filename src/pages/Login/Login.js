@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, LoginForm } from './Login-style'
 import { withFormik } from 'formik'
-import { renderInput } from '../../functions/form'
+import { renderInput } from '../../functions'
 import { Button } from '../../components'
 import { useSelector } from 'react-redux'
 
