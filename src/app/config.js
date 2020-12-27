@@ -3,8 +3,9 @@ import { BrowserRouter } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons'
-library.add(faExclamationTriangle)
+import { fas } from '@fortawesome/free-solid-svg-icons'
+library.add(fas)
+
 
 const GlobalStyle = createGlobalStyle`
     body {

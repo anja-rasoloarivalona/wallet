@@ -1,20 +1,27 @@
 import React, { useEffect } from 'react'
-import { Route, Switch, Redirect, useLocation } from 'react-router-dom'
+import { Route, Switch, Redirect, useLocation, withRouter } from 'react-router-dom'
 import Login from '../pages/Login/Login'
 import Signup from '../pages/Signup/Signup'
-import Dashboard from '../pages/Dashboard/Dashboard'
 import ActivateAccount from '../pages/ActivateAccount/ActivateAccount'
+import Setup from '../pages/Setup/Setup'
+import Dashboard from '../pages/Dashboard/Dashboard'
 import { getInitialText } from '../translations'
 import * as actions from '../store/actions'
 import { useSelector, useDispatch } from 'react-redux'
 
-const Routes = () => {
+const Routes = props => {
     const dispatch = useDispatch()
     const location = useLocation()
     const { lang } = useSelector(state => state.settings)
-    const { currentPage, pathname } = useSelector(state => state.text)
+    const { pathname } = useSelector(state => state.text)
+    const { token } = useSelector(state => state.login)
     const { initText, setTextPathName } = actions
 
+    useEffect(() => {
+        if(!token){
+            props.history.push("/login")
+        }
+    },[])
 
     useEffect(() => {
         const text = getInitialText(lang, [pathname])
@@ -39,10 +46,11 @@ const Routes = () => {
                 <Route path="/login" component={Login}/>
                 <Route path="/signup/activate" component={ActivateAccount} />
                 <Route path="/signup" component={Signup}/>
+                <Route path="/setup" component={Setup} />
                 <Redirect to="/"/>
             </Switch>
     )
 }
 
 
-export default Routes
+export default withRouter(Routes) 

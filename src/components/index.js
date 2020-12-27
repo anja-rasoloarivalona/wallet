@@ -17,3 +17,11 @@ export {
 export {
     Success
 } from './Success/Success'
+
+export {
+    Card
+} from './Card'
+
+export {
+    Amount
+} from './Amount'

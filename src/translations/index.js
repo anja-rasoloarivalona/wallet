@@ -3,13 +3,17 @@ import login from './login.json'
 import signup from './signup.json'
 import main from './main.json'
 import errors from './errors.json'
+import setup from './setup.json'
+import categories from './categories.json'
 
 const lexique = {
     header,
     errors,
+    categories,
     "/": main,
     "/login": login,
-    "/signup": signup
+    "/signup": signup,
+    "/setup": setup
 }
 
 const getCurrentPagesText = (lang, pages) => {
@@ -21,20 +25,31 @@ const getCurrentPagesText = (lang, pages) => {
             }
         }
     });
+    for(const text in lexique.categories){
+        data[text] = lexique.categories[text][lang]
+    }
     return data
 }
 
 const getInitialText = (lang, pages) => {
     const header = {}
     const errors = {}
+    const categories = {}
     for(const text in lexique.header){
         header[text] = lexique.header[text][lang]
     }
     for(const text in lexique.errors){
         errors[text] = lexique.errors[text][lang]
     }
+
+    for(const text in lexique.categories){
+        categories[text] = lexique.categories[text][lang]
+    }
     
-    const currentPage = getCurrentPagesText(lang, pages)
+    const currentPage = {
+        ...getCurrentPagesText(lang, pages),
+        ...categories
+    }
 
     return {
         header,

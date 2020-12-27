@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Config from './config'
 import Header from '../elements/Header/Header'
 import ErrorModal from '../components/ErrorModal'
@@ -10,11 +10,14 @@ import { getInitialText } from '../translations'
 
 const App = () => {
     const dispatch = useDispatch()
-    const { initText, setTextPathName } = actions
+    const [ready, setReady] = useState(false)
+    const [checkedToken, setCheckedToken] = useState(false)
+    const { initText, setTextPathName, getCategories, initCurrentPeriod } = actions
     const { 
         text : { header },
         settings : { lang },
-        error : { error }
+        error : { error },
+        categories: {expense, income}
     } = useSelector(state => state)
 
     useEffect(() => {
@@ -22,10 +25,24 @@ const App = () => {
         const text = getInitialText(lang, [pathname])
         dispatch(setTextPathName(pathname))
         dispatch(initText(text))
+        dispatch(getCategories())
+        dispatch(initCurrentPeriod())
+        checkUserToken()
     },[])
 
+    useEffect(() => {
+        if(header && expense && income && checkedToken){
+            setReady(true)
+        }
+    },[header, expense, income, checkedToken])
 
-    if(!header){
+    const checkUserToken = () => {
+        const token = localStorage.getItem("moneytor-token")
+        setCheckedToken(true)
+    }
+
+
+    if(!ready){
         return (
             <div>Loading</div>
         )

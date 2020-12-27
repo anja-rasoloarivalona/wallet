@@ -1,6 +1,5 @@
 import React from 'react'
 import {EmailSentContainer, EmailSentTitleContainer, EmailSentTitle, EmailSentTitleIcon, EmailSentModal, EmailSentText } from '../Signup-style'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 
 const EmailSent = props => {
     const { user } = props
@@ -11,7 +10,7 @@ const EmailSent = props => {
         <EmailSentContainer>
             <EmailSentTitleContainer>
                 <EmailSentTitleIcon 
-                    icon={faEnvelope}
+                    icon="envelope"
                     size="3x"
                 />
                 <EmailSentTitle>

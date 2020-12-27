@@ -86,7 +86,7 @@ const ErrorModal = () => {
             <Modal>
                 <Top>
                     <FontAwesomeIcon 
-                        icon={"exclamation-triangle"}
+                        icon="exclamation-triangle"
                         size="2x"
                         color={red}
                     />

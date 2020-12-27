@@ -11,13 +11,17 @@ import themeReducer from "./store/reducers/theme"
 import textReducer from "./store/reducers/lexique"
 import settingsReducer from "./store/reducers/settings"
 import errorReducer from "./store/reducers/error"
+import categoriesReducer from './store/reducers/categories'
+import budgetReducer from './store/reducers/budget'
 
 const rootReducer = combineReducers({
   login: loginReducer,
   theme: themeReducer,
   text: textReducer,
   settings: settingsReducer,
-  error: errorReducer
+  error: errorReducer,
+  categories: categoriesReducer,
+  budget: budgetReducer
 })
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))

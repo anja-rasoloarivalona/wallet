@@ -3,6 +3,10 @@ import { HeaderContainer, HeaderSection, HeaderSectionItem } from './Header-styl
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../store/actions'
 
+import styled from 'styled-components'
+import logo from '../../assets/logo.png'
+const Image = styled.img``
+
 
 const Header = () => {
     const text = useSelector(state => state.text.header)
@@ -28,6 +32,7 @@ const Header = () => {
     }
     return (
         <HeaderContainer>
+            <Image src={logo}/>
             {Object.keys(links).map(section => (
                 <HeaderSection key={section}>
                     {links[section].map(link => (

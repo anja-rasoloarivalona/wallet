@@ -1,0 +1,94 @@
+{   
+    "add": {
+        "fr": "Ajouter",
+        "en": "Add"
+    },
+    "amount": {
+        "fr": "Montant",
+        "en": "Amount"
+    },
+    "assets": {
+        "fr": "Actifs",
+        "en": "Assets"
+    },
+    "assets_text": {
+        "fr": "Un actif représente le bien que vous utilisez pour effectuer un paiement ou pour recevoir vos revenus",
+        "en": "An asset represents the property you use to make a payment or to receive your income"
+    },
+    "balance": {
+        "fr": "Solde",
+        "en": "Balance"
+    },
+    "budget": {
+        "fr": "Budget",
+        "en": "Budget"
+    },
+    "cancel": {
+        "fr": "Annuler",
+        "en": "Cancel"
+    },
+    "cash": {
+        "fr": "Cash",
+        "en": "Cash"
+    },
+    "category": {
+        "fr": "Catégorie",
+        "en": "Category"
+    },
+    "choose_currency": {
+        "fr": "Choisissez votre devise",
+        "en": "Select your currency"
+    },
+    "choose_valid_currency": {
+        "fr": "Veuillez sélectionner une devise",
+        "en": "Please select a valid currency"
+    },
+    "credit_card": {
+        "fr": "Carte de crédit",
+        "en": "Credit card"
+    },
+    "currency": {
+        "fr": "Devise",
+        "en": "Currency"
+    },
+    "currency_text_a": {
+        "fr": "Votre monnaie de référence doit être celle que vous utilisez quotidiennement",
+        "en": "Your reference currency should be the one you use on a daily basis."
+    },
+    "currency_text_b": {
+        "fr": "Votre solde et vos statistiques seront affichés dans cette devise",
+        "en": "Your balance and statistics will be displayed in that currency"
+    },
+    "debit_card": {
+        "fr": "Carte de débit",
+        "en": "Debit card"
+    },
+    "expense": {
+        "fr": "Dépenses",
+        "en": "Expenses"
+    },
+    "income": {
+        "fr": "Revenus",
+        "en": "Incomes"
+    },
+    "name": {
+        "fr": "Identifiant",
+        "en": "Name"
+    },
+    "next": {
+        "fr": "Suivant",
+        "en": "Next"
+    },
+    "skip": {
+        "fr": "Passer",
+        "en": "Skip"
+    },
+    "finish": {
+        "fr": "Terminer",
+        "en": "Finish"
+    },
+    "type": {
+        "fr": "Type",
+        "en": "Type"
+    }
+}

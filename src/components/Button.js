@@ -11,6 +11,31 @@ const Button = styled.button`
     font-size: 1.4rem;
     min-width: 14rem;
     margin: 0 .5rem;
+
+    background: ${props => props.theme.clr_primary};
+    color: ${props => props.theme.clr_text};
+    padding: 0 7rem;
+    border-radius: 2.5rem;
+
+    ${props => {
+        if(props.square){
+            return {
+                borderRadius: ".5rem"
+            }
+        }
+    }}
+
+    ${props => {
+        if(props.secondary){
+            return {
+                background: "white",
+                color: props.theme.clr_primary,
+                border: `1px solid ${props.theme.clr_primary}`
+            }
+        }
+    }}
+
+
     :focus {
         outline: none;
     }

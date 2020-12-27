@@ -116,6 +116,10 @@ const EmailSentText = styled.div`
     font-size: 1.6rem;
 `
 
+const PasswordReqList = styled.ul`
+    padding-left: 20px;
+`
+
 export {
     Title,
     Container,
@@ -127,6 +131,9 @@ export {
     OrText,
     OrTextLine,
     SignupOther,
+
+    PasswordReqList,
+
 
     EmailSentContainer,
     EmailSentTitleContainer,

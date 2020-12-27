@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import {Title, SignupForm, ButtonContainer, SignupButton, OrTextContainer, OrText, OrTextLine, SignupOther } from '../Signup-style'
+import {Title, SignupForm, ButtonContainer, SignupButton, OrTextContainer, OrText, OrTextLine, SignupOther, PasswordReqList } from '../Signup-style'
 import { withFormik } from 'formik'
 import { renderInput } from '../../../functions'
 import {Loader, Tail} from '../../../components'
 import { useSelector } from 'react-redux'
 import * as Yup from 'yup'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+
+const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 const Form = props => {
     const { errors, touched, handleChange, values, handleBlur, setFieldValue, submitting, usedEmails } = props
-    const {  currentPage: text } = useSelector(state => state.text)
+    const {
+        text: { currentPage: text, errors: errorText },
+        theme: { green, grey_dark }
+    } = useSelector(state => state)
+   
+    const [showPassword, setShowPassword] = useState(false)
 
     const inputsData = [
         {
@@ -35,41 +44,120 @@ const Form = props => {
             label: text.password,
             placeholder: text.password,
             input_type: "input",
+            children: null,
+            unit: <FontAwesomeIcon 
+                      icon="eye"
+                      size="2x"
+                      color={grey_dark}
+                      onClick={() => setShowPassword(prev => !prev)}
+                  />
         }
     ]
 
     const [inputs, setInputs] = useState(inputsData)
 
     useEffect(() => {
-        const emailAlreadyUsedHandler = action => { // Action equals to clear or set
-            const updatedInputs = inputs.map(input => ({...input}))
-            if(action === "set" && updatedInputs[1].children === null){
-                updatedInputs[1].children = renderTail
-                setInputs(updatedInputs)
-            }
-            if(action === "clear" && updatedInputs[1].children !== null){
-                updatedInputs[1].children = null
-                setInputs(updatedInputs)
-            }
-        }
         if(usedEmails.includes(values.email)){
-            emailAlreadyUsedHandler('set')
+            tailHandler({
+                action: "set",
+                index: 1,
+                text: errorText.email_taken
+            })
         } else {
-            emailAlreadyUsedHandler('clear')
+            tailHandler({
+                action: "clear",
+                index: 1
+            })
         }
+
     },[usedEmails, values.email, inputs])
     
+    useEffect(() => {
+        const { password } = values
+        const lengthIsValid = password.length >= 8
+        const includeNumber = /\d/.test(password) 
+        const includeUppercase = /^(?=.*[A-Z])/.test(password)
+        const includeSpecial = /^(?=.*[@$!%*?&])/.test(password)
+        const passwordRequirement = (
+            <>
+                <div>{text.password_requirement_intro}:</div>
+                <PasswordReqList>
+                    <li style={{color: lengthIsValid ? green : "white"}}>{text.password_requirement_length}</li>
+                    <li style={{color: includeNumber ? green : "white"}}>{text.password_requirement_number}</li>
+                    <li style={{color: includeUppercase ? green : "white"}}>{text.password_requirement_text}</li>
+                    <li style={{color: includeSpecial ? green : "white"}}>{text.password_requirement_special}</li>
+                </PasswordReqList>
+            </>
+        )
+           
+        if(password !== "" && !passwordRegex.test(password)){
+            tailHandler({
+                action: "set",
+                index: 2,
+                text: passwordRequirement,
+                type: "information",
+                style: {   
+                    "maxWidth": "38rem",
+                    "> div": {
+                        padding: "2rem"
+                    }
+                }
+            })
+        } else {
+            tailHandler({
+                action: "clear",
+                index: 2
+            })
+        }
+    },[values.password])
 
-    const renderTail = () => (
-        <Tail bottom="943px">
-            This email address is already used
+    const tailHandler = props => {
+        const { action, index, text, type, style } = props
+        const updatedInputs = inputs.map(input => ({...input}))
+        if(action === "set"){
+            updatedInputs[index].children = () => renderTail(text, type, style)
+            setInputs(updatedInputs)
+        }
+        if(action === "clear" && updatedInputs[index].children !== null){
+            updatedInputs[index].children = null
+            setInputs(updatedInputs)
+        }
+    }
+
+    const renderTail = (text, type, style) => (
+        <Tail
+            bottom="943px"
+            type={type}
+            style={style}
+        >
+           {text}
         </Tail>
     )
+
+
+    useEffect(() => {
+        const updatedInputs = inputs.map(input => ({...input}))
+        const type = showPassword ? "text" : "password"
+        updatedInputs[2].type = type
+        updatedInputs[2].unit = (
+            <FontAwesomeIcon 
+                icon={showPassword ? "eye-slash" : "eye"}
+                size="2x"
+                color={grey_dark}
+                onClick={() => setShowPassword(prev => !prev)}
+                style={{cursor: "pointer"}}
+            />
+        )
+        setInputs(updatedInputs)
+
+    },[showPassword])
+
+ 
 
     return (
         <SignupForm>
             <Title>
-                Create an account
+                {text.title}
             </Title>
             {inputs.map((input, index) => renderInput({
                 input,
@@ -83,11 +171,11 @@ const Form = props => {
             }))}
             <OrTextContainer>
                 <OrTextLine />
-                    <OrText>Or</OrText>
+                    <OrText> {text.or}</OrText>
                 <OrTextLine />
             </OrTextContainer>
             <SignupOther submitting={submitting}>
-                Sign up with Google or Facebook
+                {text.signup_google_facebook}
             </SignupOther>
             <ButtonContainer>
                 {!submitting ?
@@ -110,9 +198,12 @@ const EnhancedForm = withFormik({
         }
     },
     validationSchema: ({ text }) => {
-        const empty = "Required"
+        const empty = text.errors.required_field
+   
         return Yup.object().shape({
-            email: Yup.string().required(empty).email("Enter an email please")
+                email: Yup.string().required(empty).email(text.errors.email_invalid),
+                username: Yup.string().required(empty),
+                password: Yup.string().required(empty)
         })
     },
     handleSubmit: async (values, {props}) => {

@@ -13,6 +13,7 @@ const HeaderContainer = styled.div`
     justify-content: space-between;
     background: ${props => props.theme.clr_surface};
     color: ${props => props.theme.clr_text};
+    z-index: 10;
 `
 
 const HeaderSection = styled.div`

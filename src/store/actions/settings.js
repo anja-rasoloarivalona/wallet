@@ -7,6 +7,14 @@ const setLang = lang => {
     }
 }
 
+const setCurrency = currency => {
+    return {
+        type: actionTypes.SET_CURRENCY,
+        currency
+    }
+}
+
 export {
-    setLang
+    setLang,
+    setCurrency
 }

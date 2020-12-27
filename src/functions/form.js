@@ -1,19 +1,23 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Field } from 'formik'
 import { useSelector } from 'react-redux'
 import DatePicker from 'react-datepicker'
 import ReactSelect from 'react-select'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
+import { useOnClickOutside } from './index'
+
 
 export const Container = styled.div`
     position: relative;
     width: 100%;
     margin-top: 30px;
-    caret-color: ${props => props.theme.primary};
+    caret-color: ${props => props.theme.clr_primary};
 
     * {
         box-sizing: border-box;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 
     .input_cta {
@@ -30,7 +34,7 @@ export const Container = styled.div`
     }
 
     .react-datepicker__input-container > input {
-        border: 1px solid ${props => props.theme.greyDark};
+        border: 1px solid ${props => props.theme.grey_dark};
         padding: 12px 6px;
         :focus {
             outline: none;
@@ -38,7 +42,7 @@ export const Container = styled.div`
     }
 
     input::placeholder {
-        color: ${props => props.theme.greyDark};
+        color: ${props => props.theme.grey_dark};
     }
 
     input::-webkit-outer-spin-button,
@@ -98,7 +102,7 @@ export const LabelAction = styled.div`
 `
 
 export const DateInput = styled(DatePicker)`
-    border: 1px solid ${props => props.theme.greyDark};
+    border: 1px solid ${props => props.theme.grey_dark};
     border-radius: 4px;
 `
 
@@ -149,7 +153,7 @@ export const Select = styled.div`
     height: 100%;
     height: 40px;
 
-    svg {
+    .select-category_icon {
         position: absolute;
         top: 0;
         bottom: 0;
@@ -160,10 +164,13 @@ export const Select = styled.div`
 export const SelectValue = styled.div`
     height: 100%;
     width: 100%;
-    padding: 12px 6px;
-    border: 1px solid ${props => props.theme.greyDark};
-    color: ${props => props.placeholder ? props.theme.greyDark : 'initial'};
+    padding-left: 10px;
+    color: ${props => props.placeholder ? props.theme.grey_dark : 'initial'};
     border-radius: 4px;
+    background: white;
+    font-size: 1.4rem !important;
+    display: flex;
+    align-items: center;
 
 `
 export const SelectList = styled.ul`
@@ -174,10 +181,9 @@ export const SelectList = styled.ul`
     list-style: none;
     padding: 0;
     margin: 0;
-    border: ${props => props.showList ? '1px' : '0px'} solid ${props => props.theme.greyDark};
+    border: ${props => props.showList ? '1px' : '0px'} solid ${props => props.theme.grey_dark};
     transition: height .3s ease-in;
     height: ${props => props.showList ? 'unset' : '0px'};
-    overflow: hidden;
     z-index: 14;
     background: ${props => props.theme.white};
     border-radius: 4px;
@@ -199,7 +205,7 @@ export const SelectListItem = styled.li`
     align-items: center;
     cursor: pointer;
     :hover {
-        background: ${props => props.theme.primary};
+        background: ${props => props.theme.clr_primary};
         color: ${props => props.theme.white};
     }
 `
@@ -211,7 +217,7 @@ export const InputUnit = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
-    color: ${props => props.theme.white}
+    color: ${props => props.theme.grey_dark};
 `
 
 export const Error = styled.div`
@@ -225,6 +231,15 @@ export const Error = styled.div`
     color: ${props => props.theme.red};
 `
 export const ListContainer = styled.div`
+    > div > div {
+        border: none;
+        :hover {
+            border: none;
+        }
+    }
+    > div > div:first-child > div:first-child {
+        overflow: unset;
+    }
     > div > div:first-child {
         z-index: 14;
     }
@@ -262,12 +277,13 @@ const RenderSelectInput = props => {
         props.onBlur(input.name, true)
     }
 
-    const borderStyle = `1px solid ${theme.greyDark}`
+    const borderStyle = `1px solid ${theme.grey_dark}`
 
     const style = {
         control: (provided, state) => ({
           ...provided,
           boxShadow: "none",
+          height: "40px",
           border: state.isFocused ? borderStyle : borderStyle,
           cursor: 'pointer',
           '&:hover': {
@@ -276,7 +292,8 @@ const RenderSelectInput = props => {
         }),
         placeholder: (provided) => ({
             ...provided,
-            color: theme.greyDark
+            color: theme.grey_dark,
+            fontSize: "1.4rem"
         }),
         menuList: (provided) => ({
             ...provided,
@@ -287,10 +304,11 @@ const RenderSelectInput = props => {
         }),
         option: (provided, state) => ({
             ...provided,
-            backgroundColor: state.isSelected ? theme.primary : theme.white,
+            fontSize: "1.4rem",
+            backgroundColor: state.isSelected ? theme.clr_primary : theme.white,
             cursor: 'pointer',
             '&:hover': {
-                backgroundColor: state.isSelected ? theme.primary : theme.white
+                backgroundColor: state.isSelected ? theme.clr_primary : theme.white
             }
         })
       };
@@ -310,7 +328,8 @@ const RenderSelectInput = props => {
                     onBlur={handleBlur}
                     styles={style}
                     placeholder={input.placeholder}
-                    isSearchable={false}
+                    // menuIsOpen={true}
+                    isSearchable={input.isSearchable ? true : false}
                     value={input.options.filter(({value}) => value === values[input.name])}
                     // defaultValue={{...input.defaultValue}}
                     components={{
@@ -423,4 +442,255 @@ const renderDatePicker = props => {
             )}
         </Container>
     )
+}
+
+
+
+const CategoriesContainer = styled(Container)`
+    @media (max-width: 590px){
+        grid-column: 1 / -1;
+    }
+`
+
+const ArrowIcon = styled(FontAwesomeIcon)`
+    color: ${props => props.theme.clr_primary};
+    width: 10px;
+`
+
+
+const CategoryList = styled.li`
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    border-bottom: 1px solid ${props => props.theme.clr_primary};
+
+    &:last-child {
+        border-bottom: none !important;
+    }
+
+    * {
+        font-size: 1.4rem;
+    }
+`
+const CategoryListItem = styled.div`
+
+`
+
+const CategoryListItemValue = styled.div`
+    padding: 12px 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    position: relative;
+    
+    :hover {
+        background: ${props => props.theme.clr_primary};
+        color: white;
+        .select-category_icon {
+            color: white;
+        }   
+    }
+    .select-category_icon {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        right: 12px;
+    }
+`
+
+const SubcategoryList = styled.ul`
+    list-style: none;
+    height: ${props => props.displayed ? 'unset': '0px'};
+    transition: height .3s ease-in;
+    overflow: hidden;
+    padding: 0px;
+`
+
+const SubcategoryListItem = styled.li`
+    padding: 12px 6px;
+    padding-left: 50px;
+    cursor: pointer;
+    ${props => {
+        if(props.active){
+            return {
+                background: "red"
+            }
+        }
+    }}
+    &:first-child {
+        border-top: 1px solid ${props => props.theme.clr_primary}
+    }
+    :hover {
+        background: ${props => props.theme.clr_primary};
+        color: ${props => props.theme.white};
+    }
+`
+
+const DesignedList = styled(SelectList)`
+    overflow-y: scroll;
+    background: ${props => props.theme.white};
+    z-index: 15;
+
+    // ::-webkit-scrollbar {
+    //     width: 8px;
+    //     background-color: #F5F5F5;
+    // }
+    // ::-webkit-scrollbar-track {
+    //     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    //     box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    //     background-color: #F5F5F5;
+    // }
+    // ::-webkit-scrollbar-thumb {
+    //     border-radius: 10px;
+    //     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    //     box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    //     background-color: rgb(185, 182, 181);
+    // }
+    // ::-webkit-scrollbar-thumb:hover {
+    //     background-color: #555;
+    // }
+    scrollbar-width: thin;
+`
+
+
+const LabelContainer = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+const LabelText = styled.div``
+
+const IconContainer = styled.div`
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 2rem;
+    background: ${props => props.background};
+`
+
+export const renderLabel = (item, type, color) => {
+    const icon = type === "master" ? item.master_icon : item.sub_icon
+    const text = type === "master" ? item.master_name : item.sub_name
+    const background =  item.color ? item.color : color
+
+    return (
+        <LabelContainer>
+            <IconContainer background={background}>
+                <FontAwesomeIcon 
+                    icon={icon}
+                    size="1x"
+                    color="white"
+                />
+            </IconContainer>
+            <LabelText>{text}</LabelText>
+        </LabelContainer>
+    )
+}
+
+
+export const SelectCategory = props => {
+
+    const {data : categories, values, errors, setFieldValue , touched} = props
+
+    const [showCategoryList, setShowCategoryList] = useState(false)
+    const [activeCategoriesList, setActiveCategoriesList] = useState([])
+    const text = useSelector(state => state.text.currentPage)
+    const inputRef = useRef()
+
+
+    const categoryHandler = category => {
+        if(activeCategoriesList === category){
+                setActiveCategoriesList(null)
+            } else {
+                setActiveCategoriesList(category)
+        }
+    }
+
+    const selectCategoryAndClose = (categoryName, data) => {
+        setFieldValue("category", categoryName)
+        setFieldValue("data", data)
+        setActiveCategoriesList([])
+        setShowCategoryList(false)
+    }
+
+
+    useOnClickOutside(inputRef, () => setShowCategoryList(false));
+
+    const categoriesInput = () => (
+        <CategoriesContainer>
+            <Label htmlFor="category" shown={values.category !== ''}>{text.category}</Label>
+            <Select
+                id="category"
+                ref={inputRef}
+            >
+                <SelectValue
+                    placeholder={values.category === ''}
+                    showList={showCategoryList}
+                    onClick={() => setShowCategoryList(true)}
+                >
+                    {values.category === "" ? text.category : renderLabel({sub_icon: values.data.sub_icon, sub_name: values.data.sub_name}, "sub", values.data.color)}
+                    <ArrowIcon
+                        icon={faChevronDown}
+                        showList={showCategoryList}
+                        className="select-category_icon"
+                    />
+                </SelectValue>
+                <DesignedList
+                    showList={showCategoryList}
+                    maxHeight={'320px'}
+                >
+                    {Object.keys(categories).map((category, index) => (
+                        <CategoryList key={index}>
+                            <CategoryListItem>
+                                <CategoryListItemValue
+                                    active={activeCategoriesList === category}
+                                    onClick={() => categoryHandler(category)}
+                                >   
+                                    {renderLabel(categories[category], "master")}
+                                    <ArrowIcon
+                                        icon={faChevronDown}
+                                        showList={activeCategoriesList === category}
+                                        className="select-category_icon"
+                                    />
+
+                                </CategoryListItemValue>
+
+                                <SubcategoryList displayed={activeCategoriesList === category}>
+                                    {categories[category].children.map((subcategory, index) => {
+                                            return (
+                                                <SubcategoryListItem
+                                                    key={index}
+                                                    active={values.category === subcategory.sub_name}
+                                                    onClick={() => selectCategoryAndClose(subcategory.sub_name, {
+                                                        sub_id:  subcategory.sub_id,
+                                                        master: category,
+                                                        color: categories[category].color,
+                                                        sub_name: subcategory.sub_name,
+                                                        sub_icon: subcategory.sub_icon
+                                                    })}
+                                                >   
+                                                    {renderLabel(categories[category].children[index], "sub", categories[category].color)}
+                                                </SubcategoryListItem>
+                                            )
+                                        })}
+                                </SubcategoryList>
+                            </CategoryListItem>
+                        </CategoryList>
+                    ))}
+                </DesignedList>
+            </Select>
+            {touched.category && errors.category && (
+                <Error>
+                    {errors.category}
+                </Error>
+            )}                        
+        </CategoriesContainer>
+    )
+
+    return categories ? categoriesInput() : <div></div>
 }

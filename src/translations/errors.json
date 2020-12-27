@@ -1,7 +1,15 @@
 {
+    "email_invalid": {
+        "fr": "Adresse email invalide",
+        "en": "Invalid email address"
+    },
     "email_taken": {
         "fr": "Cet adresse email a déjà utilisé",
         "en": "This email address is already used"
+    },
+    "required_field": {
+        "fr": "Champ requis",
+        "en": "Required field"
     },
     "signup_failed": {
         "fr": "Nous sommes désolés, quelque chose s'est mal passé lors de la création de votre compte. Veuillez réessayer.",

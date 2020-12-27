@@ -21,10 +21,22 @@ const Loader = styled.div`
     animation: ${spin} 2s linear infinite;
 
     ${props => {
-      if(props.size = "large"){
+      if(props.size === "large"){
         return {
           width: "10rem",
           height: "10rem"
+        }
+      }
+      if(props.size === "small"){
+        return {
+          width: "4rem",
+          height: "4rem"
+        }
+      }
+      if(props.size === "medium"){
+        return {
+          width: "8rem",
+          height: "8rem"
         }
       }
     }}

@@ -1,0 +1,262 @@
+{
+    
+    "expense": {
+        "fr": "Dépense",
+        "en": "Expense"
+    },
+    "income": {
+        "fr": "Revenu",
+        "en": "Income"
+    },
+    "investment": {
+        "fr": "Investissement",
+        "en": "Investment"
+    },
+    "vehicle_&_personnal-belongings": {
+        "fr": "Véhicule et effets personnels",
+        "en": "Vehicle & personnal belongings"
+    },
+    "education": {
+        "fr": "Éducation",
+        "en": "Education"
+    },
+    "realestate": {
+        "fr": "Immobolier",
+        "en": "Real estate"
+    },
+    "financial_investment": {
+        "fr": "Investissement financier",
+        "en": "Financial investment"
+    },
+    "transport": {
+        "fr": "Transport",
+        "en": "Transport"
+    },
+    "car_rental": {
+        "fr": "Location de voiture",
+        "en": "Car rental"
+    },
+    "plane": {
+        "fr": "Avion",
+        "en": "Plane"
+    },
+    "train": {
+        "fr": "Train",
+        "en": "Train"
+    },
+    "taxi": {
+        "fr": "Taxi",
+        "en": "Taxi"
+    },
+    "public_transportation": {
+        "fr": "Transport public",
+        "en": "Public transportation"
+    },
+    "health": {
+        "fr": "Santé",
+        "en": "Health"
+    },
+    "medicines": {
+        "fr": "Médicaments",
+        "en": "Medicines"
+    },
+    "health_insurance": {
+        "fr": "Assurance santé",
+        "en": "Health insurance"
+    },
+    "consulting_fees": {
+        "fr": "Frais de consultation",
+        "en": "Consulting fees"
+    },
+    "housing": {
+        "fr": "Logement",
+        "en": "Housing"
+    },
+    "home_insurance": {
+        "fr": "Assurance habitation",
+        "en": "Home insurance"
+    },
+    "furniture_&_equipment": {
+        "fr": "Mobilier et équipement",
+        "en": "Furniture & equipement"
+    },
+    "hotel": {
+        "fr": "Hôtel",
+        "en": "Hotel"
+    },
+    "maintenance_&_repairs": {
+        "fr": "Entretien et réparations",
+        "en": "Maintenance & repairs"
+    },
+    "rent": {
+        "fr": "Loyer",
+        "en": "Rent"
+    },
+    "mortgage_loan": {
+        "fr": "Hypothèque, prêt",
+        "en": "Mortgage, loan"
+    },
+    "energy_&_public-services": {
+        "fr": "Énergie & services publics",
+        "en": "Energy & public services"
+    },
+    "vehicle": {
+        "fr": "Véhicule",
+        "en": "Vehicle"
+    },
+    "vehicle_insurance": {
+        "fr": "Assurance auto",
+        "en": "Vehicle insurance"
+    },
+    "fuel": {
+        "fr": "Carburant",
+        "en": "Fuel"
+    },
+    "credit_lease": {
+        "fr": "Crédit-bail",
+        "en": "Credit lease"
+    },
+    "vehicle_maintenance": {
+        "fr": "Entretien",
+        "en": "Vehicle maintenance"
+    },
+    "multimedia": {
+        "fr": "Multimédia",
+        "en": "Multimedia"
+    },
+    "music_streaming": {
+        "fr": "Music streaming",
+        "en": "Music streaming"
+    },
+    "internet": {
+        "fr": "Internet",
+        "en": "Internet"
+    },
+    "mobile_phone": {
+        "fr": "Téléphone portable",
+        "en": "Mobile phone"
+    },
+    "movie_streaming": {
+        "fr": "Movie streaming",
+        "en": "Movie streaming"
+    },
+    "shopping": {
+        "fr": "Achats",
+        "en": "Shopping"
+    },
+    "gift": {
+        "fr": "Cadeau",
+        "en": "Gift"
+    },
+    "flowers_&_garden": {
+        "fr": "Fleurs et jardinage",
+        "en": "Flowers & garden"
+    },
+    "clothes_&_shoes": {
+        "fr": "Vêtements & chaussures",
+        "en": "Clothes & shoes"
+    },
+    "baby_&_children": {
+        "fr": "Bébé & enfants",
+        "en": "Baby & children"
+    },
+    "health_&_beauty": {
+        "fr": "Santé & beauté",
+        "en": "Health & beauty"
+    },
+    "electronic_&_accessories": {
+        "fr": "Électronique & accessoires",
+        "en": "Electronic & accessories"
+    },
+    "leisure": {
+        "fr": "Loisir",
+        "en": "Leisure"
+    },
+    "alcohol_&_tobacco": {
+        "fr": "Alcool & tabac",
+        "en": "Alcohol & tobacco"
+    },
+    "donations": {
+        "fr": "Donations",
+        "en": "Donations"
+    },
+    "culture": {
+        "fr": "Culture",
+        "en": "Culture"
+    },
+    "sporting_events": {
+        "fr": "Événements sportifs",
+        "en": "Sporting events"
+    },
+    "gymn": {
+        "fr": "Salle de sport",
+        "en": "Gymn"
+    },
+    "shows": {
+        "fr": "Concert",
+        "en": "Show"
+    },
+    "food_&_drinks": {
+        "fr": "Nourriture & boissons",
+        "en": "Food & drinks"
+    },
+    "groceries": {
+        "fr": "Épiceries",
+        "en": "Groceries"
+    },
+    "bar_&_coffee": {
+        "fr": "Bar & café",
+        "en": "Bar & coffe"
+    },
+    "restaurant": {
+        "fr": "Restaurant",
+        "en": "Restaurant"
+    },
+    "fast_food": {
+        "fr": "Restauration rapide",
+        "en": "Fast food"
+    },
+    "loan_&_rental": {
+        "fr": "Prêt & location",
+        "en": "Loan & rental"
+    },
+    "sale": {
+        "fr": "Vente",
+        "en": "Sale"
+    },
+    "interest_&_dividends": {
+        "fr": "Intérêt & dividendes",
+        "en": "Interest & dividends"
+    },
+    "family_benefits": {
+        "fr": "Allocations familiales",
+        "en": "Family benefits"
+    },
+    "lottery_&_gambling": {
+        "fr": "Loterie & jeux d'argent",
+        "en": "Lottery & gambling"
+    },
+    "check_&_discount-vouchers": {
+        "fr": "Chèque & bons de réduction",
+        "en": "Check & discount vouchers"
+    },
+    "rental_income": {
+        "fr": "Revenus locatifs",
+        "en": "Rental income"
+    },
+    "salary": {
+        "fr": "Salaire",
+        "en": "Salary"
+    },
+    "refunds": {
+        "fr": "Remboursements",
+        "en": "Refunds"
+    },
+    "contribution_&_subsidies": {
+        "fr": "Contributions & subsidies",
+        "en": "Contributions & subsidies"
+    }
+    
+
+
+}

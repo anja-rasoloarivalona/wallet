@@ -1,13 +1,13 @@
 import * as actionTypes from '../actions/actionTypes'
 
 const initialState = {
-    primary: "#5382ac",
-    secondary: "#F191B1E",
-    greyLight: "#f6f6f6",
-    greyDark: "#acadae",
+    grey_light: "#f6f6f6",
+    grey_dark: "#acadae",
     white: "#FEFDFB",
     black: "#1B1A19",
-    red: "#CC0000",
+
+    red: "#dd1a1a",
+    green: "#0dc30d",
 
     clr_primary: "#7b7b7b",
     clr_text: "#f5f5f5",

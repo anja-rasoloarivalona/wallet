@@ -1,16 +1,48 @@
-{
+{   
     "email": {
         "fr": "Email",
         "en": "Email"
+    },
+    "or": {
+        "fr": "OU",
+        "en": "OR"
     },
     "password": {
         "fr": "Mot de passe",
         "en": "Password"
     },
+    "password_requirement_intro": {
+        "fr": "Le mot de passe doit remplir les critères suivants",
+        "en": "The password must meet the following criteria"
+    },
+    "password_requirement_length": {
+        "fr": "avoir au moins 8 charactères",
+        "en": "be at least 8 characters long"
+    },
+    "password_requirement_number": {
+        "fr": "inclure au moins un chiffre",
+        "en": "include at least one number"
+    },
+    "password_requirement_special": {
+        "fr": "include au moins un charatère spécial",
+        "en": "include at least one special character"
+    },
+    "password_requirement_text": {
+        "fr": "inclure au moins une lettre en majuscule",
+        "en": "include at least one uppercase letter"
+    },
     "signup": {
         "fr": "S'inscrire",
         "en": "Signup"
     },
+    "signup_google_facebook": {
+        "fr": "S'inscrire avec Google ou Facebook",
+        "en": "Sign up with Google or Facebook"
+    },
+    "title": {
+        "fr": "Commençons par le début",
+        "en": "Let's get started"
+    },  
     "username": {
         "fr": "Nom d'utilisateur",
         "en": "Username"

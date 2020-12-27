@@ -2,11 +2,12 @@ import styled from 'styled-components'
 import { Form } from 'formik'
 
 const Container = styled.div`
-    grid-column: 2 / 4;
+    grid-column: 1 / -1;
     height: calc(100vh - 7.5rem);
     display: flex;
     align-items: center;
     justify-content: center;
+    background: ${props => props.theme.clr_background};
 `
 
 const LoginForm = styled(Form)`

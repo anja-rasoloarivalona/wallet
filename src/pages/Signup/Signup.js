@@ -17,7 +17,7 @@ const Signup = () => {
         password: ""
     })
     const { setError } = actions
-    const errorText = useSelector(state => state.text.errors.signup_failed)
+    const text = useSelector(state => state.text)
 
     const sections = {
         form: Form,
@@ -40,7 +40,7 @@ const Signup = () => {
                 setCurrentSection('emailSent')
                 return 
             }
-            return dispatch(setError({error: errorText})) 
+            return dispatch(setError({error: text.errors.signup_failed})) 
         } catch(error){
             const { response : { data : { message }  } } = error
             setSubmitting(false)
@@ -59,6 +59,7 @@ const Signup = () => {
                 signupHandler={signupHandler}
                 submitting={submitting}
                 usedEmails={usedEmails}
+                text={text}
             />
             {currentSection !== "emailSent" && (
                 <Disclaimer>
