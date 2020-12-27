@@ -36,9 +36,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "client": "react-scripts start",
-    "server": "cd server && npm run dev",
-    "all": "concurrently --kill-others \"npm run client\" \"npm run server\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
