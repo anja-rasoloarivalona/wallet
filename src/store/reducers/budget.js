@@ -3,7 +3,7 @@ import { updatedObject } from '../utility'
 
 const initialState = {
     current_period: null,
-    data: {}
+    data: null
 }
 
 const addBudget = (state, action) => {
@@ -21,10 +21,18 @@ const addBudget = (state, action) => {
     return updatedObject(state, { data: data })
 }
 
+const setBudget = (state, action) => {
+    const { budgets } = action
+    return updatedObject(state, {
+        data: budgets
+    })
+}
+
 const reducer = (state = initialState, action) => {
     switch(action.type){
         case actionTypes.SET_CURRENT_PERIOD: return updatedObject(state, { current_period: action.current_period})
         case actionTypes.ADD_BUDGET: return addBudget(state, action)
+        case actionTypes.SET_BUDGET: return setBudget(state, action)
         default: return state
     }
 }

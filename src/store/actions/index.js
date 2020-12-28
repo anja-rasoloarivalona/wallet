@@ -20,5 +20,11 @@ export {
 
 export {
     initCurrentPeriod,
-    addBudget
+    addBudget,
+    setBudget
 } from './budget'
+
+export {
+    setUser,
+    clearUser
+} from './user'

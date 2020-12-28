@@ -18,6 +18,8 @@ const Title = styled.div`
     font-size: 3rem;
     font-weight: 500;
     margin-bottom: 2rem;
+    width: 100vw;
+    text-align: center;
 `
 
 const SignupForm = styled(Form)`

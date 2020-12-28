@@ -14,7 +14,7 @@ const Form = props => {
     const { errors, touched, handleChange, values, handleBlur, setFieldValue, submitting, usedEmails } = props
     const {
         text: { currentPage: text, errors: errorText },
-        theme: { green, grey_dark }
+        theme: { green, grey_dark },
     } = useSelector(state => state)
    
     const [showPassword, setShowPassword] = useState(false)
@@ -151,6 +151,15 @@ const Form = props => {
         setInputs(updatedInputs)
 
     },[showPassword])
+
+    useEffect(() => {
+        const updatedInputs = inputs.map(input => ({...input}))
+        updatedInputs.forEach((input, index) => {
+            updatedInputs[index].label = text[input.name]
+            updatedInputs[index].placeholder = text[input.name]
+        })
+        setInputs(updatedInputs)
+    }, [text])
 
  
 

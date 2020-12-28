@@ -8,6 +8,7 @@ import { Button } from '../../../components'
 import { SelectCategory, renderLabel } from '../../../functions/form'
 import styled from 'styled-components'
 import { Loader, Amount } from '../../../components'
+import { setDate } from '../../../functions'
 
 
 const BudgetSection = styled.div`
@@ -60,7 +61,7 @@ const LoaderText = styled.div`
 
 
 const Form = props => {
-    const { errors, touched, handleChange, values, handleBlur, setFieldValue, currentSection, budget, currency, setErrors, submitting } = props
+    const { errors, touched, handleChange, values, handleBlur, setFieldValue, currentSection, budget, currency, setErrors, submitting, submitHandler } = props
     const { currentPage : text } = useSelector(state => state.text)
     const { lang } = useSelector(state => state.settings)
     const { expense : data } = useSelector(state => state.categories)
@@ -123,7 +124,7 @@ const Form = props => {
     const renderBudgetItem = item => {
         return (
             <BudgetSectionItem key={item.sub_id}>
-                <BudgetSectionItemLabel>{renderLabel(item.data, "sub")}</BudgetSectionItemLabel>
+                <BudgetSectionItemLabel>{renderLabel(item, "sub")}</BudgetSectionItemLabel>
                 <BudgetSectionItemAmount>
                     <Amount value={item.amount}/>
                 </BudgetSectionItemAmount>
@@ -147,7 +148,7 @@ const Form = props => {
             {!submitting && (
                 <ButtonContainer>
                     <Button square="true" secondary="true" onClick={() => setAction("adding")}>{text.add}</Button>
-                    <Button square="true">{text.finish}</Button>
+                    <Button square="true" onClick={submitHandler}>{text.finish}</Button>
                 </ButtonContainer>
             )}
 
@@ -190,9 +191,17 @@ const Budget = withFormik({
     handleSubmit: (values, {props}) => {
         const { budget, setBudget} = props
         const updatedBudget = budget.map(item => ( {...item}))
-        updatedBudget.push({
-            ...values
-        })
+
+        const budgetData = {
+            category: values.category,
+            sub_id: values.data.sub_id,
+            sub_icon: values.data.sub_icon,
+            amount: values.amount,
+            used: 0,
+            period: setDate(new Date(), "mm-yy", "en"),
+            color: values.data.color
+        }
+        updatedBudget.push(budgetData)
         setBudget(updatedBudget)
     }
 })(Form)

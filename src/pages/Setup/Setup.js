@@ -26,6 +26,14 @@ const Setup = () => {
 
     useEffect(() => {
         const updatedSections = sections.map(section => ({...section}))
+        updatedSections[0].name = text.currency
+        updatedSections[1].name = text.assets
+        updatedSections[2].name = text.budget
+        setSections(updatedSections)
+    },[text])
+
+    useEffect(() => {
+        const updatedSections = sections.map(section => ({...section}))
         if(currency){
             dispatch(actions.setCurrency(currency))
             if(!sections[0].isValid){
@@ -44,8 +52,35 @@ const Setup = () => {
         }
     }
 
-    const submitHandler = () => {
-        setSubmitting(true)
+    const submitHandler = async () => {
+        try {
+            setSubmitting(true)
+            let userAssets = []
+            if(assets.length > 0){
+                userAssets = assets
+            } else {
+                userAssets.push({
+                    type: "cash",
+                    amount: 0,
+                    name: text.principal
+                })
+            }
+            const res = await client.post("/setup/init", {
+                currency,
+                budget,
+                assets: userAssets
+            })
+            if(res.status !== 201){
+                setSubmitting(true)
+                return 
+            }
+
+            
+
+        } catch(err){
+            setSubmitting(false)
+            console.log(err.message)
+        }
         
     }
 
@@ -106,6 +141,7 @@ const Setup = () => {
                             currency={currency}
                             errorText={errorText}
                             submitting={submitting}
+                            submitHandler={submitHandler}
                         />
                     </>
                 )}

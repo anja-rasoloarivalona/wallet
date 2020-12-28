@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SideBar from './SideBar'
 import styled from "styled-components"
 import GridLayout from 'react-grid-layout'
@@ -7,6 +7,7 @@ import "../../../node_modules/react-resizable/css/styles.css"
 import Balance from './items/Balance'
 import MonthlyReport from './items/MonthlyReport'
 import Expenses from './items/Expenses'
+import { useSelector } from 'react-redux'
 
 const Container = styled.div`
     grid-column: 1 / -1;
@@ -46,11 +47,13 @@ const Item = styled.div`
 
 
 
-const Dashboard = () => {
+const Dashboard = props => {
+    const { token } = useSelector(state => state.user)
+
     const layout = [
         {i: 'balance', x: 0, y: 0, w: 4, h: 3, Component: Balance},
         {i: 'monthly-report', x: 4, y: 0, w: 4, h: 3, Component: MonthlyReport}, 
-        {i: 'expenses', x: 4, y: 8, w: 4, h: 6, Component: Expenses},      
+        {i: 'expenses', x: 8, y: 0, w: 4, h: 6, Component: Expenses},      
     ];
 
       const renderItem = item => {
@@ -61,6 +64,14 @@ const Dashboard = () => {
               </Item>
           )
       }
+
+      useEffect(() => {
+        if(!token){
+            props.history.push("/login")
+        }
+      },[])
+
+      
 
     return (
         <Container>

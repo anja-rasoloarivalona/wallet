@@ -25,7 +25,7 @@ const Card = props => {
     return (
         <CardContainer>
             <CardAmount>
-                <Amount value={card.balance}/>
+                <Amount value={card.amount}/>
             </CardAmount>
         </CardContainer>
     )

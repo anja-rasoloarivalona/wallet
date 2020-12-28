@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import { client } from '../../functions'
 import queryString from 'query-string'
 import { Container, Modal, Text } from './ActivateAccount-style'
 import { Loader, Success } from '../../components'
+import { useDispatch } from 'react-redux'
+import * as actions from '../../store/actions'
 
 const ActivateAccount = props => {
-
+    const dispatch = useDispatch()
     const [loading, setLoading] = useState(true)
     const [account, setAccount] = useState({
                                     activated: false,
@@ -19,7 +21,7 @@ const ActivateAccount = props => {
     useEffect(() => {
         const activateAccountHandler = async () => {
             try {
-                const res = await axios({
+                const res = await client({
                     method: "post",
                     url: "/signup/activate-account",
                     data: {
@@ -33,12 +35,14 @@ const ActivateAccount = props => {
                         activated: true,
                         message: "Acount activated"
                     })
-                    // return props.history.push('/')
+                    const user = res.data.data
+                    dispatch(actions.setUser(user))
+                    return props.history.push('/setup')
                 }
                 setLoading(false)
             } catch(error){
                 setLoading(false)
-                console.log("FAILED ACTIVATE ACCOUNT", error.response)
+                console.log("FAILED ACTIVATE ACCOUNT", error.message)
             }
         }  
         activateAccountHandler()

@@ -1,54 +1,109 @@
-import React from 'react'
-import { HeaderContainer, HeaderSection, HeaderSectionItem } from './Header-style'
+import React, { useState, useEffect } from 'react'
+import { HeaderContainer, HeaderSection, HeaderSectionItem, HeaderSectionLink, HeaderButton,  LanguageToggle, LanguageToggleIcon, LanguageToggleText, LanguageToggleList, LanguageToggleListItem } from './Header-style'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../store/actions'
-
+import { client } from '../../functions'
 import styled from 'styled-components'
 import logo from '../../assets/logo.png'
 const Image = styled.img``
 
 
 const Header = () => {
-    const text = useSelector(state => state.text.header)
-    const { lang } = useSelector(state => state.settings)
+    const {
+        text: { header : text },
+        settings: { lang },
+        user
+    } = useSelector(state => state)
+    const [ showLangList, setShowLangList] = useState(false)
+    const [ currentSection, setCurrentSection] = useState(null)
     const dispatch = useDispatch()
 
-    const links = {
-        left: [
-            // {label: text.dashboard, path: "/", exact: true},
-            // {label: text.transactions, path: "/transactions"},
-            // {label: text.report, path: "/report"}
+    useEffect(() => {
+        if(user.isLoggedIn && currentSection !== "isLoggedIn"){
+            setCurrentSection("isLoggedIn")
+        }
+        if(!user.isLoggedIn && currentSection === "isLoggedIn"){
+            setCurrentSection("isLoggedOut")
+        }
+    },[user])
+
+    const logout = async () => {
+        try {
+            await client.post("/logout")
+            dispatch(actions.clearUser())
+        } catch(err){
+            console.log(err.message)
+        }
+    }
+
+    const items = {
+        isLoggedOut: [
+            {type: "link", label: text.login, path: "/login"},
+            {type: "link", label: text.signup, path: "/signup"}
         ],
-        right: [
-            {label: text.login, path: "/login"},
-            {label: text.signup, path: "/signup"},
+        isLoggedIn: [
+            {type: "button", label: text.logout, onClick: logout}
         ]
     }
 
-    const changeLang = () => {
-        const newLang = lang === "fr" ? "en" : "fr"
-        dispatch(actions.setLang(newLang))
+    const renderLanguageToggler = () => {
 
+        const toggleLangHandler = () => {
+            const newLang = lang === "fr" ? "en" : "fr"
+            dispatch(actions.setLang(newLang))
+            setShowLangList(false)
+    
+        }
+        return (
+            <HeaderSectionItem
+                showList={showLangList}
+                onMouseOver={() => setShowLangList(true)}
+                onMouseLeave={() => setShowLangList(false)}
+            >
+                <LanguageToggle>
+                    <LanguageToggleText>{lang}</LanguageToggleText>
+                    <LanguageToggleIcon 
+                        size="1x"
+                        icon="caret-down"
+                    />
+                </LanguageToggle>
+                <LanguageToggleList>
+                        <LanguageToggleListItem onClick={toggleLangHandler}>
+                            {lang === "en" ? "fr" : "en"}
+                        </LanguageToggleListItem>
+                </LanguageToggleList>
+            </HeaderSectionItem>
+        )
     }
+
+    const renderItem = item => {
+        if(item.type === "link"){
+            return (
+            <HeaderSectionLink
+                key={item.label}
+                to={item.path}
+                exact={item.exact ? item.exact : false}
+            >
+                {item.label}
+            </HeaderSectionLink> 
+            )
+        }
+
+        return (
+            <HeaderButton key={item.label} onClick={item.onClick}>
+                {item.label}
+            </HeaderButton>
+        )
+    }
+
+
     return (
         <HeaderContainer>
             <Image src={logo}/>
-            {Object.keys(links).map(section => (
-                <HeaderSection key={section}>
-                    {links[section].map(link => (
-                        <HeaderSectionItem
-                            key={link.label}
-                            to={link.path}
-                            exact={link.exact ? link.exact : false}
-                        >
-                            {link.label}
-                        </HeaderSectionItem>
-                    ))}
-                </HeaderSection>
-            ))}
-            {/* <div onClick={changeLang}>
-                Change
-            </div> */}
+            <HeaderSection>
+                {items[currentSection] && items[currentSection].map(item => renderItem(item))}
+                {renderLanguageToggler()}
+            </HeaderSection>
         </HeaderContainer>
     )
 }

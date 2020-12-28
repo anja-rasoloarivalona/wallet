@@ -27,10 +27,6 @@
         "fr": "Annuler",
         "en": "Cancel"
     },
-    "cash": {
-        "fr": "Cash",
-        "en": "Cash"
-    },
     "category": {
         "fr": "Catégorie",
         "en": "Category"
@@ -43,10 +39,6 @@
         "fr": "Veuillez sélectionner une devise",
         "en": "Please select a valid currency"
     },
-    "credit_card": {
-        "fr": "Carte de crédit",
-        "en": "Credit card"
-    },
     "currency": {
         "fr": "Devise",
         "en": "Currency"
@@ -58,18 +50,6 @@
     "currency_text_b": {
         "fr": "Votre solde et vos statistiques seront affichés dans cette devise",
         "en": "Your balance and statistics will be displayed in that currency"
-    },
-    "debit_card": {
-        "fr": "Carte de débit",
-        "en": "Debit card"
-    },
-    "expense": {
-        "fr": "Dépenses",
-        "en": "Expenses"
-    },
-    "income": {
-        "fr": "Revenus",
-        "en": "Incomes"
     },
     "name": {
         "fr": "Identifiant",

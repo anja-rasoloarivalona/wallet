@@ -11,4 +11,10 @@ export const GET_CATEGORIES = "GET_CATEGORIES"
 export const SET_CATEGORIES = "SET_CATEGORIES"
 
 export const SET_CURRENT_PERIOD = "SET_CURRENT_PERIOD"
+export const SET_BUDGET = "SET_BUDGET"
 export const ADD_BUDGET = "ADD_BUDGET"
+
+export const SET_USER = "SET_USER"
+export const CLEAR_USER = "CLEAR_USER"
+
+export const SET_ASSETS = "SET_ASSETS"

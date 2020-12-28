@@ -6,7 +6,7 @@ import Routes from './routes'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../store/actions'
 import { getInitialText } from '../translations'
-
+import { client } from '../functions'
 
 const App = () => {
     const dispatch = useDispatch()
@@ -36,9 +36,31 @@ const App = () => {
         }
     },[header, expense, income, checkedToken])
 
-    const checkUserToken = () => {
+    const checkUserToken = async () => {
         const token = localStorage.getItem("moneytor-token")
-        setCheckedToken(true)
+        if(token){
+            try {
+                const res = await client.post("/verify-user-token", { token })
+                const resData = res.data.data
+                const { assets, budgets, email, id, setting, username } = resData
+                dispatch(actions.setUser({
+                    id,
+                    token,
+                    username,
+                    email,
+                    assets
+                }))
+                dispatch(actions.setBudget(budgets))
+                dispatch(actions.setCurrency(JSON.parse(setting.currency)))
+                setCheckedToken(true)
+            }  catch(err){
+                console.log(err.message)
+                setCheckedToken(true)
+            }
+        } else {
+            setCheckedToken(true)
+        }
+
     }
 
 

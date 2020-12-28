@@ -12,16 +12,25 @@ import { useSelector, useDispatch } from 'react-redux'
 const Routes = props => {
     const dispatch = useDispatch()
     const location = useLocation()
-    const { lang } = useSelector(state => state.settings)
+    const { lang, currency } = useSelector(state => state.settings)
     const { pathname } = useSelector(state => state.text)
-    const { token } = useSelector(state => state.login)
+    const { token } = useSelector(state => state.user)
     const { initText, setTextPathName } = actions
 
     useEffect(() => {
         if(!token){
-            props.history.push("/login")
+            if(pathname !== "/login" || pathname !== "/signup"){
+                props.history.push("/login")
+            }
+        } else {
+            if(currency){
+                props.history.push("/")
+            }
+            if(!currency && pathname !== "/setup"){
+                props.history.push("/setup")
+            }
         }
-    },[])
+    },[pathname, token, currency])
 
     useEffect(() => {
         const text = getInitialText(lang, [pathname])

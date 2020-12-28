@@ -6,7 +6,7 @@ import './index.css'
 import { createStore, applyMiddleware, compose, combineReducers } from "redux"
 import thunk from "redux-thunk"
 import { Provider } from "react-redux"
-import loginReducer from "./store/reducers/login"
+import userReducer from "./store/reducers/user"
 import themeReducer from "./store/reducers/theme"
 import textReducer from "./store/reducers/lexique"
 import settingsReducer from "./store/reducers/settings"
@@ -15,7 +15,7 @@ import categoriesReducer from './store/reducers/categories'
 import budgetReducer from './store/reducers/budget'
 
 const rootReducer = combineReducers({
-  login: loginReducer,
+  user: userReducer,
   theme: themeReducer,
   text: textReducer,
   settings: settingsReducer,

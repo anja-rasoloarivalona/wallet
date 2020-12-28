@@ -9,6 +9,13 @@ const setCurrentPeriod = current_period => {
     }
 }
 
+const setBudget = budgets => {
+    return {
+        type: actionTypes.SET_BUDGET,
+        budgets
+    }
+}
+
 const addBudget = budget => {
     return {
         type: actionTypes.ADD_BUDGET,
@@ -26,5 +33,6 @@ const initCurrentPeriod = () => {
 
 export {
     initCurrentPeriod,
-    addBudget
+    addBudget,
+    setBudget
 }

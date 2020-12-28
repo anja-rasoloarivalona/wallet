@@ -47,12 +47,12 @@ const Form = props => {
             name: "name"
         },
         {
-            id: "balance",
+            id: "amount",
             input_type: "input",
             type: "number",
             placeholder: text.balance,
             label: text.balance,
-            name: "balance",
+            name: "amount",
             unit: currency ? currency.symbol : null
         }
     ]
@@ -112,7 +112,7 @@ const Assets = withFormik({
         return {
             type: "",
             name: "",
-            balance: ""
+            amount: ""
         }
     },
     validationSchema: ({ errorText }) => {
@@ -120,7 +120,7 @@ const Assets = withFormik({
         return Yup.object().shape({
             type: Yup.string().required(empty),
             name: Yup.string().required(empty),
-            balance: Yup.string().required(empty)
+            amount: Yup.string().required(empty)
         })
     },
     handleSubmit: (values, {props}) => {

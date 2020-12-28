@@ -1,0 +1,18 @@
+{
+    "principal": {
+        "fr": "Principal",
+        "en": "Main"
+    },
+    "cash": {
+        "fr": "Cash",
+        "en": "Cash"
+    },
+    "debit_card": {
+        "fr": "Carte de débit",
+        "en": "Debit card"
+    },
+    "credit_card": {
+        "fr": "Carte de crédit",
+        "en": "Credit card"
+    }
+}

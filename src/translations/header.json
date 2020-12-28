@@ -7,6 +7,10 @@
         "fr": "Se connecter",
         "en": "Login"
     },
+    "logout": {
+        "fr": "Se déconnecter",
+        "en": "Logout"
+    },
     "report": {
         "fr": "Rapport",
         "en": "Report"
