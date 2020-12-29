@@ -574,6 +574,11 @@ const IconContainer = styled.div`
 `
 
 export const renderLabel = (item, type, color) => {
+    console.log("renderLabel", {
+        item,
+        type,
+        color
+    })
     const icon = type === "master" ? item.master_icon : item.sub_icon
     const text = type === "master" ? item.master_name : item.sub_name
     const background =  item.color ? item.color : color
@@ -661,7 +666,8 @@ export const SelectCategory = props => {
                                 </CategoryListItemValue>
 
                                 <SubcategoryList displayed={activeCategoriesList === category}>
-                                    {categories[category].children.map((subcategory, index) => {
+                                    {Object.keys(categories[category].children).map((sub, index) => {
+                                            const subcategory = categories[category].children[sub]
                                             return (
                                                 <SubcategoryListItem
                                                     key={index}
@@ -674,7 +680,7 @@ export const SelectCategory = props => {
                                                         sub_icon: subcategory.sub_icon
                                                     })}
                                                 >   
-                                                    {renderLabel(categories[category].children[index], "sub", categories[category].color)}
+                                                    {renderLabel(subcategory, "sub", categories[category].color)}
                                                 </SubcategoryListItem>
                                             )
                                         })}

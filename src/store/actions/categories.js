@@ -26,18 +26,20 @@ const getCategories = () => {
                         master_name: text[data[ctgIndex].master_name],
                         master_icon: data[ctgIndex].master_icon,
                         color: data[ctgIndex].color,
-                        children: [{
-                            sub_id: data[ctgIndex].sub_id,
-                            sub_name: text[data[ctgIndex].sub_name],
-                            sub_icon: data[ctgIndex].sub_icon
-                        }]
+                        children: {
+                            [data[ctgIndex].sub_name]: {
+                                sub_id: data[ctgIndex].sub_id,
+                                sub_name: text[data[ctgIndex].sub_name],
+                                sub_icon: data[ctgIndex].sub_icon
+                            }
+                        }
                     }
                 } else {
-                    categories[ctg.type][ctg.master_name].children.push({
+                    categories[ctg.type][ctg.master_name].children[data[ctgIndex].sub_name] = {
                         sub_id: data[ctgIndex].sub_id,
                         sub_name: text[data[ctgIndex].sub_name],
                         sub_icon: data[ctgIndex].sub_icon
-                    })
+                    }
                 }
             })
             categories.income = categories.income.income

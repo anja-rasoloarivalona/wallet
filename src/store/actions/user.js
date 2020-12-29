@@ -13,7 +13,15 @@ const clearUser = () => {
     }
 }
 
+const setAssets = assets => {
+    return {
+        type: actionTypes.SET_ASSETS,
+        assets
+    }
+}
+
 export {
     setUser,
-    clearUser
+    clearUser,
+    setAssets
 }

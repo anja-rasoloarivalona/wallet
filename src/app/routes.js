@@ -14,19 +14,19 @@ const Routes = props => {
     const location = useLocation()
     const { lang, currency } = useSelector(state => state.settings)
     const { pathname } = useSelector(state => state.text)
-    const { token } = useSelector(state => state.user)
+    const { token, assets } = useSelector(state => state.user)
     const { initText, setTextPathName } = actions
 
     useEffect(() => {
         if(!token){
-            if(pathname !== "/login" || pathname !== "/signup"){
+            if(pathname !== "/login" && pathname !== "/signup"){
                 props.history.push("/login")
             }
         } else {
-            if(currency){
+            if(currency && assets && assets.length > 0){
                 props.history.push("/")
             }
-            if(!currency && pathname !== "/setup"){
+            if((!currency || !assets || assets.length === 0) && pathname !== "/setup"){
                 props.history.push("/setup")
             }
         }

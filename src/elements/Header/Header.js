@@ -19,15 +19,16 @@ const Header = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if(user.isLoggedIn && currentSection !== "isLoggedIn"){
+        if(user.isLoggedIn){
             setCurrentSection("isLoggedIn")
         }
-        if(!user.isLoggedIn && currentSection === "isLoggedIn"){
+        if(!user.isLoggedIn){
             setCurrentSection("isLoggedOut")
         }
     },[user])
 
     const logout = async () => {
+        console.log("logging out")
         try {
             await client.post("/logout")
             dispatch(actions.clearUser())
@@ -46,6 +47,7 @@ const Header = () => {
         ]
     }
 
+ 
     const renderLanguageToggler = () => {
 
         const toggleLangHandler = () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ItemContainer , Title, Amount} from '../Dashboard-style'
+import { Item , Title, Amount} from '../Dashboard-style'
 import { renderAmount } from '../../../functions'
 import { useSelector } from 'react-redux'
 import { Doughnut } from 'react-chartjs-2'
@@ -23,7 +23,7 @@ const Expenses = () => {
     };
     
     return (
-        <ItemContainer>
+        <Item>
             <Title>Expenses</Title>
             <Doughnut 
                 data = {data}
@@ -31,7 +31,7 @@ const Expenses = () => {
                     cutoutPercentage: 50
                 }}
             />
-        </ItemContainer>
+        </Item>
     )
 }
 

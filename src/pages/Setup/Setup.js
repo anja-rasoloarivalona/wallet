@@ -70,12 +70,20 @@ const Setup = () => {
                 budget,
                 assets: userAssets
             })
+            console.log('res', res)
             if(res.status !== 201){
                 setSubmitting(true)
                 return 
             }
 
-            
+            const { budget: _budget, assets: _assets } = res.data.data
+
+            console.log({
+                _budget,
+                _assets
+            })
+            dispatch(actions.setBudget(_budget))
+            dispatch(actions.setAssets(_assets))
 
         } catch(err){
             setSubmitting(false)

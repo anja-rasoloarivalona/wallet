@@ -26,5 +26,6 @@ export {
 
 export {
     setUser,
-    clearUser
+    clearUser,
+    setAssets
 } from './user'

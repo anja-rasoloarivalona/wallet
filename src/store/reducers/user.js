@@ -36,6 +36,7 @@ const reducer = (state = initialState, action) => {
     switch(action.type){
         case actionTypes.SET_USER: return setUser(state, action)
         case actionTypes.CLEAR_USER: return clearUser(state, action)
+        case actionTypes.SET_ASSETS: return updatedObject(state, {assets: action.assets})
         default: return state
     }
 }

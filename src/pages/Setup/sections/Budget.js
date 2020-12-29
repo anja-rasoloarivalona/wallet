@@ -113,7 +113,7 @@ const Form = props => {
             }))}
             {!submitting && (
                 <ButtonContainer>
-                    {budget.length === 0  &&  <Button square="true" secondary="true">{text.skip}</Button> }
+                    {budget.length === 0  &&  <Button square="true" secondary="true" onClick={submitHandler}>{text.skip}</Button> }
                     {budget.length > 0 && action === "adding" &&  <Button square="true" secondary="true" onClick={() => setAction("viewing")}>{text.cancel}</Button>}   
                     <Button square="true" type="submit">{text.add}</Button>
                 </ButtonContainer>
