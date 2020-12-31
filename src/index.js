@@ -13,6 +13,7 @@ import settingsReducer from "./store/reducers/settings"
 import errorReducer from "./store/reducers/error"
 import categoriesReducer from './store/reducers/categories'
 import budgetReducer from './store/reducers/budget'
+import interfaceReducer from './store/reducers/interface'
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   settings: settingsReducer,
   error: errorReducer,
   categories: categoriesReducer,
-  budget: budgetReducer
+  budget: budgetReducer,
+  ui: interfaceReducer
 })
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))

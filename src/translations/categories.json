@@ -8,6 +8,10 @@
         "fr": "Revenu",
         "en": "Income"
     },
+    "category": {
+        "fr": "Categorie",
+        "en": "Category"
+    },
     "investment": {
         "fr": "Investissement",
         "en": "Investment"

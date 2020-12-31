@@ -12,18 +12,27 @@ const HeaderContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: ${props => props.theme.clr_surface};
-    color: ${props => props.theme.clr_text};
-    z-index: 10;
+    background: ${props => props.theme.surface};
+    color: ${props => props.theme.text};
+    z-index: 12;
+    box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
 `
 
 const HeaderSection = styled.div`
     display: flex;
     align-items: center;
+    font-size: 1.6rem;
 
     a:not(:last-child){
         margin-right: 3rem;
     }
+    ${props => {
+        if(props.width){
+            return {
+                width: props.width
+            }
+        }
+    }}
 `
 const HeaderSectionLink = styled(Link)`
     font-size: 1.6rem;
@@ -55,6 +64,22 @@ const HeaderButton = styled(Button)`
     min-width: unset;
     padding: 0 4rem;
     margin-right: 1.5rem;
+    color: ${props => props.theme.text};
+    font-size: 1.7rem;
+
+    svg {
+        margin-right: 1rem;
+    }
+    
+
+    ${props => {
+        if(props.background ===  false){
+            return {
+                background: "transparent !important",
+
+            }
+        }
+    }}
 `
 
 const LanguageToggle = styled.div`

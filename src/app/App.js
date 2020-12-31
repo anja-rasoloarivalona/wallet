@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../store/actions'
 import { getInitialText } from '../translations'
 import { client } from '../functions'
+import TransactionForm from '../elements/TransactionForm/TransactionForm'
 
 
 const App = () => {
@@ -16,11 +17,12 @@ const App = () => {
     const [checkedToken, setCheckedToken] = useState(false)
     const { initText, setTextPathName, getCategories, initCurrentPeriod } = actions
     const { 
-        text : { header },
+        text : { header, errors: errorText },
         settings : { lang },
         error : { error },
         categories: {expense, income},
-        user: { isLoggedIn }
+        user: { isLoggedIn },
+        ui: { transactionForm }
     } = useSelector(state => state)
 
     useEffect(() => {
@@ -41,34 +43,29 @@ const App = () => {
 
     const checkUserToken = async () => {
         const token = localStorage.getItem("moneytor-token")
-        console.log({
-            token
-        })
         if(token){
             try {
-                const res = await client.post("/verify-user-token", { token })
-                console.log("res", res)
+                const res = await client.post("/verify-user-token", { token: token })
                 const resData = res.data.data
-                const { assets, budgets, email, id, setting, username } = resData
-                dispatch(actions.setUser({
-                    id,
-                    token,
-                    username,
-                    email,
-                    assets
+                dispatch(actions.updateApp({
+                    ...resData,
+                    token
                 }))
-                dispatch(actions.setBudget(budgets))
-                dispatch(actions.setCurrency(JSON.parse(setting.currency)))
                 setCheckedToken(true)
             }  catch(err){
-                console.log('ouups', err.message)
+                console.log(err)
                 setCheckedToken(true)
-                // dispatch(actions.clearUser())
+                dispatch(actions.clearUser())
             }
         } else {
             setCheckedToken(true)
         }
 
+    }
+
+    const addEditTransactionHandler = data => {
+        dispatch(actions.updateApp(data))
+        dispatch(actions.toggleTransactionForm())
     }
 
 
@@ -78,10 +75,19 @@ const App = () => {
         )
     }
 
+    const displayTransactionForm = isLoggedIn && transactionForm.isOpened
+
     return (
         <Config>
             <Header />
             {isLoggedIn && <Sidebar />}
+
+            {displayTransactionForm && (
+                <TransactionForm 
+                    errorText={errorText}
+                    addEditTransactionHandler={addEditTransactionHandler}
+                />
+            )}
             <Routes />
             {error && <ErrorModal />}
         </Config>

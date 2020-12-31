@@ -57,27 +57,27 @@ const Budget = () => {
             xAxes: [{
                 ticks: {
                     callback: function(value, index, values) {
-                        return value + settings.currency.symbol;
+
+                        return settings.currency ?  value + settings.currency.symbol : value;
                     },
-                },
+                }
             }]
     
         }
     }
 
-    const Test = styled.div`
+    const ChartContainer = styled.div`
         position: relative;
         width: 100%;
         height: 90%;
-        // background: blue;
     `
 
     return (
         <Item>
-            <Title>Budget</Title>
-            <Test>
+            <Title>Budget Remaining</Title>
+            <ChartContainer>
                 <HorizontalBar data={data} options={options}/>
-            </Test>
+            </ChartContainer>
       
         </Item>
     )

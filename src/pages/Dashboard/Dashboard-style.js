@@ -3,18 +3,16 @@ import styled from 'styled-components'
 
 const Container = styled.div`
     grid-column: 1 / -1;
-    width: 100%;
-    min-height: calc(100vh - 7.5rem);
+    width: calc(100vw - 35rem);
+    // min-height: calc(100vh - 7.5rem);
     background: ${props => props.theme.clr_background};
-    padding-left: 35rem;
+    margin-left: 35rem;
     padding-top: 3rem;
     display: flex;
     justify-content: center;
 `
 const GridContainer = styled.div`
-    width: 70vw;
-    max-width: 1100rem;
-    // background: grey;
+    width: 100%;
     display: flex;
 `
 
@@ -23,7 +21,8 @@ const GridItem = styled.div`
     align-items: center;
     justify-content: center;
     background: white;
-    border-radius: 5px;
+    border-radius: 1.5rem;
+    box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
 
     .react-grid-item.react-grid-placeholder {
         background-color: green !important;

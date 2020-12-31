@@ -5,6 +5,8 @@ import Signup from '../pages/Signup/Signup'
 import ActivateAccount from '../pages/ActivateAccount/ActivateAccount'
 import Setup from '../pages/Setup/Setup'
 import Dashboard from '../pages/Dashboard/Dashboard'
+import Transactions from '../pages/Transactions/Transactions'
+import Settings from '../pages/Settings/Settings'
 import { getInitialText } from '../translations'
 import * as actions from '../store/actions'
 import { useSelector, useDispatch } from 'react-redux'
@@ -23,12 +25,12 @@ const Routes = props => {
                 props.history.push("/login")
             }
         } else {
-            if(currency && assets && assets.length > 0){
-                props.history.push("/")
-            }
-            if((!currency || !assets || assets.length === 0) && pathname !== "/setup"){
-                props.history.push("/setup")
-            }
+            // if(currency && assets && assets.length > 0 && pathname === "/setup"){
+            //     props.history.push("/")
+            // }
+            // if((!currency || !assets || assets.length === 0) && pathname !== "/setup"){
+            //     props.history.push("/setup")
+            // }
         }
     },[pathname, token, currency])
 
@@ -45,9 +47,7 @@ const Routes = props => {
         }
     },[location.pathname, pathname])
 
-
-    if(location.pathname !== pathname) return <div>Loading</div>
-
+    // if(location.pathname !== pathname) return <div>Loading</div>
 
     return (
             <Switch>
@@ -56,6 +56,8 @@ const Routes = props => {
                 <Route path="/signup/activate" component={ActivateAccount} />
                 <Route path="/signup" component={Signup}/>
                 <Route path="/setup" component={Setup} />
+                <Route path="/transactions" component={Transactions} />
+                <Route path="/settings" component={Settings} />
                 <Redirect to="/"/>
             </Switch>
     )

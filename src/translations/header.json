@@ -22,6 +22,18 @@
     "transactions": {
         "fr": "Transactions",
         "en": "Transactions"
+    },
+    "morning_salutation": {
+        "fr": "Bonjour",
+        "en": "Good morning"
+    },
+    "noon_salutation": {
+        "fr": "Bonjour",
+        "en": "Hello"
+    },
+    "evening_salutation": {
+        "fr": "Bonsoir",
+        "en": "Good evening"
     }
  
 }

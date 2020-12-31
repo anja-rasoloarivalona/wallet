@@ -16,7 +16,13 @@ const initialState = {
 
     clr_background: "#f5f5f5",
     clr_surface: "rgb(20, 20, 20)",
-    clr_on_surface: "rgb(46, 46, 46)"
+    clr_on_surface: "rgb(46, 46, 46)",
+
+    background: "#f5f5f5",
+    surface: "#ffffff",
+    surface_secondary: "#F6F6F6",
+    text: "#c5c5c5",
+    active_text: "#161616"
 }
 
 const reducer = (state=initialState, action) => {

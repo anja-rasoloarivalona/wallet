@@ -14,12 +14,13 @@ const GlobalStyle = createGlobalStyle`
 `
 const Container = styled.div`
     width: 100vw;
-    min-height: calc(100vh - 7.5rem);
+    height: calc(100vh - 7.5rem);
     display: grid;
     grid-template-columns: 300px repeat(2, 1fr) 300px;
     grid-template-rows: max-content;
     grid-auto-rows: max-content;
     margin-top: 7.5rem;
+    overflow-y: overlay;
 `
 
 const Config = props => {

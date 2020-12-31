@@ -2,12 +2,17 @@ import React, {useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { Field } from 'formik'
 import { useSelector } from 'react-redux'
-import DatePicker from 'react-datepicker'
+import DatePicker, { registerLocale } from 'react-datepicker'
 import ReactSelect from 'react-select'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { useOnClickOutside } from './index'
+import "react-datepicker/dist/react-datepicker.css"
 
+import en from 'date-fns/locale/en-US'
+import fr from 'date-fns/locale/fr-CA'
+registerLocale('en', en)
+registerLocale('fr', fr)
 
 export const Container = styled.div`
     position: relative;
@@ -33,12 +38,37 @@ export const Container = styled.div`
         cursor: pointer;
     }
 
+    .react-datepicker-popper {
+        z-index: 20;
+    }
+
     .react-datepicker__input-container > input {
-        border: 1px solid ${props => props.theme.grey_dark};
+        border: 0px solid black !important;
         padding: 12px 6px;
         :focus {
             outline: none;
         }
+    }
+
+    .react-datepicker {
+        width: 40rem;
+    }
+
+    .react-datepicker__month-container, .react-datepicker__month {
+        width: 100%;
+    }
+
+    .react-datepicker__week > div,.react-datepicker__day-name  {
+        margin: .8rem
+    }
+
+    .react-datepicker__current-month {
+        font-size: 1.6rem;
+    }
+
+    .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name {
+        width: 2.7rem;
+        padding: 7px 0;
     }
 
     input::placeholder {
@@ -252,14 +282,14 @@ export const renderInput = (props) => {
     const inputType = props.input.input_type;
     switch(inputType){
         case "input":
-            return  renderNormalInput(props);
+            return <RenderNormalInput {...props} />;
         case "textarea":
-            return renderTextArea(props);
+            return <RenderTextArea {...props } />;
         case "select":
-            return RenderSelectInput(props);
+            return <RenderSelectInput {...props} />;
         case  "date":
-            return renderDatePicker(props);
-        default: return renderNormalInput(props)
+            return <RenderDatePicker {...props} />;
+        default: return <RenderNormalInput {...props}  />
     }
 }
 
@@ -346,7 +376,7 @@ const RenderSelectInput = props => {
     )
 }
 
-export const renderNormalInput = props => {
+export const RenderNormalInput = props => {
     const {input, index, errors, touched} = props
 
     const clickHandler = () => {
@@ -384,7 +414,7 @@ export const renderNormalInput = props => {
     )
 }
 
-const renderTextArea = props => {
+const RenderTextArea = props => {
     const { input, index, touched, errors } = props
     return (
         <Container
@@ -412,8 +442,10 @@ const renderTextArea = props => {
     )
 }
 
-const renderDatePicker = props => {
+const RenderDatePicker = props => {
     const { input, index, onChange, values, touched, errors } = props
+    const { settings: { lang } } = useSelector(state => state)
+    const format = lang === "fr" ? "dd-MM-yyyy" : "MM-dd-yyyy"
 
     return (
         <Container
@@ -421,9 +453,9 @@ const renderDatePicker = props => {
             style={{...input.style}}
         >   
             <DateInput 
+                dateFormat={format}
                 id={input.id}
                 name={input.name}
-                dateFormat={input.dateFormat}
                 minDate={input.minDate ? input.minDate : null}
                 maxDate={input.maxDate ? input.maxDate : null}
                 showTimeInput={input.showTimeInput}
@@ -573,12 +605,33 @@ const IconContainer = styled.div`
     background: ${props => props.background};
 `
 
+export const RenderLabel  = props => {
+
+    const { item, type, color, index, from } = props
+
+    const icon = type === "master" ? item.master_icon : item.sub_icon
+    const textData = type === "master" ? item.master_name : item.sub_name
+    const background =  item.color ? item.color : color
+
+    console.log(textData)
+
+    const { text : { currentPage: text }} = useSelector(state => state)
+
+    return (
+        <LabelContainer>
+            <IconContainer background={background}>
+                <FontAwesomeIcon 
+                    icon={icon}
+                    size="1x"
+                    color="white"
+                />
+            </IconContainer>
+            <LabelText>{text[textData]}</LabelText>
+        </LabelContainer>
+    )
+}
+
 export const renderLabel = (item, type, color) => {
-    console.log("renderLabel", {
-        item,
-        type,
-        color
-    })
     const icon = type === "master" ? item.master_icon : item.sub_icon
     const text = type === "master" ? item.master_name : item.sub_name
     const background =  item.color ? item.color : color
@@ -638,7 +691,14 @@ export const SelectCategory = props => {
                     showList={showCategoryList}
                     onClick={() => setShowCategoryList(true)}
                 >
-                    {values.category === "" ? text.category : renderLabel({sub_icon: values.data.sub_icon, sub_name: values.data.sub_name}, "sub", values.data.color)}
+                    {values.category === "" ? text.category :
+                        <RenderLabel 
+                            item={{ sub_icon: values.data.sub_icon, sub_name: values.data.sub_name } }
+                            type="sub"
+                            color={values.data.color}
+                        />
+                    }
+                   
                     <ArrowIcon
                         icon={faChevronDown}
                         showList={showCategoryList}
@@ -670,14 +730,15 @@ export const SelectCategory = props => {
                                             const subcategory = categories[category].children[sub]
                                             return (
                                                 <SubcategoryListItem
-                                                    key={index}
+                                                    key={subcategory.sub_id}
                                                     active={values.category === subcategory.sub_name}
                                                     onClick={() => selectCategoryAndClose(subcategory.sub_name, {
                                                         sub_id:  subcategory.sub_id,
-                                                        master: category,
+                                                        master_id: categories[category].master_id,
                                                         color: categories[category].color,
-                                                        sub_name: subcategory.sub_name,
-                                                        sub_icon: subcategory.sub_icon
+                                                        sub_name: sub,
+                                                        sub_icon: subcategory.sub_icon,
+                                                        type: categories[category].type
                                                     })}
                                                 >   
                                                     {renderLabel(subcategory, "sub", categories[category].color)}

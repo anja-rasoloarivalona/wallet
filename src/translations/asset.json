@@ -1,4 +1,24 @@
-{
+{   
+    "asset": {
+        "fr": "Actif",
+        "en": "Asset"
+    },
+    "amount": {
+        "fr": "Montant",
+        "en": "Amount"
+    },
+    "date": {
+        "fr": "Date",
+        "en": "Date"
+    },
+    "counterparty": {
+        "fr": "Contrepartie",
+        "en": "Counterparty"
+    },
+    "counterparty_placeholder": {
+        "fr": "Contrepartie (ex: Netflix, ...)",
+        "en": "Counterparty (ex: Netflix, ...)"
+    },
     "principal": {
         "fr": "Principal",
         "en": "Main"

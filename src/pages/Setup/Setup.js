@@ -8,9 +8,9 @@ import SideBar from './SideBar'
 import * as actions from "../../store/actions" 
 import { client } from '../../functions'
 
-const Setup = () => {
+const Setup = props => {
     const dispatch = useDispatch()
-    const { errors: errorText, currentPage: text } = useSelector(state => state.text)
+    const {  text: { errors: errorText, currentPage: text } , user: { token } } = useSelector(state => state)
     const [currentSection, setCurrentSection] = useState(0)
     const [submitting, setSubmitting] = useState(false)
 
@@ -70,20 +70,11 @@ const Setup = () => {
                 budget,
                 assets: userAssets
             })
-            console.log('res', res)
-            if(res.status !== 201){
-                setSubmitting(true)
-                return 
-            }
 
-            const { budget: _budget, assets: _assets } = res.data.data
-
-            console.log({
-                _budget,
-                _assets
-            })
-            dispatch(actions.setBudget(_budget))
-            dispatch(actions.setAssets(_assets))
+            const resData = res.data.data
+            dispatch(actions.updateApp(resData))
+            setSubmitting(false)
+            props.history.push("/")
 
         } catch(err){
             setSubmitting(false)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Container, LoginForm } from './Login-style'
 import { withFormik } from 'formik'
 import { renderInput } from '../../functions'
@@ -70,25 +70,44 @@ const EnhancedForm = withFormik({
 })(Form)
 
 
-const Login = () => {
+const Login = props  => {
 
     const dispatch = useDispatch()
-    const { text } = useSelector(state => state)
+    const { 
+        text,
+        user : { token }
+    } = useSelector(state => state)
+
+
+    useEffect(() => {
+        if(token){
+            props.history.push("/")
+        }
+    },[])
 
     const loginHandler = async data => {
         try {
             const res = await client.post("/login", data)
             if(res.status === 200){
-                const { budgets, setting, user } = res.data.data
-                dispatch(actions.setUser(user))
-                dispatch(actions.setBudget(budgets))
-                dispatch(actions.setCurrency(JSON.parse(setting.currency)))
+                const resData = res.data.data
+                const loginData = {
+                    ...resData.user,
+                    ...resData.budgets,
+                    ...resData.setting
+                    
+
+                }
+                dispatch(actions.updateApp(loginData))
             } else {
                 console.log('failed to login')
             }
         } catch(err){
             console.log(err.message)
         }
+    }
+
+    if(token){
+        return <div></div>
     }
 
     return (

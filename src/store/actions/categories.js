@@ -26,6 +26,7 @@ const getCategories = () => {
                         master_name: text[data[ctgIndex].master_name],
                         master_icon: data[ctgIndex].master_icon,
                         color: data[ctgIndex].color,
+                        type: data[ctgIndex].type,
                         children: {
                             [data[ctgIndex].sub_name]: {
                                 sub_id: data[ctgIndex].sub_id,

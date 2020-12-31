@@ -4,6 +4,9 @@ import { renderAmount } from '../../../functions'
 import { useSelector } from 'react-redux'
 import Expenses from './Expenses'
 import Budget from './Budget'
+import Assets from './Assets'
+import Transactions from './Transactions'
+import History from './History'
 
 const Balance = () => {
     const { lang } = useSelector(state => state.settings)
@@ -46,12 +49,15 @@ const ComparedToLastMonth = () => {
 }
 
 export {
+    Assets,
     Balance,
     MonthlyExpenses,
     MonthlyIncomes,
     ComparedToLastMonth,
     Budget,
-    Expenses
+    Expenses,
+    Transactions,
+    History
 }
 
 

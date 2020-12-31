@@ -20,8 +20,17 @@ const setAssets = assets => {
     }
 }
 
+const setToken = token => {
+    return {
+        type: actionTypes.SET_TOKEN,
+        token
+    }
+}
+
+
 export {
     setUser,
     clearUser,
-    setAssets
+    setAssets,
+    setToken
 }

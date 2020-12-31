@@ -8,15 +8,27 @@ const initialState = {
     username: null,
     email: null,
     isLoggedIn: false,
-    assets: null
+    assets: null,
+    transactions: null
 }
 
 const setUser = (state, action) => {
-    localStorage.setItem("moneytor-token", action.user.token)
-    client.defaults.headers.common['Authorization'] = 'Bearer ' + action.user.token;
+    // localStorage.setItem("moneytor-token", action.user.token)
+    // client.defaults.headers.common['Authorization'] = 'Bearer ' + action.user.token;
+
+    console.log(action)
+    
     return updatedObject(state, {
         ...action.user,
         isLoggedIn: true
+    })
+}
+
+const setToken = (state, action) => {
+    localStorage.setItem("moneytor-token", action.token)
+    client.defaults.headers.common['Authorization'] = 'Bearer ' + action.token;
+    return updatedObject(state, {
+        token: action.token
     })
 }
 
@@ -29,7 +41,8 @@ const clearUser = state => {
         username: null,
         email: null,
         isLoggedIn: false,
-        assets: null
+        assets: null,
+        transactions: null
     })
 }
 const reducer = (state = initialState, action) => {
@@ -37,6 +50,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_USER: return setUser(state, action)
         case actionTypes.CLEAR_USER: return clearUser(state, action)
         case actionTypes.SET_ASSETS: return updatedObject(state, {assets: action.assets})
+        case actionTypes.SET_TOKEN: return setToken(state, action)
         default: return state
     }
 }
