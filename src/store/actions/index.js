@@ -5,8 +5,10 @@ import {
 } from './lexique'
 
 import {
+    initLang,
     setLang,
-    setCurrency
+    setCurrency,
+    setDashboard
 } from './settings'
 
 import {
@@ -32,7 +34,9 @@ import {
 } from './user'
 
 import {
-    toggleTransactionForm
+    toggleTransactionForm,
+    toggleSideBar,
+    toggleDashboard
 } from './interface'
 
 const updateApp = data => {
@@ -49,10 +53,15 @@ const updateApp = data => {
             transactions
         })) 
         dispatch(setBudget(budgets))
-
-        if(setting && setting.currency){
-            dispatch(setCurrency(JSON.parse(setting.currency)))
+        if(setting){
+            if(setting.currency){
+                dispatch(setCurrency(JSON.parse(setting.currency)))
+            }
+            if(setting.dashboard){
+                dispatch(setDashboard(setting.dashboard))
+            }
         }
+        
     }
 
 }
@@ -64,8 +73,10 @@ export {
 
     updateApp,
 
+    initLang,
     setLang,
     setCurrency,
+    setDashboard,
 
     setError,
     clearError,
@@ -82,6 +93,8 @@ export {
     setToken,
 
 
-    toggleTransactionForm
+    toggleTransactionForm,
+    toggleSideBar,
+    toggleDashboard
 
 }

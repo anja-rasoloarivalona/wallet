@@ -17,6 +17,9 @@ const Amount = props => {
     } else {
         return  <Container>{currency.symbol} {value.toFixed(2)}</Container>  
     }
+
+
+
 }
 
 export {

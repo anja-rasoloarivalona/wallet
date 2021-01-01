@@ -9,7 +9,7 @@ const Container = styled.div`
     left: 0;
     width: 30rem;
     height: calc(100vh - 7.5rem);
-    border-right: 1px solid  ${props => props.theme.clr_text_semi_dark};
+    border-right: 1px solid  ${props => props.theme.active_text};
     background: white;
 `
 
@@ -24,7 +24,7 @@ const ListItem = styled.li`
     font-size: 1.6rem;
     display: flex;
     align-items: center;
-    color: ${props => props.theme.clr_text_semi_dark};
+    color: ${props => props.theme.active_text};
 
     ${props => {
         if(props.isValid){

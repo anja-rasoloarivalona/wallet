@@ -12,12 +12,7 @@ const initialState = {
     transactions: null
 }
 
-const setUser = (state, action) => {
-    // localStorage.setItem("moneytor-token", action.user.token)
-    // client.defaults.headers.common['Authorization'] = 'Bearer ' + action.user.token;
-
-    console.log(action)
-    
+const setUser = (state, action) => {   
     return updatedObject(state, {
         ...action.user,
         isLoggedIn: true

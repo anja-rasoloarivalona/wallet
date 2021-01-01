@@ -99,7 +99,7 @@ const Header = () => {
     return (
         <HeaderContainer>
             <HeaderSection>
-                 {salutationText()} {user.username} !
+                 {/* {salutationText()} {user.username} ! */}
             </HeaderSection>
             <HeaderSection>
                 {items.map(item => renderItem(item))}

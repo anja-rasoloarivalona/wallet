@@ -17,7 +17,7 @@ const CardContainer = styled.div`
 const CardAmount = styled.div`
     font-size: 2rem;
     font-weight: 600;
-    color: ${props => props.theme.clr_text}
+    color: ${props => props.theme.text}
 `
 
 const Card = props => {

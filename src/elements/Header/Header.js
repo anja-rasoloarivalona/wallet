@@ -10,7 +10,7 @@ const Header = () => {
         user
     } = useSelector(state => state)
 
-    return user.isLoggedIn ? null : <LoggedInTrue /> 
+    return user.isLoggedIn ? null : <LoggedInFalse /> 
 }
 
 export default Header

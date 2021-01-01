@@ -39,18 +39,6 @@
         "fr": "Veuillez sélectionner une devise",
         "en": "Please select a valid currency"
     },
-    "currency": {
-        "fr": "Devise",
-        "en": "Currency"
-    },
-    "currency_text_a": {
-        "fr": "Votre monnaie de référence doit être celle que vous utilisez quotidiennement",
-        "en": "Your reference currency should be the one you use on a daily basis."
-    },
-    "currency_text_b": {
-        "fr": "Votre solde et vos statistiques seront affichés dans cette devise",
-        "en": "Your balance and statistics will be displayed in that currency"
-    },
     "name": {
         "fr": "Identifiant",
         "en": "Name"

@@ -87,13 +87,6 @@ const History = () => {
         chartData.datasets[0].data.push(item.balance)
     })
 
-
-
-
-    console.log(data)
-
-
-
     const options = {
 
     }

@@ -49,8 +49,6 @@ const Expenses = () => {
         labels: expensesLabels
     }
 
-    console.log(data.datasets[0])
-
     const ChartContainer = styled.div`
         position: relative;
         width: 100%;

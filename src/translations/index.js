@@ -5,13 +5,13 @@ import main from './main.json'
 import errors from './errors.json'
 import setup from './setup.json'
 import categories from './categories.json'
-import asset from './asset.json'
+import global from './global.json'
 
 const lexique = {
+    global, 
     header,
     errors,
     categories,
-    asset,
     "/": main,
     "/login": login,
     "/signup": signup,
@@ -34,10 +34,13 @@ const getCurrentPagesText = (lang, pages) => {
 }
 
 const getInitialText = (lang, pages) => {
+    const global = {}
+
     const header = {}
     const errors = {}
     const categories = {}
-    const asset = {}
+
+
     for(const text in lexique.header){
         header[text] = lexique.header[text][lang]
     }
@@ -49,14 +52,16 @@ const getInitialText = (lang, pages) => {
         categories[text] = lexique.categories[text][lang]
     }
 
-    for(const text in lexique.asset){
-        asset[text] = lexique.asset[text][lang]
+    for(const text in lexique.global){
+        global[text] = lexique.global[text][lang]
     }
     
     const currentPage = {
-        ...getCurrentPagesText(lang, pages),
+        ...global,
         ...categories,
-        ...asset
+        ...getCurrentPagesText(lang, pages),
+     
+
     }
 
     return {

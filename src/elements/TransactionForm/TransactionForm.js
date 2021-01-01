@@ -17,12 +17,15 @@ const Container = styled.div`
     width: 100vw;
     height: 100vh;
     background: rgba(0,0,0, .7);
-    z-index: 11;
+    z-index: 15;
 `
 
 const Content = styled.div`
     width: 40vw;
     height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
     background: ${props => props.theme.clr_background};
 `
 

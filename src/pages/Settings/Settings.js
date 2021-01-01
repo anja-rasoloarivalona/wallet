@@ -1,21 +1,63 @@
 import React from 'react'
 import styled from 'styled-components'
+import Language from './sections/Language'
+import Currency from './sections/Currency'
+import { useSelector, useDispatch } from 'react-redux'
+import * as actions from '../../store/actions'
+import { client } from '../../functions'
 
 const Container = styled.div`
     grid-column: 1 / -1;
-    width: calc(100vw - 35rem);
-    min-height: calc(100vh - 7.5rem);
+    width: 100%;
+    min-height: 100vw;
     background: ${props => props.theme.clr_background};
-    margin-left: 35rem;
-    padding-top: 3rem;
     display: flex;
-    justify-content: center;
+    padding-left: 7rem;
+    display: flex;
+    flex-direction: column;
 `
 
+const Title = styled.div`
+    padding: 3rem 0;
+    font-size: 3rem;
+`
+
+const Content = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+`
+
+
+
 const Settings = () => {
+    const dispatch = useDispatch()
+    const {
+        text : { currentPage: text },
+    } = useSelector(state => state)
+
+    const changeCurrency = async currency => {
+        dispatch(actions.setCurrency(currency))
+        try {
+            const res = await client.post("/settings/currency", {currency})
+            console.log(res)
+        } catch(err){
+            console.log(err)
+        }
+        // console.log({
+        //     currency
+        // })
+    }
+
     return (
         <Container>
-            Settings
+            <Title>{text.settings}</Title>
+            <Content>
+                <Language />
+                <Currency
+                    changeCurrency={changeCurrency}
+                />
+            </Content>   
         </Container>
     )
 }

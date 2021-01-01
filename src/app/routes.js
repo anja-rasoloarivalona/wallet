@@ -25,12 +25,12 @@ const Routes = props => {
                 props.history.push("/login")
             }
         } else {
-            // if(currency && assets && assets.length > 0 && pathname === "/setup"){
-            //     props.history.push("/")
-            // }
-            // if((!currency || !assets || assets.length === 0) && pathname !== "/setup"){
-            //     props.history.push("/setup")
-            // }
+            if(currency && assets && assets.length > 0 && pathname === "/setup"){
+                props.history.push("/")
+            }
+            if((!currency || !assets || assets.length === 0) && pathname !== "/setup"){
+                props.history.push("/setup")
+            }
         }
     },[pathname, token, currency])
 

@@ -9,22 +9,52 @@ library.add(fas)
 
 const GlobalStyle = createGlobalStyle`
     body {
-        font-family: Roboto;
+        font-family: Roboto;      
+        &::-webkit-scrollbar {
+            display: none !important;
+        }
     }
 `
 const Container = styled.div`
-    width: 100vw;
-    height: calc(100vh - 7.5rem);
+    width: ${props => props.full ? " calc(100vw - 25rem)" : "calc(100vw - 7rem)"};
+
+    margin-left: ${props => props.full ? "25rem" : "7rem"};
+    background: ${props => props.theme.clr_background};
     display: grid;
     grid-template-columns: 300px repeat(2, 1fr) 300px;
     grid-template-rows: max-content;
     grid-auto-rows: max-content;
-    margin-top: 7.5rem;
     overflow-y: overlay;
+    transition: all .3s ease-in;
+
+    ${props => {
+        if(props.isLoggedIn){
+            if(props.full){
+                return {
+                    marginLeft: "25rem",
+                    width: "calc(100vw - 25rem)"
+                }
+            } else {
+                return {
+                    marginLeft: "7rem",
+                    width: "calc(100vw - 7rem)"
+                }
+            }
+        } else {
+            return {
+                marginLeft: 0,
+                width: "100vw"
+            }
+        }
+    }}
 `
 
 const Config = props => {
-    const theme = useSelector(state => state.theme)
+    const {
+        theme,
+        ui: { sidebar },
+        user: { isLoggedIn }
+    }= useSelector(state => state)
     axios.defaults.baseURL = process.env.REACT_APP_API_URL  
 
     return (
@@ -32,7 +62,10 @@ const Config = props => {
             <BrowserRouter>
                 <ThemeProvider theme={theme}>
                     <GlobalStyle />
-                    <Container>
+                    <Container
+                        full={sidebar.isShown}
+                        isLoggedIn={isLoggedIn}
+                    >
                         {props.children}
                     </Container>
                 </ThemeProvider>

@@ -3,11 +3,9 @@ import styled from 'styled-components'
 
 const Container = styled.div`
     grid-column: 1 / -1;
-    width: calc(100vw - 35rem);
-    // min-height: calc(100vh - 7.5rem);
-    background: ${props => props.theme.clr_background};
-    margin-left: 35rem;
-    padding-top: 3rem;
+    width: 100%;
+    padding-top: 10rem;
+    padding-left: 1rem;
     display: flex;
     justify-content: center;
 `
@@ -24,6 +22,7 @@ const GridItem = styled.div`
     border-radius: 1.5rem;
     box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
 
+
     .react-grid-item.react-grid-placeholder {
         background-color: green !important;
         background: green !important;
@@ -34,12 +33,19 @@ const GridItem = styled.div`
         background-color: green !important;
         border: 1px solid black;
     }
+
+    .react-resizable-handle.react-resizable-handle-se {
+        bottom: 1rem !important;
+        right: 1rem !important;
+    }
 `
 
 
 const Item = styled.div`
     width: 100%;
     height: 100%;
+
+    
     padding: 2rem;
 `
 
@@ -54,6 +60,10 @@ const Amount = styled.div`
     font-weight: 600;
 `
 
+const HiddenButton = styled.button`
+    display: none;
+`
+
 
 export {
     Container,
@@ -61,5 +71,6 @@ export {
     GridItem,
     Item,
     Amount,
-    Title
+    Title,
+    HiddenButton
 }

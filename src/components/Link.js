@@ -3,11 +3,11 @@ import styled from 'styled-components'
 
 const Link = styled(NavLink)`
     &, &:link, &:visited {
-        color: ${props => props.theme.clr_text_semi_dark};
+        color: ${props => props.theme.text};
         text-decoration: none;
     }
     &:hover, &.active {
-        color: ${props => props.theme.clr_text};
+        color: ${props => props.theme.active_text};
     }
 `
 

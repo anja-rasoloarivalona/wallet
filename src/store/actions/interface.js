@@ -7,6 +7,21 @@ const toggleTransactionForm = data => {
     }
 }
 
+const toggleSideBar = () => {
+    return {
+        type: actionTypes.TOGGLE_SIDE_BAR
+    }
+}
+
+const toggleDashboard = action => {
+    return {
+        type: actionTypes.TOGGLE_DASHBOARD,
+        action
+    }
+}
+
 export {
-    toggleTransactionForm
+    toggleTransactionForm,
+    toggleSideBar,
+    toggleDashboard
 }

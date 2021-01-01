@@ -97,7 +97,7 @@ export const Label = styled.label`
     margin: auto;
     display: flex;
     align-items:center;
-    color: ${props => props.theme.clr_text_semi_dark};
+    color: ${props => props.theme.active_text};
     transition: all .2s ease-in;
     opacity: 0;
     font-size: 1.4rem;
@@ -127,7 +127,7 @@ export const LabelAction = styled.div`
     right: 12px;
     font-size: 1.4rem
     :hover {
-        color: ${props => props.theme.clr_text_semi_dark};
+        color: ${props => props.theme.active_text};
     }
 `
 
@@ -146,7 +146,7 @@ export const Input = styled(Field)`
     border-bottom: 1px solid transparent;
 
     ::placeholder {
-        color: ${props => props.theme.clr_text_semi_dark};
+        color: ${props => props.theme.active_text};
     }
 
     :focus {
@@ -564,25 +564,6 @@ const DesignedList = styled(SelectList)`
     overflow-y: scroll;
     background: ${props => props.theme.white};
     z-index: 15;
-
-    // ::-webkit-scrollbar {
-    //     width: 8px;
-    //     background-color: #F5F5F5;
-    // }
-    // ::-webkit-scrollbar-track {
-    //     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    //     box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-    //     background-color: #F5F5F5;
-    // }
-    // ::-webkit-scrollbar-thumb {
-    //     border-radius: 10px;
-    //     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    //     box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    //     background-color: rgb(185, 182, 181);
-    // }
-    // ::-webkit-scrollbar-thumb:hover {
-    //     background-color: #555;
-    // }
     scrollbar-width: thin;
 `
 
@@ -612,8 +593,6 @@ export const RenderLabel  = props => {
     const icon = type === "master" ? item.master_icon : item.sub_icon
     const textData = type === "master" ? item.master_name : item.sub_name
     const background =  item.color ? item.color : color
-
-    console.log(textData)
 
     const { text : { currentPage: text }} = useSelector(state => state)
 

@@ -1,0 +1,86 @@
+{   
+    "asset": {
+        "fr": "Actif",
+        "en": "Asset"
+    },
+    "amount": {
+        "fr": "Montant",
+        "en": "Amount"
+    },
+    "dashboard": {
+        "fr": "Tableau de bord",
+        "en": "Dashboard"
+    },
+    "transactions": {
+        "fr": "Transactions",
+        "en": "Transactions"
+    },
+    "profile": {
+        "fr": "Profil",
+        "en": "Profile"
+    },
+    "settings": {
+        "fr": "Paramètres",
+        "en": "Settings"
+    },
+    "date": {
+        "fr": "Date",
+        "en": "Date"
+    },
+    "counterparty": {
+        "fr": "Contrepartie",
+        "en": "Counterparty"
+    },
+    "counterparty_placeholder": {
+        "fr": "Contrepartie (ex: Netflix, ...)",
+        "en": "Counterparty (ex: Netflix, ...)"
+    },
+    "principal": {
+        "fr": "Principal",
+        "en": "Main"
+    },
+    "cash": {
+        "fr": "Cash",
+        "en": "Cash"
+    },
+    "debit_card": {
+        "fr": "Carte de débit",
+        "en": "Debit card"
+    },
+    "credit_card": {
+        "fr": "Carte de crédit",
+        "en": "Credit card"
+    },
+    "morning_salutation": {
+        "fr": "Bonjour",
+        "en": "Good morning"
+    },
+    "noon_salutation": {
+        "fr": "Bonjour",
+        "en": "Hello"
+    },
+    "evening_salutation": {
+        "fr": "Bonsoir",
+        "en": "Good evening"
+    },
+    "fr": {
+        "fr": "Français",
+        "en": "French"
+    },
+    "en": {
+        "fr": "Anglais",
+        "en": "English"
+    },
+    "currency": {
+        "fr": "Devise",
+        "en": "Currency"
+    },
+    "currency_text_a": {
+        "fr": "Votre monnaie de référence doit être celle que vous utilisez quotidiennement",
+        "en": "Your reference currency should be the one you use on a daily basis."
+    },
+    "currency_text_b": {
+        "fr": "Votre solde et vos statistiques seront affichés dans cette devise",
+        "en": "Your balance and statistics will be displayed in that currency"
+    }
+}
