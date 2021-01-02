@@ -7,9 +7,11 @@ import Setup from '../pages/Setup/Setup'
 import Dashboard from '../pages/Dashboard/Dashboard'
 import Transactions from '../pages/Transactions/Transactions'
 import Settings from '../pages/Settings/Settings'
+import Profile from '../pages/Profile/Profile'
 import { getInitialText } from '../translations'
 import * as actions from '../store/actions'
 import { useSelector, useDispatch } from 'react-redux'
+
 
 const Routes = props => {
     const dispatch = useDispatch()
@@ -58,6 +60,7 @@ const Routes = props => {
                 <Route path="/setup" component={Setup} />
                 <Route path="/transactions" component={Transactions} />
                 <Route path="/settings" component={Settings} />
+                <Route path="/profile" component={Profile} />
                 <Redirect to="/"/>
             </Switch>
     )

@@ -5,7 +5,17 @@ const initialState = {
     transactionForm: {
         isOpened: false,
         action: null,
-        editedTransaction: null
+        edited: null
+    },
+    budgetForm: {
+        isOpened: false,
+        action: null,
+        edited: null
+    },
+    assetForm: {
+        isOpened: false,
+        action: null,
+        edited: null
     },
     sidebar: {
         isShown: true
@@ -13,26 +23,34 @@ const initialState = {
     dashboard: {
         isManaging: false,
         action: null,
-    }
+    },
+    openedForm: null
 }
 
-const toggleTransactionForm = (state, action) => {
+
+const toggleForm = (state, action) => {
     const { data } = action
-    if(data && data.action){
+    if(!state[data.form] ){
+        return state
+    }
+
+    if(state[data.form].isOpened){
         return updatedObject(state, {
-            transactionForm: {
-                isOpened: true,
-                action: data.action,
-                editedTransaction: data.editedTransaction
-            }
+            [data.form]: {
+                isOpened: false,
+                action: null,
+                edited: null
+            },
+            openedForm: null
         })
     } else {
         return updatedObject(state, {
-            transactionForm: {
-                isOpened: false,
-                action: null,
-                editedTransaction: null
-            }
+            [data.form]: {
+                isOpened: true,
+                action: data.edited ? "edit" : "add",
+                edited: data.edited,
+            },
+            openedForm: data.form
         })
     }
 }
@@ -66,7 +84,7 @@ const toggleDashboard = (state, action) => {
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
-        case actionTypes.TOGGLE_TRANSACTION_FORM: return toggleTransactionForm(state, action)
+        case actionTypes.TOGGLE_FORM: return toggleForm(state, action)
         case actionTypes.TOGGLE_SIDE_BAR: return toggleSidebar(state)
         case actionTypes.TOGGLE_DASHBOARD: return toggleDashboard(state, action)
         default: return state

@@ -39,14 +39,10 @@ const Settings = () => {
     const changeCurrency = async currency => {
         dispatch(actions.setCurrency(currency))
         try {
-            const res = await client.post("/settings/currency", {currency})
-            console.log(res)
+            await client.post("/settings/currency", {currency})
         } catch(err){
             console.log(err)
         }
-        // console.log({
-        //     currency
-        // })
     }
 
     return (

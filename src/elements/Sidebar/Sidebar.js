@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NavLink } from 'react-router-dom'
@@ -7,7 +7,7 @@ import * as actions from '../../store/actions'
 
 const Container = styled.div`
     position: fixed;
-    z-index: 12;
+    z-index: ${props => props.openedForm ? 1 : 12};
     left: 0;
     width: ${props => props.fullWidth ? "25rem" : "7rem"};
     height: 100vh;
@@ -16,7 +16,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     background: ${props => props.theme.background};
-    transition: all .3s ease-in;
+    transition:  ${props => props.openedForm ? "all 0s ease-in" : "all .3s ease-in"};
 `
 
 const Content = styled.div`
@@ -100,16 +100,13 @@ const ListLink = styled(NavLink)`
 `
 
 const ListItemText = styled.div`
-    transform: translateX(-100%);
     opacity: 0;
-    transition: all .3s ease-in;
     position: relative;
     z-index: 2;
 
     ${props => {
         if(props.shown){
             return {
-                transform: "translateX(0px)",
                 opacity: 1
             }
         }
@@ -136,8 +133,10 @@ const Logout = styled.div`
     const dispatch = useDispatch()
     const {
         text : { currentPage : text },
-        ui: { sidebar }
+        ui: { sidebar, openedForm }
     } = useSelector(state => state)
+
+    const [showText, setShowText ] = useState(sidebar.isShown)
 
     
     const salutationText = () => {
@@ -173,7 +172,7 @@ const Logout = styled.div`
                             size="1x"
                         />
                     </IconContainer>
-                    <ListItemText shown={sidebar.isShown}>{item.label}</ListItemText>
+                    <ListItemText shown={showText}>{item.label}</ListItemText>
                 </ListItem>
             </ListLink>
         )
@@ -182,10 +181,21 @@ const Logout = styled.div`
     const logout = () => {
         dispatch(actions.clearUser())
     }
+
+    useEffect(() => {
+        if(sidebar.isShown && !showText){
+            setTimeout(() => {
+                setShowText(true)
+            }, 300)
+        } 
+        if(!sidebar.isShown && showText){
+            setShowText(false)
+        }
+    }, [sidebar.isShown])
     
 
     return (
-        <Container fullWidth={sidebar.isShown}>
+        <Container fullWidth={sidebar.isShown} openedForm={openedForm}>
             <Content>
                 <Top>
                     <IconContainer header onClick={() => dispatch(actions.toggleSideBar())}>
@@ -194,7 +204,7 @@ const Logout = styled.div`
                             size="lg"
                         />
                     </IconContainer>
-                    <ListItemText shown={sidebar.isShown}>
+                    <ListItemText shown={showText}>
                         <TopText>
                             {salutationText()}
                         </TopText>
@@ -203,26 +213,18 @@ const Logout = styled.div`
                 <List>
                     {links.map(link => renderLink(link))}
                 </List>
-                <Logout shown={sidebar.isShown} onClick={logout}>
+                <Logout shown={showText} onClick={logout}>
                     <IconContainer>
                         <FontAwesomeIcon 
                             icon="power-off"
                             size="1x"
                         />
                     </IconContainer>
-                    <ListItemText shown={sidebar.isShown}>
+                    <ListItemText shown={showText}>
                         Log Out
                     </ListItemText>
               
                 </Logout>
-
-                {/* <AddTransaction onClick={() => dispatch(actions.toggleTransactionForm({ action: "add" }))}>
-                    <FontAwesomeIcon 
-                        icon="plus"
-                        size="3x"
-                        color="white"
-                    />
-                </AddTransaction> */}
             </Content>
         </Container>
     )

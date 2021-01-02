@@ -31,13 +31,11 @@ const AssetContainer = styled.div`
         display: flex;
         align-items: flex-end;
         font-size: 2.3rem;
-        // font-weight: 600;
     }
 
 `
 
 const AssetName = styled.div`
-        // background: green;
         font-size: 2rem;
         text-align: right;
 `
@@ -52,9 +50,6 @@ const Type = styled.div`
 const Asset = props => {
     const { currentPage: text } = useSelector(state => state.text)
     const { asset } = props
-
-    console.log({asset})
-
     return (
         <Item style={{padding: 0}}>
             <AssetContainer type={asset.type}>
@@ -62,7 +57,7 @@ const Asset = props => {
                     {asset.type === "cash" ? <Money /> : <Chip />}
                     {text[asset.type]}
                 </Type>
-                <Amount value={parseInt(asset.amount)} />
+                <Amount value={asset.amount} />
                 <AssetName>{asset.name}</AssetName>
             </AssetContainer>
         </Item>

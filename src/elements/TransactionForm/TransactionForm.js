@@ -1,83 +1,19 @@
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
-import { SelectCategory, renderLabel, renderInput } from '../../functions/form'
+import React, { useEffect, useState } from 'react'
+import { SelectCategory, renderInput } from '../../functions/form'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../store/actions'
-import { Form, withFormik } from 'formik'
+import { withFormik } from 'formik'
 import * as Yup from 'yup'
 import { Button, Loader } from '../../components'
 import { client } from '../../functions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-
-const Container = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0, .7);
-    z-index: 15;
-`
-
-const Content = styled.div`
-    width: 40vw;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: ${props => props.theme.clr_background};
-`
-
-const Top = styled.div`
-    height: 7.5rem;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-
-    svg {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        margin: auto;
-        left: 8rem;
-        cursor: pointer;
-    }
-`
-
-const TopText = styled.div`
-    font-size: 2rem;
-    margin-left: 3rem;
-`
-
-const FormContainer = styled.div`
-    // background: red;
-    padding: 0 3rem;
-    display: flex;
-    justify-content: center;
-`
-
-const FormComponent = styled(Form)`
-    max-width: 40rem;
-    width: 100%;
-`
-
-const ButtonContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: 6rem;
-    position: relative;
-    height: 6rem;
-`
-
-
+import { Container, Content, Top, TopText, FormComponent, ButtonContainer, LoaderContainer, LoaderText } from '../Form-Style'
 
 
 const TransactionForm = props => {
     const dispatch = useDispatch()
-    const { errors, touched, handleChange, values, handleBlur, setFieldValue, isSubmitting } = props
+    const [mounted, setMounted] = useState(false)
+    const { errors, touched, handleChange, values, handleBlur, setFieldValue, isSubmitting, setValues } = props
     const {
         settings,
         categories: { expense, income },
@@ -86,9 +22,12 @@ const TransactionForm = props => {
         ui: { transactionForm }
     } = useSelector(state => state)
 
-    const data = [ income ]
+    const data = [ {...income, master: "income" } ]
     Object.keys(expense).forEach(item => {
-        data.push(expense[item])
+        data.push({
+            ...expense[item],
+            master: item
+        })
     })
 
     const assetsOptions = []
@@ -100,34 +39,39 @@ const TransactionForm = props => {
     })
 
     useEffect(() => {
-        const { isOpened, action, editedTransaction } = transactionForm
-        if(isOpened && action === "edit" && editedTransaction){
-
-            console.log(editedTransaction.category.sub_name)
-            console.log(text[editedTransaction.category.sub_name] )
-
-            const master_id = editedTransaction.type === "income" ? income.master_id : expense[editedTransaction.category.master_name].master_id
-            const color = editedTransaction.type === "income" ? income.color : expense[editedTransaction.category.master_name].color
-            const data = [
-                { field: "id", value:  editedTransaction.id},
-                { field: "category", value: text[editedTransaction.category.sub_name] },
-                { field: "amount", value:  editedTransaction.amount},
-                { field: "date", value:   new Date(editedTransaction.date)},
-                { field: "counterparty", value:  editedTransaction.counterparty},
-                { field: "asset_id", value:  editedTransaction.asset_id},
-                { field: "data", value:  {
-                    sub_id: editedTransaction.sub_id,
+        setTimeout(() => {
+            setMounted(true)
+        }, 0)
+        const { isOpened, action, edited } = transactionForm
+        if(isOpened && action === "edit" && edited){
+            const master_id = edited.type === "income" ? income.master_id : expense[edited.category.master_name].master_id
+            const color = edited.type === "income" ? income.color : expense[edited.category.master_name].color
+           
+           
+           const data = {
+               id: edited.id,
+               category: text[edited.category.sub_name],
+               amount:  edited.amount,
+               date:  new Date(edited.date),
+               counterparty: edited.counterparty,
+               asset_id:  edited.asset_id,
+               data: {
+                    sub_id: edited.sub_id,
                     master_id,
                     color: color,
-                    sub_name: editedTransaction.category.sub_name,
-                    sub_icon: editedTransaction.category.sub_icon,
-                    type: editedTransaction.type
-                }}
-                
-            ]
-            data.forEach( item => {
-                setFieldValue(item.field, item.value)
-            })
+                    master_name: edited.category.master_name,
+                    sub_name: edited.category.sub_name,
+                    sub_icon: edited.category.sub_icon,
+                    type: edited.type
+               }
+           }
+
+           setValues(data)
+           
+           
+        }
+        return () => {
+            setMounted(false)
         }
     },[])
 
@@ -169,26 +113,24 @@ const TransactionForm = props => {
 
     return (
         <Container>
-            <Content>
+            <Content mounted={mounted}>
                 <Top>
                     <FontAwesomeIcon 
-                        icon="chevron-left"
+                        icon="times-circle"
                         size="3x"
-                        color="grey"
-                        onClick={() => dispatch(actions.toggleTransactionForm())}
+                        onClick={() => dispatch(actions.toggleForm({ form: "transactionForm"}))}
                     />
-                    <TopText>New transactions</TopText>
+                    <TopText>{text.transaction}</TopText>
                 </Top>
-                <FormContainer>
-                    <FormComponent>
-                        <SelectCategory 
+                <FormComponent>
+                    <SelectCategory 
                             data={data}
                             values={values}
                             errors={errors}
                             touched={touched}
                             setFieldValue={setFieldValue}
-                        />
-                        {inputs.map((input, index) => renderInput({
+                    />
+                    {inputs.map((input, index) => renderInput({
                             input,
                             index,
                             errors,
@@ -197,22 +139,24 @@ const TransactionForm = props => {
                             values,
                             onBlur: handleBlur,
                             onChange: setFieldValue
-                        }))}
-                        <ButtonContainer>
-                            {!isSubmitting && (
+                    }))}
+                    <ButtonContainer>
+                        {!isSubmitting ?
                                 <>
-                                <Button square="true" secondary="true">
-                                    Cancel
-                                </Button>
-                                <Button square="true" type="submit">
-                                    Add
-                                </Button>
-                                </>
-                            )}
-                            {isSubmitting && <Loader />}
-                        </ButtonContainer>
-                    </FormComponent>
-                </FormContainer>
+                                    <Button square="true" secondary="true">
+                                        {text.cancel}
+                                    </Button>
+                                    <Button square="true" type="submit">
+                                        {transactionForm.edited ? text.edit : text.add}
+                                    </Button>
+                                </> :
+                                <LoaderContainer>
+                                        <Loader size="medium"/>
+                                        <LoaderText>{transactionForm.edited ? text.transaction_editing : text.transaction_adding}</LoaderText>
+                                </LoaderContainer>
+                        }
+                    </ButtonContainer>
+                </FormComponent>
             </Content>
         </Container>
     )
@@ -242,7 +186,7 @@ const EnhancedTransactionForm = withFormik({
     },
     handleSubmit: async (values, {props}) => {
 
-        const { addEditTransactionHandler } = props
+        const { submitFormHandler } = props
 
         const data = {
             sub_id: values.data.sub_id,
@@ -263,8 +207,7 @@ const EnhancedTransactionForm = withFormik({
                 url: `/transaction/${action}`,
                 data
             })
-            console.log("res", res)
-            addEditTransactionHandler(res.data.data)
+            submitFormHandler(res.data.data, "transactionForm")
         } catch(err){
             console.log(err, "Failed to add/edit transaction")
         }

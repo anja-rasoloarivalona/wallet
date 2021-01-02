@@ -22,8 +22,8 @@ const  Transactions = () => {
         {label: "Date"},
         {label: "Type"},
         {label: "Category"},
-        {label: "Counterparty"},
         {label: "Asset"},
+        {label: "Counterparty"},
         {label: "Amount"}
     ]
 
@@ -36,9 +36,10 @@ const  Transactions = () => {
     }
 
     const editTransaction = (transaction, index) => {
-        dispatch(actions.toggleTransactionForm({
+        dispatch(actions.toggleForm({
             action: "edit",
-            editedTransaction: {
+            form: "transactionForm",
+            edited: {
                 ...transaction,
                 index
             }
@@ -46,23 +47,22 @@ const  Transactions = () => {
     }
 
     const renderTransaction = (transaction, index) => {
+        const odd = Math.abs(index % 2) === 1;
         const { id, type, date, counterparty, amount, asset, category: { master_name  } } = transaction
         return (
-            <TableRow key={id} onClick={() => editTransaction(transaction, index)}>
-                <TableRowItem>{setDate(date, "dd-mm", lang, "long")}</TableRowItem>
+            <TableRow key={id} onClick={() => editTransaction(transaction, index)} odd={odd}>
+                <TableRowItem>{setDate(date, "dd-mm", lang, "short")}</TableRowItem>
                 <TableRowItem>{`${text[type]}`}</TableRowItem>
                 <TableRowItem>
                     <RenderLabel 
                         item={transaction.category}
                         type="sub"
-                        color={categories[type][master_name].color}
-
                     />
                 </TableRowItem>
-                <TableRowItem>{counterparty}</TableRowItem>
                 <TableRowItem>{`${text[asset.type]} - ${asset.name}`}</TableRowItem>
+                <TableRowItem>{counterparty}</TableRowItem>
                 <TableRowItem>
-                    <Amount value={parseInt(amount)} />
+                    <Amount value={amount} />
                 </TableRowItem>
                 <Cta>
                    <FontAwesomeIcon 

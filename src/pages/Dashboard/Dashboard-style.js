@@ -8,6 +8,9 @@ const Container = styled.div`
     padding-left: 1rem;
     display: flex;
     justify-content: center;
+    background: ${props => props.theme.background};
+    position: relative;
+    z-index: 2;
 `
 const GridContainer = styled.div`
     width: 100%;

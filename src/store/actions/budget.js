@@ -16,12 +16,6 @@ const setBudget = budgets => {
     }
 }
 
-const addBudget = budget => {
-    return {
-        type: actionTypes.ADD_BUDGET,
-        budget
-    }
-}
 
 const initCurrentPeriod = () => {
     return async function(dispatch, getState){
@@ -33,6 +27,5 @@ const initCurrentPeriod = () => {
 
 export {
     initCurrentPeriod,
-    addBudget,
-    setBudget
+    setBudget,
 }

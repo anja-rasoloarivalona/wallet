@@ -296,7 +296,7 @@ export const renderInput = (props) => {
 
 const RenderSelectInput = props => {
 
-    const {input, index, errors, touched, values } = props
+    const {input, index, errors, touched, values, disabled } = props
     const theme = useSelector(state => state.theme)
 
     const handleChange = value => {
@@ -358,10 +358,9 @@ const RenderSelectInput = props => {
                     onBlur={handleBlur}
                     styles={style}
                     placeholder={input.placeholder}
-                    // menuIsOpen={true}
+                    isDisabled={input.disabled}
                     isSearchable={input.isSearchable ? true : false}
                     value={input.options.filter(({value}) => value === values[input.name])}
-                    // defaultValue={{...input.defaultValue}}
                     components={{
                         IndicatorSeparator: () => null
                     }}
@@ -377,13 +376,15 @@ const RenderSelectInput = props => {
 }
 
 export const RenderNormalInput = props => {
-    const {input, index, errors, touched} = props
+
+    const {input, index, errors, touched, values } = props
 
     const clickHandler = () => {
         if(input.disabled && input.disabledHandler){
             input.disabledHandler()
         }
     }
+
     return (
         <Container key={index} style={{...input.style}} onClick={clickHandler}>
                 <Input 
@@ -395,7 +396,7 @@ export const RenderNormalInput = props => {
                     style={{...input.fiedlStyle}}
                 />
                 {!errors[input.name] && (
-                    <Label htmlFor={input.id} style={{...input.labelStyle}}>
+                    <Label htmlFor={input.id} style={{...input.labelStyle}}  shown={values[input.name] !== ''}>
                         {input.label}
                     </Label>
                 )}
@@ -587,25 +588,52 @@ const IconContainer = styled.div`
 `
 
 export const RenderLabel  = props => {
+    const {
+        categories,
+        text : { currentPage : text }
+    } = useSelector(state => state)
 
-    const { item, type, color, index, from } = props
+    const { item, type } = props
 
-    const icon = type === "master" ? item.master_icon : item.sub_icon
-    const textData = type === "master" ? item.master_name : item.sub_name
-    const background =  item.color ? item.color : color
+    console.log("RENDER LABEL", props)
 
-    const { text : { currentPage: text }} = useSelector(state => state)
+    const labelData = {
+        icon: "",
+        text: "",
+        color: ""
+    }
 
+  
+    if(item.master_name === "income"){
+        labelData.color = categories.income.color
+            if(type === "master"){
+                labelData.icon = categories.income.master_icon
+                labelData.text = text[item.master_name]
+            } else {
+                labelData.icon = categories.income.children[item.sub_name].sub_icon
+                labelData.text = text[item.sub_name]
+            }
+    } else {
+        labelData.color = categories.expense[item.master_name].color
+            if(type === "master"){
+                labelData.icon = categories.expense[item.master_name].master_icon
+                labelData.text = text[item.master_name]
+            } else {
+                labelData.icon = categories.expense[item.master_name].children[item.sub_name].sub_icon
+                labelData.text = text[item.sub_name]
+            }
+    }
+   
     return (
         <LabelContainer>
-            <IconContainer background={background}>
+            <IconContainer background={labelData.color}>
                 <FontAwesomeIcon 
-                    icon={icon}
+                    icon={labelData.icon}
                     size="1x"
                     color="white"
                 />
             </IconContainer>
-            <LabelText>{text[textData]}</LabelText>
+            <LabelText>{labelData.text}</LabelText>
         </LabelContainer>
     )
 }
@@ -655,7 +683,6 @@ export const SelectCategory = props => {
         setShowCategoryList(false)
     }
 
-
     useOnClickOutside(inputRef, () => setShowCategoryList(false));
 
     const categoriesInput = () => (
@@ -672,9 +699,8 @@ export const SelectCategory = props => {
                 >
                     {values.category === "" ? text.category :
                         <RenderLabel 
-                            item={{ sub_icon: values.data.sub_icon, sub_name: values.data.sub_name } }
+                            item={values.data}
                             type="sub"
-                            color={values.data.color}
                         />
                     }
                    
@@ -712,12 +738,8 @@ export const SelectCategory = props => {
                                                     key={subcategory.sub_id}
                                                     active={values.category === subcategory.sub_name}
                                                     onClick={() => selectCategoryAndClose(subcategory.sub_name, {
-                                                        sub_id:  subcategory.sub_id,
-                                                        master_id: categories[category].master_id,
-                                                        color: categories[category].color,
-                                                        sub_name: sub,
-                                                        sub_icon: subcategory.sub_icon,
-                                                        type: categories[category].type
+                                                            sub_name: sub,
+                                                            master_name:  categories[category].master
                                                     })}
                                                 >   
                                                     {renderLabel(subcategory, "sub", categories[category].color)}

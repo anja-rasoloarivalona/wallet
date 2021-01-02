@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import Config from './config'
-import Header from '../elements/Header/Header'
-import Sidebar from '../elements/Sidebar/Sidebar'
+import { AssetForm, TransactionsForm, BudgetForm, Header, Sidebar} from '../elements'
 import ErrorModal from '../components/ErrorModal'
 import Routes from './routes'
 import { useSelector, useDispatch } from 'react-redux'
-import * as actions from '../store/actions'
 import { getInitialText } from '../translations'
 import { client } from '../functions'
-import TransactionForm from '../elements/TransactionForm/TransactionForm'
-import styled from 'styled-components'
-
+import * as actions from '../store/actions'
 
 const AddTransaction = styled.button`
     position: fixed;
@@ -34,6 +31,27 @@ const AddTransaction = styled.button`
     }
 `
 
+const Background = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: rgba(0, 0, 0, .5);
+    opacity: -1;
+    transition: opacity .1s ease-in;
+
+    ${props => {
+        if(props.show){
+            return {
+                zIndex: 30,
+                opacity: 1
+            }
+        }
+    }}
+`
+
 const App = () => {
     const dispatch = useDispatch()
     const [ready, setReady] = useState(false)
@@ -45,8 +63,16 @@ const App = () => {
         error : { error },
         categories: {expense, income},
         user: { isLoggedIn },
-        ui: { transactionForm, dashboard }
+        ui: { openedForm,  dashboard, budgetForm }
     } = useSelector(state => state)
+
+
+    const forms = {
+        transactionForm: TransactionsForm,
+        budgetForm: BudgetForm,
+        assetForm: AssetForm
+    }
+    const CurrentForm = openedForm ? forms[openedForm] : null
 
     useEffect(() => {
         const pathname = window.location.pathname
@@ -87,9 +113,9 @@ const App = () => {
 
     }
 
-    const addEditTransactionHandler = data => {
+    const submitFormHandler = (data, form) => {
         dispatch(actions.updateApp(data))
-        dispatch(actions.toggleTransactionForm())
+        dispatch(actions.toggleForm({ form }))
     }
 
 
@@ -99,24 +125,22 @@ const App = () => {
         )
     }
 
-    const displayTransactionForm = isLoggedIn && transactionForm.isOpened
-
-
     return (
         <Config>
             <Header />
             {!dashboard.isManaging && (
-                <AddTransaction onClick={() => dispatch(actions.toggleTransactionForm({ action: "add" }))}>
+                <AddTransaction onClick={() => dispatch(actions.toggleForm({ form: "transactionForm" }))}>
                     Add transaction
                 </AddTransaction>
             )}
             {isLoggedIn && <Sidebar />}
-
-            {displayTransactionForm && (
-                <TransactionForm 
-                    errorText={errorText}
-                    addEditTransactionHandler={addEditTransactionHandler}
-                />
+            <Background  show={openedForm}/>
+            {openedForm && (
+                    <CurrentForm 
+                        errorText={errorText}
+                        submitFormHandler={submitFormHandler}
+                        budgetForm={budgetForm}
+                    />
             )}
             <Routes />
             {error && <ErrorModal />}

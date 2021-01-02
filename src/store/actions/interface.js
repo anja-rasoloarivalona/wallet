@@ -1,8 +1,8 @@
 import * as actionTypes from './actionTypes'
 
-const toggleTransactionForm = data => {
+const toggleForm = data => {
     return {
-        type: actionTypes.TOGGLE_TRANSACTION_FORM,
+        type: actionTypes.TOGGLE_FORM,
         data
     }
 }
@@ -21,7 +21,7 @@ const toggleDashboard = action => {
 }
 
 export {
-    toggleTransactionForm,
+    toggleForm,
     toggleSideBar,
     toggleDashboard
 }

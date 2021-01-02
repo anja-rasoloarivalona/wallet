@@ -1,15 +1,63 @@
 {   
+    "add": {
+        "fr": "Ajouter",
+        "en": "Add"
+    },
+    "edit": {
+        "fr": "Éditer",
+        "en": "Edit"
+    },
+    "cancel": {
+        "fr": "Annuler",
+        "en": "Cancel"
+    },
     "asset": {
         "fr": "Actif",
         "en": "Asset"
+    },
+    "asset_adding": {
+        "fr": "Création de l'actif",
+        "en": "Adding asset"  
+    },
+    "asset_editing": {
+        "fr": "Modification de l'actif",
+        "en": "Editing asset"
+    },
+    "assets": {
+        "fr": "Actifs",
+        "en": "Assets"
     },
     "amount": {
         "fr": "Montant",
         "en": "Amount"
     },
+    "budget": {
+        "fr": "Budget",
+        "en": "Budget"
+    },
+    "budget_adding": {
+        "fr": "Création du budget ...",
+        "en": "Adding budget"
+    },
+    "budget_editing": {
+        "fr": "Modification du budget ...",
+        "en": "Editing budget"
+    },
     "dashboard": {
         "fr": "Tableau de bord",
         "en": "Dashboard"
+    },
+    "transaction": {
+        "fr": "Transaction",
+        "en": "Transaction"
+    },
+    "transaction_adding": {
+        "fr": "Ajout de la transaction",
+        "en": "Adding transaction"
+    },
+    "transaction_editingg": {
+        "fr": "Modification de la transaction",
+        "en": "Editing transaction"
     },
     "transactions": {
         "fr": "Transactions",
@@ -82,5 +130,13 @@
     "currency_text_b": {
         "fr": "Votre solde et vos statistiques seront affichés dans cette devise",
         "en": "Your balance and statistics will be displayed in that currency"
+    },
+    "name": {
+        "fr": "Identifiant",
+        "en": "Name"
+    },
+    "type": {
+        "fr": "Type",
+        "en": "Type"
     }
 }

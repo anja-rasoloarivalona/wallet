@@ -22,7 +22,6 @@ import {
 
 import {
     initCurrentPeriod,
-    addBudget,
     setBudget
 } from './budget'
 
@@ -34,7 +33,7 @@ import {
 } from './user'
 
 import {
-    toggleTransactionForm,
+    toggleForm,
     toggleSideBar,
     toggleDashboard
 } from './interface'
@@ -53,6 +52,7 @@ const updateApp = data => {
             transactions
         })) 
         dispatch(setBudget(budgets))
+
         if(setting){
             if(setting.currency){
                 dispatch(setCurrency(JSON.parse(setting.currency)))
@@ -84,7 +84,6 @@ export {
     getCategories,
 
     initCurrentPeriod,
-    addBudget,
     setBudget,
 
     setUser,
@@ -93,7 +92,7 @@ export {
     setToken,
 
 
-    toggleTransactionForm,
+    toggleForm,
     toggleSideBar,
     toggleDashboard
 

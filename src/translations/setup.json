@@ -1,8 +1,4 @@
 {   
-    "add": {
-        "fr": "Ajouter",
-        "en": "Add"
-    },
     "amount": {
         "fr": "Montant",
         "en": "Amount"
@@ -23,10 +19,6 @@
         "fr": "Budget",
         "en": "Budget"
     },
-    "cancel": {
-        "fr": "Annuler",
-        "en": "Cancel"
-    },
     "category": {
         "fr": "Catégorie",
         "en": "Category"
@@ -39,10 +31,6 @@
         "fr": "Veuillez sélectionner une devise",
         "en": "Please select a valid currency"
     },
-    "name": {
-        "fr": "Identifiant",
-        "en": "Name"
-    },
     "next": {
         "fr": "Suivant",
         "en": "Next"
@@ -54,9 +42,6 @@
     "finish": {
         "fr": "Terminer",
         "en": "Finish"
-    },
-    "type": {
-        "fr": "Type",
-        "en": "Type"
     }
+
 }

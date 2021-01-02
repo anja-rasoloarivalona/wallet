@@ -7,15 +7,16 @@ const Container = styled.div``
 const Amount = props => {
     const { value } = props
     const { lang, currency } = useSelector(state => state.settings)
+    const amount = parseInt(value)
 
     if(!currency){
         return <div></div>
     }
 
     if(lang === "fr"){
-        return <Container>{value.toFixed(2)} {currency.symbol}</Container>
+        return <Container>{amount.toFixed(2)} {currency.symbol}</Container>
     } else {
-        return  <Container>{currency.symbol} {value.toFixed(2)}</Container>  
+        return  <Container>{currency.symbol} {amount.toFixed(2)}</Container>  
     }
 
 

@@ -2,8 +2,6 @@ import React from 'react'
 import { Item , Title } from '../Dashboard-style'
 import { Amount } from '../../../components'
 import { useSelector } from 'react-redux'
-import { ReactComponent as Chip } from '../../../assets/icons/sim-card.svg'
-import { ReactComponent as Money } from '../../../assets/icons/money.svg'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { setDate } from '../../../functions'
@@ -98,7 +96,7 @@ const Transactions = () => {
                     </Label>
                 </LabelContainer>
                 <AmountContainer>
-                    <Amount value={parseInt(amount)}/>
+                    <Amount value={amount}/>
                 </AmountContainer>
             </Transaction>
         )

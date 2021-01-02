@@ -17,14 +17,13 @@ export const SET_CATEGORIES = "SET_CATEGORIES"
 
 export const SET_CURRENT_PERIOD = "SET_CURRENT_PERIOD"
 export const SET_BUDGET = "SET_BUDGET"
-export const ADD_BUDGET = "ADD_BUDGET"
+
 
 export const SET_USER = "SET_USER"
 export const CLEAR_USER = "CLEAR_USER"
 
 export const SET_ASSETS = "SET_ASSETS"
 
-
-export const TOGGLE_TRANSACTION_FORM = "TOGGLE_TRANSACTION_FORM"
+export const TOGGLE_FORM = "TOGGLE_FORM"
 export const TOGGLE_SIDE_BAR = "TOGGLE_SIDEBAR"
 export const TOGGLE_DASHBOARD = "TOGGLE_DASHBOARD"
