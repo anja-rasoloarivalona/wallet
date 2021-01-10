@@ -5,28 +5,35 @@ const Container = styled.div`
     grid-column: 1 / -1;
     height: calc(100vh - 7.5rem);
     display: flex;
-    align-items: center;
     justify-content: center;
-    background: ${props => props.theme.clr_background};
+    background: ${props => props.theme.background};
+    margin-top: 7.5rem;
 `
 
 const LoginForm = styled(Form)`
-    transform: translateY(-14vh);
-    display: grid;
-    grid-template-columns: 30rem;
-    grid-template-rows: repeat(2, max-content);
-    row-gap: 1rem;
-
-    input {
-        width: 30rem;
-    }
+    display: flex;
+    flex-direction: column;
+    margin-top: 20vh;
+    align-items: center;
+    width: 90vw;
+    max-width: 35rem; 
 
     button {
-        margin-top: 2rem;
+        margin-top: 3rem;
     }
+`
+
+const Title = styled.div`
+    color: ${props => props.theme.text};
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    width: 100vw;
+    text-align: center;
 `
 
 export {
     Container,
-    LoginForm
+    LoginForm,
+    Title
 }

@@ -8,8 +8,8 @@ import styled from 'styled-components'
 const Budget = () => {
 
     const { 
-        budget,
         categories : { expense },
+        user: { budgets }, 
         theme,
         settings
     } = useSelector(state => state)
@@ -34,7 +34,7 @@ const Budget = () => {
         datasets: [usedData, amountData ]
     }
 
-    budget.data.forEach(item  => {
+    budgets.forEach(item  => {
         data.labels.push(expense[item.category.master_name].children[item.category.sub_name].sub_name)
         amountData.data.push(item.amount)
         amountData.backgroundColor.push(theme.grey_light)

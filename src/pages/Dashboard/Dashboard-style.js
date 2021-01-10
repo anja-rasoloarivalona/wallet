@@ -21,21 +21,11 @@ const GridItem = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background: white;
+    background: ${props => props.theme.surface};
     border-radius: 1.5rem;
-    box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
+    box-shadow: ${props => props.theme.box_shadow};
+    // z-index: -1 !important;
 
-
-    .react-grid-item.react-grid-placeholder {
-        background-color: green !important;
-        background: green !important;
-
-      }
-
-      .react-grid-item:not(.react-grid-placeholder) {
-        background-color: green !important;
-        border: 1px solid black;
-    }
 
     .react-resizable-handle.react-resizable-handle-se {
         bottom: 1rem !important;
@@ -43,24 +33,23 @@ const GridItem = styled.div`
     }
 `
 
-
 const Item = styled.div`
     width: 100%;
     height: 100%;
-
-    
     padding: 2rem;
+    // z-index: -1 !important;
+
+
+    .dashboard_amount {
+        font-size: 1.8rem;
+    }
 `
 
 
 const Title = styled.div`
     font-size: 1.6rem;
     margin-bottom: .8rem;
-`
-
-const Amount = styled.div`
-    font-size: 2.5rem;
-    font-weight: 600;
+    color: ${props => props.theme.active_text}
 `
 
 const HiddenButton = styled.button`
@@ -73,7 +62,6 @@ export {
     GridContainer,
     GridItem,
     Item,
-    Amount,
     Title,
     HiddenButton
 }

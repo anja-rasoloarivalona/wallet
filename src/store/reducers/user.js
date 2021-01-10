@@ -1,6 +1,6 @@
 import * as actionTypes from '../actions/actionTypes'
 import { updatedObject } from '../utility'
-import { client } from '../../functions'
+import { client, setDate } from '../../functions'
 
 const initialState = {
     id: null,
@@ -9,13 +9,31 @@ const initialState = {
     email: null,
     isLoggedIn: false,
     assets: null,
-    transactions: null
+    transactions: null,
+    budgets: null,
+    appIsReady: false,
+    current_period: setDate(new Date(), "mm-yyyy", "en")
 }
 
-const setUser = (state, action) => {   
+const setUser = (state, action) => {  
+    const { transactions: _transactions } = action.user
+    
+    let transactions = []
+    if(_transactions){
+        _transactions.forEach(transaction => {
+            transactions.push({
+                ...transaction,
+                period: setDate(transaction.date, "mm-yyyy", "en")
+            })
+        })
+    } 
+    
+
     return updatedObject(state, {
         ...action.user,
-        isLoggedIn: true
+        transactions,
+        isLoggedIn: true,
+        appIsReady: true
     })
 }
 
@@ -37,7 +55,8 @@ const clearUser = state => {
         email: null,
         isLoggedIn: false,
         assets: null,
-        transactions: null
+        transactions: null,
+        appIsReady: true
     })
 }
 const reducer = (state = initialState, action) => {

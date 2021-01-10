@@ -4,7 +4,8 @@ export {
 
 export {
     useWindowSize,
-    useOnClickOutside
+    useOnClickOutside,
+    usePrevious
 } from './hooks'
 
 export {

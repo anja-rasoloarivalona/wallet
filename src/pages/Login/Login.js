@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Container, LoginForm } from './Login-style'
+import { Container, LoginForm, Title } from './Login-style'
 import { withFormik } from 'formik'
 import { renderInput } from '../../functions'
 import * as Yup from 'yup'
@@ -32,6 +32,9 @@ const Form = props => {
     ]
     return (
         <LoginForm>
+            <Title>
+                {text.login}
+            </Title>
             {inputs.map((input, index) => renderInput({
                 input,
                 index,
@@ -83,26 +86,24 @@ const Login = props  => {
         if(token){
             props.history.push("/")
         }
-    },[])
+    },[token])
 
     const loginHandler = async data => {
         try {
             const res = await client.post("/login", data)
             if(res.status === 200){
                 const resData = res.data.data
-                const loginData = {
-                    ...resData.user,
-                    ...resData.budgets,
-                    ...resData.setting
-                    
-
+                const data = {
+                    ...resData.userData,
+                    token: resData.token
                 }
-                dispatch(actions.updateApp(loginData))
+                dispatch(actions.updateApp(data))
             } else {
-                console.log('failed to login')
+                dispatch(actions.clearUser())
             }
         } catch(err){
             console.log(err.message)
+            dispatch(actions.clearUser())
         }
     }
 

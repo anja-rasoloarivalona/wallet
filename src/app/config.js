@@ -2,6 +2,7 @@ import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
 import { BrowserRouter } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
+import 'font-awesome/css/font-awesome.min.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 library.add(fas)
@@ -53,14 +54,20 @@ const Config = props => {
     const {
         theme,
         ui: { sidebar },
-        user: { isLoggedIn }
+        user: { isLoggedIn },
+        categories
     }= useSelector(state => state)
     axios.defaults.baseURL = process.env.REACT_APP_API_URL  
 
     return (
         (
             <BrowserRouter>
-                <ThemeProvider theme={theme}>
+                <ThemeProvider
+                    theme={{
+                        ...theme,
+                        ...categories
+                    }}
+                >
                     <GlobalStyle />
                     <Container
                         full={sidebar.isShown}

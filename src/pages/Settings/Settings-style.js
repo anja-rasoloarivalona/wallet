@@ -1,10 +1,18 @@
 import styled from 'styled-components'
 
 
+const SectionContainer = styled.div`
+    padding-right: 7rem;
+    height: calc(100vh - 7rem);
+    overflow-y: overlay;
+    padding-top: 3.5rem;
+`
+
+
+
 const Section = styled.div`
     width: 50vw;
     max-width: 50rem;
-    overflow: ${props => props.showList ? "none" : "hidden"};
     margin-bottom: 5rem;
 
     * {
@@ -25,7 +33,10 @@ const Text = styled.div`
     line-height: 1.4;
 `
 
+
+
 export {
+    SectionContainer,
     Section,
     Title,
     TextContainer,

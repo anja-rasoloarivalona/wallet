@@ -12,10 +12,10 @@ const HeaderContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: ${props => props.theme.surface};
+    background: ${props => props.theme.background};
     color: ${props => props.theme.text};
     z-index: 12;
-    box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
+    // box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
 `
 
 const HeaderSection = styled.div`

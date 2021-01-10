@@ -54,12 +54,14 @@ const Dashboard = props => {
     const [layout, setLayout] = useState(initial_layout)
 
     useEffect(() => {
-        if(dashboard_layout){  
+        if(dashboard_layout && Object.keys(dashboard_layout).length > 0 ){  
             const data = []
             for(const item in dashboard_layout){
                 if(dashboard_layout[item].i.includes("assets")){
+
                     const asset_id = dashboard_layout[item].i.split('-')[0]
                     const asset_index = assets.findIndex(item => item.id === asset_id)
+
                     data.push({
                         ...dashboard_layout[item],
                         Component:  () => <Assets asset={assets[asset_index]} /> 
@@ -75,14 +77,16 @@ const Dashboard = props => {
             }
             setLayout(data)
         }
-    },[dashboard_layout])
-
+    },[dashboard_layout, sidebar])
 
 
     const renderItem = item => {
           const { Component } = item
           return (
-              <GridItem key={item.i}>
+              <GridItem
+                key={item.i}
+                style={{zIndex: item.i === "expenses" ? 5 : 1}}
+            >
                   <Component />
               </GridItem>
           )
@@ -127,6 +131,7 @@ const Dashboard = props => {
 
     const stop = data => {
         updatedLayout = data
+        console.log(updatedLayout)
     }
 
     return (
@@ -143,6 +148,7 @@ const Dashboard = props => {
                     rowHeight={34}
                     width={dashboardwidth}
                     onDragStop={stop}
+                    onResizeStop={stop}
                     margin={[15, 15]}
                     isDraggable={dashboard.isManaging}
                     isResizable={dashboard.isManaging}

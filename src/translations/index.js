@@ -6,6 +6,7 @@ import errors from './errors.json'
 import setup from './setup.json'
 import categories from './categories.json'
 import global from './global.json'
+import settings from './settings.json'
 
 const lexique = {
     global, 
@@ -15,7 +16,8 @@ const lexique = {
     "/": main,
     "/login": login,
     "/signup": signup,
-    "/setup": setup
+    "/setup": setup,
+    "/settings": settings
 }
 
 const getCurrentPagesText = (lang, pages) => {

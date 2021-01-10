@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import Config from './config'
-import { AssetForm, TransactionsForm, BudgetForm, Header, Sidebar} from '../elements'
+import { CategoriesForm, AssetForm, TransactionsForm, BudgetForm, Header, Sidebar} from '../elements'
 import ErrorModal from '../components/ErrorModal'
 import Routes from './routes'
 import { useSelector, useDispatch } from 'react-redux'
-import { getInitialText } from '../translations'
 import { client } from '../functions'
 import * as actions from '../store/actions'
-
+import axios from 'axios'
 const AddTransaction = styled.button`
     position: fixed;
     z-index: 11;
@@ -16,7 +15,7 @@ const AddTransaction = styled.button`
     top: 2.7rem;
     height: 4.5rem;
     padding: 0 2rem;
-    background: ${props => props.theme.active_text};
+    background: ${props => props.theme.surface};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,7 +29,6 @@ const AddTransaction = styled.button`
         outline: none;
     }
 `
-
 const Background = styled.div`
     position: fixed;
     top: 0;
@@ -51,21 +49,32 @@ const Background = styled.div`
         }
     }}
 `
+const options = {
+    method: 'GET',
+    url: 'https://bloomberg-market-and-financial-news.p.rapidapi.com/market/get-full',
+    params: {id: 'adsmi:ind,aex:ind,co1:com,gc1:com'},
+    headers: {
+      'x-rapidapi-key': '12d9747c82msh1d4e33f960313cdp1383d0jsn7a1c42dec694',
+      'x-rapidapi-host': 'bloomberg-market-and-financial-news.p.rapidapi.com'
+    }
+  };
+  
+
+
+
 
 const App = () => {
     const dispatch = useDispatch()
     const [ready, setReady] = useState(false)
-    const [checkedToken, setCheckedToken] = useState(false)
-    const { initText, setTextPathName, getCategories, initCurrentPeriod, initLang } = actions
+    const { initApp } = actions
     const { 
         text : { header, errors: errorText },
         settings : { lang },
         error : { error },
         categories: {expense, income},
-        user: { isLoggedIn },
+        user: { isLoggedIn, appIsReady },
         ui: { openedForm,  dashboard, budgetForm }
     } = useSelector(state => state)
-
 
     const forms = {
         transactionForm: TransactionsForm,
@@ -74,44 +83,16 @@ const App = () => {
     }
     const CurrentForm = openedForm ? forms[openedForm] : null
 
-    useEffect(() => {
-        const pathname = window.location.pathname
-        const text = getInitialText(lang, [pathname])
-        dispatch(initLang())
-        dispatch(setTextPathName(pathname))
-        dispatch(initText(text))
-        dispatch(getCategories())
-        dispatch(initCurrentPeriod())
-        checkUserToken()
+    useEffect(async () => {
+        dispatch(initApp())        
     },[])
 
     useEffect(() => {
-        if(header && expense && income && checkedToken){
+        if(header && expense && income && appIsReady){
             setReady(true)
         }
-    },[header, expense, income, checkedToken])
+    },[header, expense, income, appIsReady])
 
-    const checkUserToken = async () => {
-        const token = localStorage.getItem("moneytor-token")
-        if(token){
-            try {
-                const res = await client.post("/verify-user-token", { token: token })
-                const resData = res.data.data
-                dispatch(actions.updateApp({
-                    ...resData,
-                    token
-                }))
-                setCheckedToken(true)
-            }  catch(err){
-                console.log(err)
-                setCheckedToken(true)
-                dispatch(actions.clearUser())
-            }
-        } else {
-            setCheckedToken(true)
-        }
-
-    }
 
     const submitFormHandler = (data, form) => {
         dispatch(actions.updateApp(data))
@@ -128,6 +109,7 @@ const App = () => {
     return (
         <Config>
             <Header />
+            {/* <CategoriesForm /> */}
             {!dashboard.isManaging && (
                 <AddTransaction onClick={() => dispatch(actions.toggleForm({ form: "transactionForm" }))}>
                     Add transaction

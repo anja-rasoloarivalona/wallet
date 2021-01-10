@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Amount, Loader } from '../../components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as actions from '../../store/actions'
+import { setDate } from '../../functions'
 
 const Container = styled.div`
     position: fixed;
@@ -24,7 +25,8 @@ const Container = styled.div`
 
 const BalanceContainer = styled.div`
      & > div:last-child {
-         font-size: 2.5rem;
+        font-size: 2.5rem;
+        color: ${props => props.theme.active_text};
      }
 `
 
@@ -32,13 +34,14 @@ const BalanceText = styled.div`
     font-size: 1.6rem;
     margin-bottom: .8rem;
     font-weight: 600;
+    color: ${props => props.theme.text};
 `
 const Cta = styled.div`
      width: 30vw;
      max-width: 40rem;
      height: 5rem;
      border-radius: 2rem;
-    box-shadow: inset 2px 2px 3px 0 rgb(143 143 143 / 20%), inset -2px -2px 6px 0 rgb(255 255 255 / 80%);
+    box-shadow: ${props => props.theme.box_shadow_inset};
     display: flex;
     align-items: center;
     justify-content: space-evenly;
@@ -113,8 +116,6 @@ const DashboardHeader = props  => {
     },[assets])
 
     const actionHandler = action => {
-        console.log("current", dashboard.action)
-        console.log("action", action)
         if(dashboard.action === action){
             dispatch(actions.toggleDashboard())
         } else {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const useWindowSize = () => {
     const initialWidth = window.innerWidth
@@ -39,7 +39,16 @@ const useOnClickOutside = (ref, handler) => {
     );
   }
 
+  const usePrevious = (value) => {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
 export {
     useWindowSize,
-    useOnClickOutside
+    useOnClickOutside,
+    usePrevious
 }

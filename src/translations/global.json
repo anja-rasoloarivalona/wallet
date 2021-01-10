@@ -138,5 +138,113 @@
     "type": {
         "fr": "Type",
         "en": "Type"
+    },
+    "light": {
+        "fr": "Clair",
+        "en": "Light"
+    },
+    "dark": {
+        "fr": "Sombre",
+        "en": "Dark"
+    },
+    "monthly_expenses": {
+        "fr": "Dépenses du mois",
+        "en": "Monthly expenses"
+    },
+    "monthly_incomes": {
+        "fr": "Revenus du mois",
+        "en": "Monthly incomes"
+    },
+    "all_f": {
+        "fr": "Toutes",
+        "en": "All"
+    },
+    "all_m": {
+        "fr": "Tous",
+        "en": "All"
+    },
+    "this_week": {
+        "fr": "Cette semaine",
+        "en": "This week"
+    },
+    "this_month": {
+        "fr": "Ce mois-ci",
+        "en": "This month"
+    },
+    "this_year": {
+        "fr": "Cette année",
+        "en": "This year"
+    },
+    "days": {
+        "fr": "jours",
+        "en": "days"
+    },
+    "months": {
+        "fr": "mois",
+        "en": "months"
+    },
+    "year": {
+        "fr": "année",
+        "en": "year"
+    },
+    "balance_variation": {
+        "fr": "Variation de la balance",
+        "en": "Balance variation"
+    },
+    "general": {
+        "fr": "Général",
+        "en": "General"
+    },
+    "categories": {
+        "fr": "Catégories",
+        "en": "Categories"
+    },
+    "security": {
+        "fr": "Sécurité",
+        "en": "Security"
+    },
+    "account": {
+        "fr": "Mon compte",
+        "en": "Account"
+    },
+    "username": {
+        "fr": "Nom d'utilisateur",
+        "en": "Username"
+    },
+    "email": {
+        "fr": "Email",
+        "en": "Email"
+    },
+    "password": {
+        "fr": "Mot de passe",
+        "en": "Password"
+    },
+    "password_requirement_intro": {
+        "fr": "Le mot de passe doit remplir les critères suivants",
+        "en": "The password must meet the following criteria"
+    },
+    "password_requirement_length": {
+        "fr": "avoir au moins 8 charactères",
+        "en": "be at least 8 characters long"
+    },
+    "password_requirement_number": {
+        "fr": "inclure au moins un chiffre",
+        "en": "include at least one number"
+    },
+    "password_requirement_special": {
+        "fr": "include au moins un charatère spécial",
+        "en": "include at least one special character"
+    },
+    "password_requirement_text": {
+        "fr": "inclure au moins une lettre en majuscule",
+        "en": "include at least one uppercase letter"
+    },
+    "verify": {
+        "fr": "Vérifiez",
+        "en": "Verify"
+    },
+    "change": {
+        "fr": "Changez",
+        "en": "Update"
     }
 }

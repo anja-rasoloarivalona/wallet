@@ -13,6 +13,7 @@ const clearUser = () => {
     }
 }
 
+
 const setAssets = assets => {
     return {
         type: actionTypes.SET_ASSETS,

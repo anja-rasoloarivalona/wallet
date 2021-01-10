@@ -4,7 +4,8 @@ import { updatedObject } from '../utility'
 const initialState = {
     lang: "en",
     currency: null,
-    dashboard: null
+    dashboard: null,
+    theme: "light"
 }
 
 const setDashboard = (state, action) => {
@@ -15,25 +16,24 @@ const setDashboard = (state, action) => {
 
 }
 
-const initLang = state => {
-    const lang = localStorage.getItem("moneytor-lang")
-    const initialLang = lang ? lang : "en"
-    return updatedObject(state, { lang: initialLang })
-}
-
 const setLang = (state, action ) => {
     const { lang } = action
     localStorage.setItem("moneytor-lang", lang)
     return updatedObject(state, { lang })
 }
 
+const setTheme = (state, action) => {
+    const { theme } = action
+    localStorage.setItem("moneytor-theme", theme)
+    return updatedObject(state, { theme })
+}
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
-        case actionTypes.INIT_LANG: return initLang(state)
         case actionTypes.SET_LANG: return setLang(state, action)
         case actionTypes.SET_CURRENCY: return updatedObject(state, {currency: action.currency})
         case actionTypes.SET_DASHBOARD: return setDashboard(state, action)
+        case actionTypes.SET_THEME: return setTheme(state, action)
         default: return  state
     }
 }

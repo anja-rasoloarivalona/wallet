@@ -1,9 +1,9 @@
 import React, { useEffect }  from 'react'
 import { withFormik, Form as FormikForm } from 'formik'
-import { Section, Title, TextContainer, Text} from '../Settings-style'
-import { renderInput } from '../../../functions'
+import { Section, Title, TextContainer, Text} from '../../Settings-style'
+import { renderInput } from '../../../../functions'
 import { useSelector  } from 'react-redux'
-import { currencies } from '../../../assets/currencies'
+import { currencies } from '../../../../assets/currencies'
 import styled from 'styled-components'
 
 const Button = styled.button`

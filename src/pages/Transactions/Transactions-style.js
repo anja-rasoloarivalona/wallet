@@ -1,13 +1,15 @@
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const Container = styled.div`
     grid-column: 1 / -1;
     width: 100%;
-    padding-top: 10rem;
+    padding-top: 6rem;
     padding-left: 1rem;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     background: ${props => props.theme.background};
     position: relative;
     z-index: 2;
@@ -32,6 +34,7 @@ const TableHeader = styled.div`
     width: 100%;
     border-bottom: 3px solid ${props => props.theme.background};
     padding: 2rem 6rem 2rem 6rem;
+    color: ${props => props.theme.text};
 
     > div:nth-child(1) {
         width: 10%;
@@ -65,8 +68,7 @@ const TableHeaderItem = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-
-
+    position: relative;
 `
 
 
@@ -77,6 +79,7 @@ const TableRow = styled.div`
     padding: 1.5rem 6rem 1.5rem 6rem;
     position: relative;
     background: ${props => props.odd ? props.theme.background :  props.theme.surface};
+    color: ${props => props.theme.text};
 
     > div:nth-child(1) {
         width: 10%;
@@ -103,7 +106,9 @@ const TableRow = styled.div`
         width: 15%;
         // background: grey;
         justify-content: flex-end;
+        color: ${props => props.theme.active_text};
     }
+
 
 
 `
@@ -126,6 +131,35 @@ const Cta = styled.div`
     cursor: pointer;
 `
 
+const FilterContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: min-content;
+
+
+    ul {
+        background: ${props => props.theme.background};
+        width: 20rem;
+        height: max-content;
+        left: 0;
+        top: calc(100% + 1.3rem);
+    }
+`
+
+const Icon = styled(FontAwesomeIcon)`
+    cursor: pointer;
+    margin-left: 3rem;
+
+    ${props => {
+        if(props.active){
+            return {
+                color: props.theme.active_text
+            }
+        }
+    }}
+`
+
 export {
     Container,
     Table,
@@ -133,5 +167,7 @@ export {
     TableHeaderItem,
     TableRow,
     TableRowItem,
-    Cta
+    Cta,
+    FilterContainer,
+    Icon
 }

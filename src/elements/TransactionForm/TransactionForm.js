@@ -111,6 +111,10 @@ const TransactionForm = props => {
         }
     ]
 
+    useEffect(() => {
+        console.log(values.data)
+    },[values])
+
     return (
         <Container>
             <Content mounted={mounted}>

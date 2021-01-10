@@ -1,12 +1,5 @@
 import * as actionTypes from './actionTypes'
 
-
-const initLang = () => {
-    return  {
-        type: actionTypes.INIT_LANG
-    }
-}
-
 const setLang = lang => {
     return {
         type: actionTypes.SET_LANG,
@@ -14,6 +7,12 @@ const setLang = lang => {
     }
 }
 
+const setTheme = theme => {
+     return {
+        type: actionTypes.SET_THEME,
+        theme
+     }
+}
 
 const setCurrency = currency => {
     return {
@@ -29,9 +28,17 @@ const setDashboard = dashboard => {
     }
 }
 
+const updateThemeColors = theme => {
+    return {
+        type: actionTypes.UPDATE_THEME_COLORS,
+        theme
+    }
+}
+
 export {
-    initLang,
     setLang,
+    setTheme,
     setCurrency,
-    setDashboard
+    setDashboard,
+    updateThemeColors
 }

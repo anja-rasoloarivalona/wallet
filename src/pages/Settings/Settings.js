@@ -1,20 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import Language from './sections/Language'
-import Currency from './sections/Currency'
-import { useSelector, useDispatch } from 'react-redux'
-import * as actions from '../../store/actions'
-import { client } from '../../functions'
+import SettingsHeader from './SettingsHeader'
+import { General, Categories, Account } from './sections'
 
 const Container = styled.div`
     grid-column: 1 / -1;
     width: 100%;
-    min-height: 100vw;
-    background: ${props => props.theme.clr_background};
+    min-height: 100vh;
+    background: ${props => props.theme.background};
     display: flex;
     padding-left: 7rem;
+    padding-top: 7rem;
     display: flex;
     flex-direction: column;
+    color: ${props => props.theme.text}
 `
 
 const Title = styled.div`
@@ -25,34 +24,30 @@ const Title = styled.div`
 const Content = styled.div`
     display: flex;
     flex-direction: column;
-    padding-top: 2rem;
 `
 
 
 
 const Settings = () => {
-    const dispatch = useDispatch()
-    const {
-        text : { currentPage: text },
-    } = useSelector(state => state)
 
-    const changeCurrency = async currency => {
-        dispatch(actions.setCurrency(currency))
-        try {
-            await client.post("/settings/currency", {currency})
-        } catch(err){
-            console.log(err)
-        }
+    const [section, setSection] = useState("account")
+
+    const sections = {
+        general: General,
+        categories: Categories,
+        account: Account
     }
+
+    const CurrentSection = sections[section]
 
     return (
         <Container>
-            <Title>{text.settings}</Title>
+            <SettingsHeader
+                section={section}
+                setSection={setSection}
+            />
             <Content>
-                <Language />
-                <Currency
-                    changeCurrency={changeCurrency}
-                />
+                <CurrentSection />
             </Content>   
         </Container>
     )

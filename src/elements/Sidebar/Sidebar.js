@@ -70,7 +70,7 @@ const List = styled.ul`
 `
 
 const ListItem = styled.li`
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     display: flex;
     align-items: center;
 
@@ -133,7 +133,8 @@ const Logout = styled.div`
     const dispatch = useDispatch()
     const {
         text : { currentPage : text },
-        ui: { sidebar, openedForm }
+        ui: { sidebar, openedForm },
+        user
     } = useSelector(state => state)
 
     const [showText, setShowText ] = useState(sidebar.isShown)
@@ -145,7 +146,6 @@ const Logout = styled.div`
 
 
         if(period === "AM"){
-            console.log(text.morning_salutation)
             return text.morning_salutation
         }
         if(hour >= 6){
@@ -206,7 +206,7 @@ const Logout = styled.div`
                     </IconContainer>
                     <ListItemText shown={showText}>
                         <TopText>
-                            {salutationText()}
+                            {salutationText()} {user && user.username}
                         </TopText>
                     </ListItemText>
                 </Top>

@@ -19,23 +19,23 @@ const Balance = () => {
 
 const MonthlyExpenses = () => {
     const {
-        user: { transactions}
+        user: { transactions, current_period},
+        text: { currentPage : text},
     } = useSelector(state => state)
 
     let expense = 0
 
     if(transactions){
         transactions.forEach(transaction => {
-            if(transaction.type === "expense"){
+            if(transaction.type === "expense" && transaction.period === current_period){
                 expense += parseInt(transaction.amount)
             }
         })
     }
 
-
     return (
         <Item>
-            <Title>Monthly expenses</Title>
+            <Title>{text.monthly_expenses}</Title>
             <Amount value={expense} />
         </Item>
     )
@@ -43,26 +43,28 @@ const MonthlyExpenses = () => {
 
 const MonthlyIncomes = () => {
     const {
-        user: { transactions}
+        user: { transactions, current_period },
+        text: { currentPage : text},
     } = useSelector(state => state)
 
     let income = 0
 
     if(transactions){
         transactions.forEach(transaction => {
-            if(transaction.type === "income"){
+            if(transaction.type === "income" && transaction.period === current_period){
                 income += parseInt(transaction.amount)
             }
         })
     }
 
-    
-
-
     return (
         <Item>
-            <Title>Monthly incomes</Title>
-            <Amount value={income} />
+            <Title>{text.monthly_incomes}</Title>
+            <Amount
+                value={income}
+                income
+                className="dashboard_amount"
+            />
         </Item>
     )
 }

@@ -10,11 +10,12 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: ${props => props.theme.clr_background};
+    background: ${props => props.theme.background};
+    margin-top: 7.5rem;
 `
 
 const Title = styled.div`
-    color: ${props => props.theme.clr_primary};
+    color: ${props => props.theme.text};
     font-size: 3rem;
     font-weight: 500;
     margin-bottom: 2rem;
@@ -32,7 +33,7 @@ const SignupForm = styled(Form)`
 `
 
 const SignupButton = styled(Button)`
-    background: ${props => props.theme.clr_primary};
+    background: ${props => props.theme.active_text};
     color: ${props => props.theme.text};
     padding: 0 7rem;
     border-radius: 2.5rem;
@@ -50,14 +51,14 @@ const OrTextContainer = styled.div`
 const OrText = styled.div`
     font-size: 20px;
     font-weight: 500;
-    color: ${props => props.theme.clr_primary};
+    color: ${props => props.theme.text};
     margin: 0 2rem;
 `
 
 const OrTextLine = styled.div`
     width: 100%;
     height: 1px;
-    background: ${props => props.theme.clr_primary};
+    background: ${props => props.theme.text};
 `
 
 const Disclaimer = styled.div`
@@ -104,11 +105,11 @@ const EmailSentTitleContainer = styled.div`
 
 const EmailSentTitleIcon = styled(FontAwesomeIcon)`
     margin-right: 2rem;
-    color: ${props => props.theme.clr_primary};
+    color: ${props => props.theme.text};
 `
 
 const EmailSentModal = styled.div`
-    background: ${props => props.theme.white};
+    background: ${props => props.theme.surface};
     font-size: 2rem;
     padding: 1rem 2rem;
     margin: 2rem 0;

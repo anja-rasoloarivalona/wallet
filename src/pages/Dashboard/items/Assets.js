@@ -17,6 +17,7 @@ const AssetContainer = styled.div`
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
 
+
     svg {
         width: 3rem;
         height: 3rem;

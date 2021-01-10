@@ -1,0 +1,10 @@
+{
+    "enter_current_password": {
+        "fr": "Entrez le mot de passe actuel",
+        "en": "Enter current password"
+    },
+    "change_password_success": {
+        "fr": "Votre mot de passe a été modifié",
+        "en": "Your password has been updated"
+    }
+}

@@ -1,99 +1,44 @@
-import {
+export {
     initText,
     setText,
     setTextPathName
 } from './lexique'
 
-import {
-    initLang,
+export {
     setLang,
+    setTheme,
     setCurrency,
     setDashboard
 } from './settings'
 
-import {
+export {
     setError,
     clearError
 } from './error'
 
-import {
+export {
      getCategories
 } from './categories'
 
-import {
-    initCurrentPeriod,
-    setBudget
-} from './budget'
-
-import {
+export {
     setUser,
     clearUser,
     setAssets,
     setToken
 } from './user'
 
-import {
+export {
     toggleForm,
     toggleSideBar,
     toggleDashboard
 } from './interface'
 
-const updateApp = data => {
-    return async function(dispatch){
-        const { assets, budgets, email, id, setting, username, transactions, token } = data
-        if(token){
-            dispatch(setToken(token))
-        }
-        dispatch(setUser({
-            id,
-            username,
-            email,
-            assets,
-            transactions
-        })) 
-        dispatch(setBudget(budgets))
-
-        if(setting){
-            if(setting.currency){
-                dispatch(setCurrency(JSON.parse(setting.currency)))
-            }
-            if(setting.dashboard){
-                dispatch(setDashboard(setting.dashboard))
-            }
-        }
-        
-    }
-
-}
-
 export {
-    initText,
-    setText,
-    setTextPathName,
-
+    initApp,
     updateApp,
-
-    initLang,
-    setLang,
-    setCurrency,
-    setDashboard,
-
-    setError,
-    clearError,
-
-    getCategories,
-
-    initCurrentPeriod,
-    setBudget,
-
-    setUser,
-    clearUser,
-    setAssets,
-    setToken,
+    updateTheme,
+} from './middlewares'
 
 
-    toggleForm,
-    toggleSideBar,
-    toggleDashboard
 
-}
+
