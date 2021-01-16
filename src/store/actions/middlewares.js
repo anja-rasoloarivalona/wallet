@@ -1,7 +1,7 @@
 import { setToken, setUser, clearUser } from './user'
 import { setLang, setTheme, setCurrency, setDashboard, updateThemeColors } from './settings'
 import { getCategories } from './categories'
-import { initText, setTextPathName } from './lexique'
+import { initText } from './lexique'
 import { getInitialText } from '../../translations'
 import { client } from '../../functions'
 
@@ -47,15 +47,26 @@ const initApp = () => {
         const token = localStorage.getItem("moneytor-token")
         const theme = localStorage.getItem("moneytor-theme")
         const initialLang = lang ? lang : "en"
-        const text = getInitialText(initialLang, [pathname])
+        const otherLang = initialLang === "en" ? "fr" : "en"
         const initialTheme = theme ? theme : "light"
 
-        dispatch(setTextPathName(pathname))
-        dispatch(initText(text))
+        let text = getInitialText(initialLang, [pathname])
+        let userOtherLang = false
+        const _pathname = window.location.pathname.split("/")[1]
+        if(_pathname !== "" && _pathname !== text.currentPage[`link_${_pathname}`]){
+            text = getInitialText(otherLang, [pathname])
+            userOtherLang = true
+        }
+
+
+        dispatch(initText({
+            ...text,
+            pathname
+        }))
         dispatch(getCategories())
         dispatch(setTheme(initialTheme))
         dispatch(updateThemeColors(initialTheme))
-        dispatch(setLang(initialLang))
+        dispatch(setLang(userOtherLang ? otherLang : initialLang))
 
         if(token){
             try {

@@ -5,13 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Container = styled.div`
     grid-column: 1 / -1;
-    min-height: calc(100vh - 7.5rem);
+    height: calc(100vh - 7.5rem);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     background: ${props => props.theme.background};
     margin-top: 7.5rem;
+    padding-top: 7rem;
+    overflow-y: overlay;
 `
 
 const Title = styled.div`

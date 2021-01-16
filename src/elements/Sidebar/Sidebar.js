@@ -156,10 +156,10 @@ const Logout = styled.div`
     }
 
     const links = [
-        { link: "/", icon: "project-diagram", label: text.dashboard, exact: true},
-        { link: "/transactions", icon: "chart-line", label: text.transactions, exact: false},
-        { link: "/profile", icon: "user", label: text.profile, exact: false },
-        { link: "/settings", icon: "cogs", label: text.settings, exact: false}
+        { link: `/${text.link_dashboard}`, icon: "project-diagram", label: text.dashboard},
+        { link: `/${text.link_transactions}`, icon: "chart-line", label: text.transactions, exact: false},
+        { link: `/${text.link_profile}`, icon: "user", label: text.profile, exact: false },
+        { link: `/${text.link_settings}`, icon: "cogs", label: text.settings, exact: false}
     ]
 
     const renderLink = item => {

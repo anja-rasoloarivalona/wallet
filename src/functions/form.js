@@ -106,8 +106,6 @@ export const SelectInput = props => {
                     options={options}
                     onChange={onChange}
                     isSearchable={isSearchable}
-                    // defaultMenuIsOpen={true}
-                    // onBlur={onBlur}
                     styles={selectStyle(theme)}
                     placeholder={placeholder}
                     value={options.filter(({value}) => value === currentValue)}

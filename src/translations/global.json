@@ -246,5 +246,93 @@
     "change": {
         "fr": "Changez",
         "en": "Update"
+    },
+    "forgot_password": {
+        "fr": "Mot de passe oublié",
+        "en": "Forgot password"
+    },
+    "send_email": {
+        "fr": "Envoyez",
+        "en": "Send"
+    },
+
+
+    "link_connexion": {
+        "fr": "connexion",
+        "en": "login"
+    },
+    "link_inscription": {
+        "fr": "inscription",
+        "en": "signup"
+    },
+    "link_inscription_activation": {
+        "fr": "inscription/activation",
+        "en": "signup/activate"
+    },
+    "link_configuration": {
+        "fr": "configuration",
+        "en": "setup"
+    },
+    "link_paramètres": {
+        "fr": "paramètres",
+        "en": "settings"
+    },
+    "link_profil": {
+        "fr": "profil",
+        "en": "profile"
+    },
+    "link_tableau-de-bord": {
+        "fr": "tableau-de-bord",
+        "en": "dashboard"
+    },
+    "link_transactions": {
+        "fr": "transactions",
+        "en": "transactions"
+    },
+    "link_mot-de-passe-oublié": {
+        "fr": "mot-de-passe-oublié",
+        "en": "forgot-password"
+    },
+    "link_mot-de-passe-modification": {
+        "fr": "mot-de-passe-modification",
+        "en": "reset-password"
+    },
+
+    "link_login": {
+        "fr": "connexion",
+        "en": "login"
+    },
+    "link_signup": {
+        "fr": "inscription",
+        "en": "signup"
+    },
+    "link_signup_activate": {
+        "fr": "inscription/activation",
+        "en": "signup/activate"
+    },
+    "link_setup": {
+        "fr": "configuration",
+        "en": "setup"
+    },
+    "link_settings": {
+        "fr": "paramètres",
+        "en": "settings"
+    },
+    "link_profile": {
+        "fr": "profil",
+        "en": "profile"
+    },
+    "link_dashboard": {
+        "fr": "tableau-de-bord",
+        "en": "dashboard"
+    },
+    "link_forgot-password": {
+        "fr": "mot-de-passe-oublié",
+        "en": "forgot-password"
+    },
+    
+    "link_reset-password": {
+        "fr": "mot-de-passe-modification",
+        "en": "reset-password"
     }
 }

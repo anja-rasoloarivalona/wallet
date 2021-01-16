@@ -3,12 +3,20 @@ import { HeaderContainer, HeaderSection, HeaderSectionItem, HeaderSectionLink, H
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../store/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import logo from '../../assets/logo.png'
+import styled from 'styled-components'
+import { withRouter } from 'react-router-dom'
 
+const Logo = styled.img`
+    width: 16rem;
+    height: 14rem;
+    object-fit: cover;
+    cursor: pointer;
+`
 
-
-const Header = () => {
+const Header = props => {
     const {
-        text: { header : text },
+        text: { header : text, currentPage },
         settings: { lang },
         user
     } = useSelector(state => state)
@@ -32,8 +40,8 @@ const Header = () => {
 
 
     const  items = [
-        {type: "link", label: text.login, path: "/login"},
-        {type: "link", label: text.signup, path: "/signup"}
+        {type: "link", label: text.login, path: `/${currentPage.link_login}`},
+        {type: "link", label: text.signup, path: `/${currentPage.link_signup}`}
     ]
 
 
@@ -99,7 +107,7 @@ const Header = () => {
     return (
         <HeaderContainer>
             <HeaderSection>
-                 {/* {salutationText()} {user.username} ! */}
+                <Logo src={logo} alt="logo" onClick={() => props.history.push("/")}/>
             </HeaderSection>
             <HeaderSection>
                 {items.map(item => renderItem(item))}
@@ -109,4 +117,4 @@ const Header = () => {
     )
 }
 
-export default Header
+export default withRouter(Header) 

@@ -107,7 +107,7 @@ const CtaItem = styled.div`
 const Budget = () => {
     const dispatch = useDispatch()
     const {
-        budget : { data },
+        user : { budgets: data },
         text : { currentPage: text }
 
     } = useSelector(state => state)

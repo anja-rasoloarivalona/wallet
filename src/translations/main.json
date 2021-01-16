@@ -2,5 +2,53 @@
     "welcome": {
         "fr": "Bienvenu",
         "en": "Welcome"
+    },
+    "main_subtitle": {
+        "fr": "Prenez controle",
+        "en": "Take control"
+    },
+    "main_title": {
+        "fr": "de votre argent",
+        "en": "over your money"
+    },
+    "stats_subtitle": {
+        "fr": "Où est",
+        "en": "Where is"
+    },
+    "stats_title": {
+        "fr": "mon argent",
+        "en": "my money"
+    },
+    "customize_subtitle": {
+        "fr": "Entièrement",
+        "en": "Fully"
+    },
+    "customize_title": {
+        "fr": "personnalisé",
+        "en": "customize"
+    },
+    "network_subtitle": {
+        "fr": "Partagez équitablement",
+        "en": "Split wisely"
+    },
+    "network_title": {
+        "fr": "avec vos amis",
+        "en": "with your friends"
+    },
+    "security_subtitle": {
+        "fr": "Entièrement",
+        "en": "Fully"
+    },
+    "security_title": {
+        "fr": "sécurisé",
+        "en": "secured"
+    },
+    "everywhere_subtitle": {
+        "fr": "Utilisez le",
+        "en": "Use it"
+    },
+    "everywhere_title": {
+        "fr": "partout",
+        "en": "everywhere"
     }
 }

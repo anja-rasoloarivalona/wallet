@@ -1,7 +1,5 @@
 export {
-    initText,
-    setText,
-    setTextPathName
+    initText
 } from './lexique'
 
 export {

@@ -8,22 +8,6 @@ const initText = text => {
     }
 }
 
-const setText = text => {
-    return {
-        type: actionTypes.SET_TEXT,
-        text
-    }
-}
-
-const setTextPathName = pathname => {
-    return {
-        type: actionTypes.SET_TEXT_PATHNAME,
-        pathname
-    }
-}
-
 export {
-    initText,
-    setText,
-    setTextPathName
+    initText
 }

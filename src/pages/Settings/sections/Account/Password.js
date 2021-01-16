@@ -92,7 +92,7 @@ const Password = props => {
     const [ newPassword, setNewPassword ] = useState("")
     const [ confirmNewPassword, setConfirmNewPassword] = useState("")
 
-    const [ showModalSuccess, setShowModalSuccess] = useState("success")
+    const [ showModalSuccess, setShowModalSuccess] = useState(false)
 
     const [showCurrentPassword, setShowCurrentPassword] = useState(false)
     const [showNewPassword, setShowNewPassword] = useState(false)

@@ -12,7 +12,9 @@ const useWindowSize = () => {
             window.removeEventListener("resize", handleResize);
           };
     }, [])
-    return windowWidth
+    return {
+      windowWidth
+    }
 }
 
 const useOnClickOutside = (ref, handler) => {

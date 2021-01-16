@@ -10,3 +10,15 @@ html {
   font-size: 62.5%;
   overflow-x: hidden;
 }
+
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 56.25%;
+  }
+}
+
+@media screen and (max-width:360px) {
+  html {
+    font-size: 50%;
+  }
+}

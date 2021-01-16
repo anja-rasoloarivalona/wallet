@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
-import { Container, LoginForm, Title } from './Login-style'
+import { Container, LoginForm, Title, Cta, CtaItem, ButtonContainer } from './Login-style'
 import { withFormik } from 'formik'
 import { renderInput } from '../../functions'
 import * as Yup from 'yup'
-import { Button } from '../../components'
+import { Button, Loader } from '../../components'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../store/actions'
 import { client } from '../../functions'
 
 const Form = props => {
-    const { errors, touched, handleChange, values, handleBlur, setFieldValue } = props
+    const { errors, touched, handleChange, values, handleBlur, setFieldValue, isSubmitting } = props
     const { currentPage :  text } = useSelector(state => state.text)
 
     const inputs = [
@@ -30,6 +30,7 @@ const Form = props => {
             input_type: "input",
         }
     ]
+
     return (
         <LoginForm>
             <Title>
@@ -45,9 +46,20 @@ const Form = props => {
                 onBlur: handleBlur,
                 onChange: setFieldValue
             }))}
-            <Button type="submit" primary>
-                {text.login}
-            </Button>
+            <Cta>
+                <CtaItem onClick={() => props.history.push(`/${text["link_forgot-password"]}`)}>
+                    {text.forgot_password}
+                </CtaItem>
+            </Cta>
+            <ButtonContainer>
+                {isSubmitting ?
+                    <Loader /> :
+                    <Button type="submit" primary>
+                        {text.login}
+                    </Button>
+                }
+            </ButtonContainer>
+
         </LoginForm>
     )
 }
@@ -68,7 +80,7 @@ const EnhancedForm = withFormik({
     },
     handleSubmit: async (values, {props}) => {
         const { loginHandler } = props
-        loginHandler(values)
+        await loginHandler(values)
     }
 })(Form)
 
@@ -81,13 +93,6 @@ const Login = props  => {
         user : { token }
     } = useSelector(state => state)
 
-
-    useEffect(() => {
-        if(token){
-            props.history.push("/")
-        }
-    },[token])
-
     const loginHandler = async data => {
         try {
             const res = await client.post("/login", data)
@@ -98,6 +103,7 @@ const Login = props  => {
                     token: resData.token
                 }
                 dispatch(actions.updateApp(data))
+                props.history.push(`/${text.currentPage.link_dashboard}`)
             } else {
                 dispatch(actions.clearUser())
             }
@@ -116,6 +122,7 @@ const Login = props  => {
             <EnhancedForm
                 loginHandler={loginHandler}
                 text={text}
+                {...props}
             />
         </Container>
     )

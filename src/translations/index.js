@@ -14,10 +14,16 @@ const lexique = {
     errors,
     categories,
     "/": main,
+
     "/login": login,
     "/signup": signup,
     "/setup": setup,
-    "/settings": settings
+    "/settings": settings,
+
+    "/connexion": login,
+    "/inscription": signup,
+    "/configuration": setup,
+    "/paramètres": settings
 }
 
 const getCurrentPagesText = (lang, pages) => {
@@ -62,8 +68,6 @@ const getInitialText = (lang, pages) => {
         ...global,
         ...categories,
         ...getCurrentPagesText(lang, pages),
-     
-
     }
 
     return {
