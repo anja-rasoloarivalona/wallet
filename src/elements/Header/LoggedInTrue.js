@@ -6,21 +6,36 @@ import { client } from '../../functions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 
+const Container = styled(HeaderContainer)`
+    background: ${props => props.theme.surface};
+    left: 0rem;
+    width: 100vw;
+    box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
+`
+
 const IconContainer = styled.div`
     position: relative;
     cursor: pointer;
+    margin-left: 2rem;
+    background: ${props => props.theme.text};
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
 
     svg {
-        color:  ${props => props.showList ?  props.theme.active_text : props.theme.text};
+        color:  ${props => props.theme.active_text};
+
+        :hover {
+            // color:  ${props => props.theme.surface};
+        }
         
     }
 
-    :hover {
-        svg {
-            color:  ${props => props.theme.active_text};
-            
-        }
-    }
+
 `
 
 const Menu = styled.div`
@@ -52,6 +67,23 @@ const Salutation = styled(HeaderSection)`
     // background: blue
 `
 
+const Avatar = styled.div`
+    width: 3rem;
+    height: 3rem;
+    border: 2px solid ${props => props.theme.text};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-transform: capitalize;
+    background: ${props => props.theme.surface};
+
+    :hover {
+        color: white;
+        background: ${props => props.theme.active_text};
+        border: 2px solid ${props => props.theme.active_text};
+    }
+`
 
 
 const Header = () => {
@@ -88,47 +120,58 @@ const Header = () => {
         }
     }
 
-    const renderMenu = () => {
+    const RenderAction = props => {
+        const [ showList, setShowList ] = useState(false)
+        const { id, icon, list, avatar } = props
+
+        const renderMenuItem = (item, index) => {
+            return (
+                <MenuItem key={index}>
+                    {item}
+                </MenuItem>
+            )
+        }
+
         return (
             <IconContainer
                 showList={showList}
                 onClick={() => setShowList(prev => !prev)}
+                key={id}
             >
-                <FontAwesomeIcon 
-                    icon="cog"
-                    size="lg"
-                />
+                {icon && <FontAwesomeIcon icon={icon} size="1x" /> }
+                {avatar && (
+                    <Avatar>
+                        A
+                    </Avatar>
+                )}
+                
                 {showList && (
                     <Menu>
-                        <MenuItem>Language</MenuItem>
-                        <MenuItem>Currency</MenuItem>
-                        <MenuItem>Theme</MenuItem>
-                        <MenuItem>Design</MenuItem>
-                        <MenuItem>Logout</MenuItem>
+                        {list.map((item, index) => renderMenuItem(item, index))}
                     </Menu>
                 )}
             </IconContainer>
         )
     }
 
-
+    const actions = [
+        { id: "other", avatar: true, list: ["Language", "Currency", "Theme", "Design", "Logout"]},
+        { id: "main", icon: "plus", list: ["Language", "Currency", "Theme", "Design", "Logout"]},
+        { id: "other", icon: "bell", list: ["Language", "Currency", "Theme", "Design", "Logout"]},
+    ]
 
 
     return (
-        <HeaderContainer>
-            <Salutation>
-                {salutationText()} {user.username} !
-            </Salutation>
-            <Dynamic>
-                <div>Overview</div>
-                <div>Edit</div>     
-            </Dynamic>
+        <Container>
             <HeaderSection>
-                {renderMenu()}
+                
+            </HeaderSection>
+            <HeaderSection>
+                {actions.map(action => <RenderAction {...action} />)}
             </HeaderSection>
 
 
-        </HeaderContainer>
+        </Container>
     )
 }
 

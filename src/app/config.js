@@ -18,15 +18,18 @@ const GlobalStyle = createGlobalStyle`
 `
 const Container = styled.div`
     width: ${props => props.full ? " calc(100vw - 25rem)" : "calc(100vw - 7rem)"};
-
     margin-left: ${props => props.full ? "25rem" : "7rem"};
-    background: ${props => props.theme.clr_background};
+    background: ${props => props.theme.background};
     display: grid;
     grid-template-columns: 300px repeat(2, 1fr) 300px;
     grid-template-rows: max-content;
     grid-auto-rows: max-content;
     overflow-y: overlay;
     transition: all .3s ease-in;
+    padding-top: 5.4rem;
+    min-height: calc(100vh - 5.4rem);
+
+
 
     ${props => {
         if(props.isLoggedIn && window.location.pathname !== "/"){

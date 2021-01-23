@@ -22,12 +22,15 @@ const setPosition = (currentSection, active) => {
 
 const Container = styled.div`
     width: 100vw;
-    min-height: calc(100vh - 7.5rem);
+    min-height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 25;
     display: flex;
     justify-content: center;
     padding-left: 30rem;
-    background: ${props => props.theme.clr_background};
-    position: relative;
+    background: ${props => props.theme.background};
 `
 
 const Content = styled.div`
@@ -59,13 +62,13 @@ const Section = styled.div`
 
 const Title = styled.div`
     width: calc(100vw - 30rem);
-    height: 7.5rem;
-    border-bottom: 1px solid grey;
-    color: ${props => props.theme.clr_primary};
+    height: 7.6rem;
+    border-bottom: 1px solid ${props => props.theme.text};
+    color: ${props => props.theme.text};
     font-size: 3rem;
     font-weight: 500;
     position: fixed;
-    top: 7.5rem;
+    top: 0rem;
     left: 30rem;
     background: white;
     display: flex;

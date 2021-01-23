@@ -116,7 +116,7 @@ const App = () => {
                 </AddTransaction>
             )}
             {isLoggedIn && <Sidebar />}
-            <Background  show={openedForm}/>
+            <Background  show={openedForm} />
             {openedForm && (
                     <CurrentForm 
                         errorText={errorText}

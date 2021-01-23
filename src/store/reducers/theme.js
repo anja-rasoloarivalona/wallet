@@ -5,7 +5,7 @@ const themes = {
     light: {
         background: "#f5f5f5",
         surface: "#ffffff",
-        surface_secondary: "#F6F6F6",
+        surface_secondary: "#e9e9e9",
         text: "#c5c5c5",
         active_text: "#161616",
         box_shadow: "0px 1px 2px -1px rgb(113 113 113 / 75%)",

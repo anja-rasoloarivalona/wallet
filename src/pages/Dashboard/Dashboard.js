@@ -32,21 +32,21 @@ const Dashboard = props => {
     }
 
     const initial_layout = [
-        { w: 12, h: 8, x: 0, y: 3, i: "history", Component: History },
-        { w: 8, h: 3, x: 4, y: 3, i: "monthly-expenses", Component: MonthlyExpenses },
-        { w: 8, h: 3, x: 0, y: 3, i: "monthly-incomes", Component: MonthlyIncomes },
-        { w: 8, h: 3, x: 4, y: 0, i: "compared-to-last-month", Component: ComparedToLastMonth },
-        { w: 8, h: 6, x: 8, y: 0, i: "expenses", Component: Expenses },
-        { w: 16, h: 6, x: 0, y: 6, i: "budget", Component: Budget },
-        { w: 12, h: 8, x: 0, y: 3, i: "transactions", Component: Transactions },
+        { w: 14, h: 8, x: 10, y: 4, i: "history", Component: History },
+        { w: 5, h: 3, x: 5, y: 0, i: "monthly-expenses", Component: MonthlyExpenses },
+        { w: 5, h: 3, x: 0, y: 0,  i: "monthly-incomes", Component: MonthlyIncomes },
+        { w: 7, h: 4, x: 17, y: 0, i: "compared-to-last-month", Component: ComparedToLastMonth },
+        { w: 10, h: 7, x: 0, y: 3, i: "expenses", Component: Expenses },
+        { w: 14, h: 6, x: 10, y: 12, i: "budget", Component: Budget },
+        { w: 10, h: 8, x: 0, y: 10, i: "transactions", Component: Transactions },
 
     ];
 
     if(assets){
         assets.forEach((asset, index) => {
-            const yData = 6 * (index + 1)
+            const yData = (6 * (index + 1)) - 6
             initial_layout.push({
-                w: 8, h: 4, x: 8, y: yData, i: `${asset.id}-assets`, Component: () => <Assets asset={asset} /> 
+                w: 7, h: 4, x: 10, y: yData, i: `${asset.id}-assets`, Component: () => <Assets asset={asset} /> 
             })
         })
     }

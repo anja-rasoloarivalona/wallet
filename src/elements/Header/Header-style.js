@@ -6,7 +6,7 @@ const HeaderContainer = styled.div`
     position: fixed;
     top: 0;
     left: 0;
-    height: 7.5rem;
+    height: 5.4rem;
     width: 100vw;
     padding: 0 5rem;
     display: flex;
@@ -14,7 +14,7 @@ const HeaderContainer = styled.div`
     justify-content: space-between;
     background: ${props => props.theme.background};
     color: ${props => props.theme.text};
-    z-index: 12;
+    z-index: 14;
     // box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
 `
 

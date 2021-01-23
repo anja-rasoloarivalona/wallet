@@ -8,7 +8,7 @@ import { setDate } from '../../functions'
 
 const Container = styled.div`
     position: fixed;
-    top: 0;
+    top: 5.4rem;
     left: 0;
     width: ${props => props.full ?  "calc(100vw - 25rem)" : "calc(100vw - 7rem)"};
     margin-left: ${props => props.full ? "25rem" : "7rem"};
@@ -129,7 +129,7 @@ const DashboardHeader = props  => {
                 <BalanceText>Balance</BalanceText>
                 <Amount value={balance}/>
             </BalanceContainer>
-            <Cta>
+            {/* <Cta>
                 <CtaItem onClick={() => actionHandler("isEditing")} active={dashboard.action === "isEditing"}>
                     <FontAwesomeIcon 
                         icon="pencil-alt"
@@ -162,7 +162,7 @@ const DashboardHeader = props  => {
                     </SaveContainer>
                 )}
 
-            </Cta>
+            </Cta> */}
         </Container>
     )
 }

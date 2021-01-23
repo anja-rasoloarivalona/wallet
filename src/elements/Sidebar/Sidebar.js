@@ -10,21 +10,28 @@ const Container = styled.div`
     z-index: ${props => props.openedForm ? 1 : 12};
     left: 0;
     width: ${props => props.fullWidth ? "25rem" : "7rem"};
-    height: 100vh;
+    height: calc(100vh - 5.4rem);
     background: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: ${props => props.theme.background};
+
     transition:  ${props => props.openedForm ? "all 0s ease-in" : "all .3s ease-in"};
+
+    // background: red;
+
+
+
 `
 
 const Content = styled.div`
     width: 100%;
     height: 100%;
-    background: ${props => props.theme.surface};
+    background: ${props => props.theme.surface_secondary};
     color: ${props => props.theme.text};
     box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
+    position: relative;
+    z-index: 3;
 `
 
 const IconContainer = styled.div`
@@ -38,7 +45,7 @@ const IconContainer = styled.div`
     cursor: pointer;
     position: relative;
     z-index: 10;
-    background:  ${props => props.theme.surface};
+    // background:  ${props => props.theme.surface};
 
     ${props => {
         if(!props.header){
@@ -49,23 +56,53 @@ const IconContainer = styled.div`
     }}
 `
 
-const Top = styled.div`
+
+
+
+const Toggler = styled.div`
     display: flex;
     align-items: center;
     font-size: 1.6rem;
+    position: absolute;
+    top: 0;
+    right: -4rem;
+    width: 4rem;
+    height: 4rem;
+    background: ${props => props.theme.active_text};
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    cursor: pointer;
+    transition: all .3s ease-in;
+    transform: ${props => props.showToggle ? "translateX(0)" : "translateX(-100%)"};
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left:  ${props => props.showToggle ? "-100%" : 0};
+        z-index: 5;
+        background: ${props => props.theme.surface_secondary};
+        width: 4rem;
+        height: 4rem;
+        transition: all .3s ease-in;
+    }
 
     svg {
-        color: ${props => props.theme.active_text}
+        color: ${props => props.theme.surface}
     }
 `
 
-const TopText = styled.div``
+
 
 const List = styled.ul`
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding-top: 2rem;
+    padding-top: 4rem;
     list-style: none;
 `
 
@@ -139,13 +176,12 @@ const Logout = styled.div`
     } = useSelector(state => state)
 
     const [showText, setShowText ] = useState(sidebar.isShown)
+    const [showToggle, setShowToggle] = useState(false)
 
-    
+
     const salutationText = () => {
         const [ time, period ] = new Date().toLocaleTimeString("en").split(" ")
         const hour = parseInt(time.split(":")[0]) 
-
-
         if(period === "AM"){
             return text.morning_salutation
         }
@@ -196,27 +232,39 @@ const Logout = styled.div`
 
 
 
-    if(!user || !user.token || location.pathname === "/"){
+    if(!user || !user.token || location.pathname === "/" || location.pathname === `/${text.link_setup}`){
         return <div></div>
     }
-    
+
+
+    let timeout
+    const stopTimeout = () => {
+        setShowToggle(true)
+        clearTimeout(timeout)
+    }
+    const startTimeOut = () => {
+        timeout = setTimeout(() => {
+            setShowToggle(false)
+        }, 2000)
+    }
 
     return (
-        <Container fullWidth={sidebar.isShown} openedForm={openedForm}>
+        <Container
+            fullWidth={sidebar.isShown}
+            openedForm={openedForm}
+            onMouseEnter={stopTimeout}
+            onMouseLeave={startTimeOut}
+        >
             <Content>
-                <Top>
-                    <IconContainer header onClick={() => dispatch(actions.toggleSideBar())}>
-                        <FontAwesomeIcon 
-                            icon="bars"
-                            size="lg"
-                        />
-                    </IconContainer>
-                    <ListItemText shown={showText}>
-                        <TopText>
-                            {salutationText()} {user && user.username}
-                        </TopText>
-                    </ListItemText>
-                </Top>
+                <Toggler           
+                    onClick={() => dispatch(actions.toggleSideBar())}
+                    showToggle={showToggle}
+                >
+                    <FontAwesomeIcon 
+                        icon={sidebar.isShown ? "chevron-left" : "chevron-right"}
+                        size="1x"
+                    />
+                </Toggler>
                 <List>
                     {links.map(link => renderLink(link))}
                 </List>

@@ -5,11 +5,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const Container = styled.div`
     position: fixed;
     z-index: 5;
-    top: 7.5rem;
+    top: 0rem;
     left: 0;
     width: 30rem;
-    height: calc(100vh - 7.5rem);
-    border-right: 1px solid  ${props => props.theme.active_text};
+    height: 100vh;
+    border-right: 1px solid  ${props => props.theme.text};
     background: white;
 `
 

@@ -24,30 +24,21 @@ const Routes = props => {
 
 
     useEffect(() => {
-        // if(token && currency && assets && assets.length > 0){
-        //     props.history.push(`/${text.link_dashboard}`)
-        // }
+        if(token && currency && assets && assets.length > 0){
+            props.history.push(`/${text.link_dashboard}`)
+        }
     },[])
 
     useEffect(() => {
-        // if(!token){
-        //     if(pathname !== "/login" && pathname !== "/signup"){
-        //         props.history.push("/login")
-        //     }
-        // } else {
-        //     if(currency && assets && assets.length > 0 && pathname === "/setup"){
-        //         props.history.push("/")
-        //     }
-        //     if((!currency || !assets || assets.length === 0) && pathname !== "/setup"){
-        //         props.history.push("/setup")
-        //     }
-        // }
-        // if(currency && assets && assets.length > 0 && pathname === "/setup"){
-        //     props.history.push("/")
-        // }
-        // if((!currency || !assets || assets.length === 0) && pathname !== "/setup"){
-        //     props.history.push("/setup")
-        // }
+        if(token){
+            const isNotReady = !currency || !assets || assets.length === 0  
+            if(isNotReady && pathname !== `/${text.link_setup}`){
+                props.history.push(`/${text.link_setup}`)
+            }
+            if(!isNotReady && pathname === `/${text.link_setup}`){
+                props.history.push(`/${text.link_dashboard}`)
+            }
+        }
     },[pathname, token, currency])
 
 

@@ -113,7 +113,7 @@ export const SelectInput = props => {
         theme 
     } = useSelector(state => state)
     return (
-        <Container>
+        <Container key={id}>
             <ListContainer>
                 <ReactSelect 
                     id={id}
@@ -187,7 +187,7 @@ export const RenderNormalInput = props => {
     }
 
     return (
-        <Container key={index} style={{...input.style}} onClick={clickHandler}>
+        <Container key={input.id} style={{...input.style}} onClick={clickHandler}>
                 <Input 
                     id={input.id}
                     type={input.type}

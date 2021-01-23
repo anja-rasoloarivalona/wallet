@@ -4,13 +4,18 @@ import styled from 'styled-components'
 const Container = styled.div`
     grid-column: 1 / -1;
     width: 100%;
-    padding-top: 10rem;
+    padding-top: 5.4rem;
     padding-left: 1rem;
     display: flex;
     justify-content: center;
     background: ${props => props.theme.background};
     position: relative;
     z-index: 2;
+
+    background: green;
+
+
+    margin-top: 10rem;
 `
 const GridContainer = styled.div`
     width: 100%;
