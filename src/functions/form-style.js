@@ -4,6 +4,7 @@ import { Field } from 'formik'
 import { useSelector } from 'react-redux'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import ReactSelect, { components } from 'react-select'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 
 export const Container = styled.div`
@@ -126,7 +127,6 @@ export const DateInput = styled(DatePicker)`
     border: 1px solid ${props => props.theme.grey_dark};
     border-radius: 4px;
 `
-
 export const AppInput = styled.input`
     height: 40px;
     width: 100%;
@@ -157,7 +157,6 @@ export const AppInput = styled.input`
 
     }
 `
-
 export const Input = styled(Field)`
     height: 40px;
     width: 100%;
@@ -197,8 +196,6 @@ export const Input = styled(Field)`
         }
     }}
 `
-
-
 export const Select = styled.div`
     cursor: pointer;
     display: flex;
@@ -301,4 +298,26 @@ export const ListContainer = styled.div`
     > div > div:not(:first-child):last-child {
         z-index: 15;
     }
+`
+
+export const CheckContainer = styled.div`
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+`
+export const CheckBox= styled.span`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.8rem;
+    width: 1.8rem;
+    border: 1px solid ${props => props.theme.text};
+    background-color: ${props => props.theme.surface};
+    margin-right: 1rem;
+    border-radius: 3px;
+`
+export const CheckMark = styled(FontAwesomeIcon)`
+`
+export const CheckLabel = styled.div`
 `

@@ -22,6 +22,13 @@ const Routes = props => {
         pathname
     })
 
+
+    useEffect(() => {
+        // if(token && currency && assets && assets.length > 0){
+        //     props.history.push(`/${text.link_dashboard}`)
+        // }
+    },[])
+
     useEffect(() => {
         // if(!token){
         //     if(pathname !== "/login" && pathname !== "/signup"){
@@ -92,7 +99,7 @@ const Routes = props => {
                 <Route path={`/${text.link_signup}`} component={Signup}/>
                 <Route path={`/${text.link_signup_activate}`} component={ActivateAccount} />
                 <Route path={`/${text["link_forgot-password"]}`} component={ForgotPassword} />
-                <Route path={`/${text.link_reset_password}`} component={ResetPassword} />
+                <Route path={`/${text["link_reset-password"]}`} component={ResetPassword} />
                 <Redirect to="/"/> 
             </Switch>
         )

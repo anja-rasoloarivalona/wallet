@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { SectionContainer } from '../../Settings-style'
 import { Section, Title, TextContainer, Text} from '../../Settings-style'
 import { useSelector, useDispatch } from 'react-redux'
-import { AppInput, Label } from '../../../../functions/form-style'
+import { AppInput } from '../../../../functions/form-style'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Loader, Tail, Modal, Success } from '../../../../components'
@@ -134,7 +133,7 @@ const Password = props => {
         <Tail
             bottom="943px"
             type="information"
-            // style={style}
+
         >
            {text}
         </Tail>

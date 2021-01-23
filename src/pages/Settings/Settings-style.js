@@ -6,6 +6,7 @@ const SectionContainer = styled.div`
     height: calc(100vh - 7rem);
     overflow-y: overlay;
     padding-top: 3.5rem;
+    margin-bottom: .5rem;
 `
 
 
@@ -27,6 +28,7 @@ const Title = styled.div`
 
 const TextContainer = styled.div`
     margin-bottom: 2rem;
+    font-size: 1.4rem;
 `
 
 const Text = styled.div`

@@ -56,6 +56,7 @@ const TailContainer = styled.div`
 
 const TailText = styled.div`
       padding: 1rem;
+      line-height: 1.4;
 `
 
 const Tail = props => {

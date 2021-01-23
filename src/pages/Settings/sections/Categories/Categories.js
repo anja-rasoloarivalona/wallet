@@ -15,20 +15,16 @@ Object.keys(fas).forEach(icon => {
 })
 iconsLibrary = iconsLibrary.filter( i => i !== "font-awesome-logo-full")
 
-console.log({ iconsLibrary})
 
 
 
 const List = styled.ul`
     list-style: none;
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: max-content;
-    grid-auto-rows: max-content;
-    column-gap: 2rem;
-    row-gap: 4rem;
-    padding-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    background: red;
+    max-width: 70rem;
 
 
     * {
@@ -39,13 +35,27 @@ const List = styled.ul`
 const Category = styled.div`
     display: flex;
     align-items: center;
-    background: ${props => props.theme.surface};
+    background: ${props => props.theme.background};
     padding: 1rem 2rem;
-    max-width: 42rem;
-    border-radius: 4px;
+    // border-radius: 4px;
     font-size: 1.6rem;
     cursor: pointer;
     position: relative;
+    border-bottom: 1px solid ${props => props.theme.surface};
+
+    ${props => {
+        if(props.showList === props.id){
+            return {
+                background: props.theme.surface,
+                borderBottom: `1px solid ${props.theme.background}`
+            }
+        }
+    }}
+
+    // display: grid;
+    // column-gap: 4rem;
+    // grid-template-columns: repeat(2, 1fr);
+
 `
 
 const CategoryColor = styled.div`
@@ -68,6 +78,7 @@ const CategoryIconContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 2rem;
 `
 
 const CategoryIcon = styled(FontAwesomeIcon)``
@@ -98,6 +109,9 @@ const SubList = styled.ul`
     list-style: none;
     padding-bottom: 2rem;
     box-shadow: ${props => props.theme.box_shadow};
+    display: grid;
+    column-gap: 4rem;
+    grid-template-columns: repeat(2, 1fr);
 `
 
 const SubListItem = styled.li`
@@ -105,16 +119,16 @@ const SubListItem = styled.li`
     display: flex;
     align-items: center;
 
-    > div:first-child {
-        width: 2.3rem;
-        height: 2.3rem;
-        margin-right: 2rem;
-    }
+    // > div:first-child {
+    //     width: 2.3rem;
+    //     height: 2.3rem;
+    //     margin-right: 2rem;
+    // }
 
-    > div:last-child {
-        width: 2rem;
-        margin-left: 4rem;
-    }
+    // > div:last-child {
+    //     width: 2rem;
+    //     margin-left: 4rem;
+    // }
 `
 
 const SubListItemText = styled.div`
@@ -157,6 +171,7 @@ const IconContainer = styled.div`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+
     :hover {
         background: ${props => props.theme.active_text};
         
@@ -206,19 +221,10 @@ const Categories = () => {
         }
     )
 
-    console.log(categories)
-
-    const ref = useRef()
-    console.log("ref", ref.current)
-    useOnClickOutside(ref, () => setShowList(null))
-
-
    const renderCategory = category => {
         const renderSubCategory = subcat => {
             return (
                 <SubListItem key={subcat.sub_id}>
-                    <div></div>
-                    <SubListItemText>{subcat.sub_name}</SubListItemText>
                     <CategoryIconContainer
                         background={showColorPicker && showColorPicker.master_id ===  category.master_id  ? showColorPicker.color :  category.color}
                     >
@@ -228,13 +234,12 @@ const Categories = () => {
                             color="white"
                         />
                     </CategoryIconContainer>
-                    <div></div>
+                    <SubListItemText>{subcat.sub_name}</SubListItemText>
                 </SubListItem>
             )
         }
 
         const clickListHandler = id => {
-
             if(!showList){
                 return setShowList(id)
             }
@@ -245,10 +250,6 @@ const Categories = () => {
             if(showList && showList !== id){
                 return setShowList(id)
             }
-
-           
-
-
         }
 
         const clickColorHandler = category => {
@@ -262,44 +263,38 @@ const Categories = () => {
             }))
         }
 
+
+
        return (
-           <Category key={category.master_id} >
-               <CategoryColor  
+           <Category key={category.master_id} showList={showList} id={category.master_id}>
+                <CategoryIconContainer
                     background={showColorPicker && showColorPicker.master_id ===  category.master_id  ? showColorPicker.color :  category.color}
-                    onClick={() => clickColorHandler(category)}
-               />
-               {showColorPicker && showColorPicker.master_id === category.master_id && (
-                    <ColorPickerContainer>
-                        <ChromePicker 
-                            color={showColorPicker.color}
-                            disableAlpha="true"
-                            onChangeComplete={changeColorComplete}
-                        />
-                </ColorPickerContainer>
-               )}
+                >
+                    <CategoryIcon 
+                            icon={category.master_icon}
+                            size="1x"
+                            color="white"
+                    />
+                </CategoryIconContainer>
+              
 
                <CategoryText>{category.master_name}</CategoryText>
-               <CategoryIconContainer
-                     background={showColorPicker && showColorPicker.master_id ===  category.master_id  ? showColorPicker.color :  category.color}
-               >
-                   <CategoryIcon 
-                        icon={category.master_icon}
-                        size="1x"
-                        color="white"
-                   />
-               </CategoryIconContainer>
+
+             <CategoryColor  
+                    background={showColorPicker && showColorPicker.master_id ===  category.master_id  ? showColorPicker.color :  category.color}
+                    onClick={() => clickColorHandler(category)}
+            />
                <TogglerContainer>
-                <Toggler
-                        icon="angle-down"
-                        size="lg"
-                        onClick={() => clickListHandler(category.master_id)}
-                />
+                    <Toggler
+                            icon={showList === category.master_id ? "times-circle" :  "angle-down"}
+                            size="lg"
+                            onClick={() => clickListHandler(category.master_id)}
+                    />
                </TogglerContainer>
 
                {showList === category.master_id && (
-                    <SubList ref={ref}>
+                    <SubList>
                         {Object.keys(category.children).map( subcat => renderSubCategory(category.children[subcat]))}
-                        {/* <Spacer /> */}
                     </SubList>
                )}
            </Category>
@@ -317,6 +312,13 @@ const Categories = () => {
                 <List>
                     {Object.keys(categories).map( category => renderCategory(categories[category]))}
                 </List>
+                <ColorPickerContainer>
+                        <ChromePicker 
+                            // color={showColorPicker.color}
+                            disableAlpha="true"
+                            // onChangeComplete={changeColorComplete}
+                        />
+                </ColorPickerContainer>
         </SectionContainer>
 
     )

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import { withFormik, Form as FormComponent } from 'formik'
-import { renderInput } from '../../functions'
+import { renderInput, client } from '../../functions'
 import { Button, Loader } from '../../components'
 import * as Yup from 'yup'
 
@@ -119,10 +119,7 @@ const EnhancedForm = withFormik({
     },
     handleSubmit: async (values, {props}) => {
         const { sendEmailHandler } = props
-        const res = await sendEmailHandler(values.email)
-        console.log({
-            res
-        })
+        await sendEmailHandler(values.email)
     }
 })(Form)
 
@@ -132,8 +129,15 @@ const ForgotPassword = () => {
         text
     } = useSelector(state => state)
 
-    const sendEmailHandler = email => {
-        
+    const sendEmailHandler = async email => {
+        try {
+            const res = await client.post('/forgot-password', { email })
+            console.log({
+                res
+            })
+        } catch(err){
+            console.log(err)
+        }
     }   
 
     return (

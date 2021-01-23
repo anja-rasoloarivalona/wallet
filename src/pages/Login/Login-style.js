@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Form } from 'formik'
 
+
 const Container = styled.div`
     grid-column: 1 / -1;
     height: calc(100vh - 7.5rem);
@@ -33,10 +34,9 @@ const Title = styled.div`
 const Cta = styled.div`
     display: flex;
     align-items: center;
-    // background: red;
+    justify-content: space-between;
     width: 100%;
     margin-top: 2rem;
-    padding-left: 1rem;
 `
 
 const CtaItem = styled.div`
@@ -57,11 +57,13 @@ const ButtonContainer = styled.div`
 `
 
 
+
+
 export {
     Container,
     LoginForm,
     Title,
     Cta,
     CtaItem,
-    ButtonContainer
+    ButtonContainer,
 }

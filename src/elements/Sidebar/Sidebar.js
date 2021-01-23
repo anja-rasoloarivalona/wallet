@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../store/actions'
 
@@ -130,6 +130,7 @@ const Logout = styled.div`
 
 
  const SideBar = props => {
+     const location = useLocation()
     const dispatch = useDispatch()
     const {
         text : { currentPage : text },
@@ -192,6 +193,12 @@ const Logout = styled.div`
             setShowText(false)
         }
     }, [sidebar.isShown])
+
+
+
+    if(!user || !user.token || location.pathname === "/"){
+        return <div></div>
+    }
     
 
     return (

@@ -29,7 +29,7 @@ const Container = styled.div`
     transition: all .3s ease-in;
 
     ${props => {
-        if(props.isLoggedIn){
+        if(props.isLoggedIn && window.location.pathname !== "/"){
             if(props.full){
                 return {
                     marginLeft: "25rem",

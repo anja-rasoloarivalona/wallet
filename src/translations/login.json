@@ -10,5 +10,9 @@
     "password": {
         "fr": "Mot de passe",
         "en": "Password"
+    },
+    "remember_me": {
+        "fr": "Se souvenir de moi",
+        "en": "Remember me"
     }
 }

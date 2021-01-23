@@ -9,7 +9,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { useOnClickOutside } from './index'
 import "react-datepicker/dist/react-datepicker.css"
 import {
-    Container, Label, LabelAction, DateInput, Input, Select, SelectValue, SelectList, SelectListItem, InputUnit, Error, ListContainer
+    Container, Label, LabelAction, DateInput, Input, Select, SelectValue, SelectList, SelectListItem, InputUnit, Error, ListContainer, CheckContainer, CheckBox, CheckMark, CheckLabel
 } from './form-style'
 import en from 'date-fns/locale/en-US'
 import fr from 'date-fns/locale/fr-CA'
@@ -37,6 +37,20 @@ export const renderInput = (props) => {
     }
 }
 
+
+export const RenderCheckBox = props => {
+
+    const {  label, isChecked, onChange } = props 
+
+    return (
+        <CheckContainer onClick={() => onChange(!isChecked)}>
+            <CheckBox>
+                {isChecked && <CheckMark icon="check" size="xs" />}
+            </CheckBox>
+            <CheckLabel>{label}</CheckLabel>
+        </CheckContainer>
+    )
+}
 
 const DropdownIndicator = props => {
     return (
