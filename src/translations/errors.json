@@ -14,5 +14,13 @@
     "signup_failed": {
         "fr": "Nous sommes désolés, quelque chose s'est mal passé lors de la création de votre compte. Veuillez réessayer.",
         "en": "We are sorry, something went wrong while creating your account. Please try again."
+    },
+    "no_user_found": {
+        "fr": "Ce compte n'existe pas",
+        "en": "No user found"
+    },
+    "wrong_password": {
+        "fr": "Le mot de passe est incorrect",
+        "en": "Invalid password"
     }
 }

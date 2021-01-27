@@ -5,7 +5,7 @@ const themes = {
     light: {
         background: "#f5f5f5",
         surface: "#ffffff",
-        surface_secondary: "#e9e9e9",
+        primary: "#2E3E4E",
         text: "#c5c5c5",
         active_text: "#161616",
         box_shadow: "0px 1px 2px -1px rgb(113 113 113 / 75%)",
@@ -34,7 +34,7 @@ const initialState = {
     grey_dark: "#acadae",
     white: "#FEFDFB",
     black: "#1B1A19",
-    red: "#dd1a1a",
+    red: "#ff3333",
     green: "#0dc30d",
     clr_primary: "#7b7b7b",
     clr_text: "#f5f5f5",

@@ -4,12 +4,13 @@ import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../store/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import logo from '../../assets/logo.png'
+import logoDark from '../../assets/logo-dark-man.png'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 
 const Logo = styled.img`
-    width: 16rem;
-    height: 14rem;
+    width: 5rem;
+    height: 5rem;
     object-fit: cover;
     cursor: pointer;
 `
@@ -107,7 +108,7 @@ const Header = props => {
     return (
         <HeaderContainer>
             <HeaderSection>
-                <Logo src={logo} alt="logo" onClick={() => props.history.push("/")}/>
+                <Logo src={logoDark} alt="logo" onClick={() => props.history.push("/")}/>
             </HeaderSection>
             <HeaderSection>
                 {items.map(item => renderItem(item))}

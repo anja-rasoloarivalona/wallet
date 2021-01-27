@@ -1,5 +1,5 @@
 import React from 'react'
-import {EmailSentContainer, EmailSentTitleContainer, EmailSentTitle, EmailSentTitleIcon, EmailSentModal, EmailSentText } from '../Signup-style'
+import {EmailSentContainer, EmailSentTitleContainer, EmailSentTitle, EmailSentTitleIcon, EmailSentModal, EmailSentText } from './Signup-style'
 
 const EmailSent = props => {
     const { user } = props

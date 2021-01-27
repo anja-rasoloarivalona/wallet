@@ -110,11 +110,11 @@ const App = () => {
         <Config>
             <Header />
             {/* <CategoriesForm /> */}
-            {!dashboard.isManaging && (
+            {/* {!dashboard.isManaging && (
                 <AddTransaction onClick={() => dispatch(actions.toggleForm({ form: "transactionForm" }))}>
                     Add transaction
                 </AddTransaction>
-            )}
+            )} */}
             {isLoggedIn && <Sidebar />}
             <Background  show={openedForm} />
             {openedForm && (

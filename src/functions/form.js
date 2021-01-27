@@ -9,7 +9,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { useOnClickOutside } from './index'
 import "react-datepicker/dist/react-datepicker.css"
 import {
-    Container, Label, LabelAction, DateInput, Input, Select, SelectValue, SelectList, SelectListItem, InputUnit, Error, ListContainer, CheckContainer, CheckBox, CheckMark, CheckLabel
+    Container, Label, LabelAction, DateInput, Input, Select, SelectValue, SelectList, SelectListItem, InputUnit, Error, ListContainer, CheckContainer, CheckBox, CheckMark, CheckLabel, Counter, TraillingIcon
 } from './form-style'
 import en from 'date-fns/locale/en-US'
 import fr from 'date-fns/locale/fr-CA'
@@ -188,17 +188,27 @@ export const RenderNormalInput = props => {
 
     return (
         <Container key={input.id} style={{...input.style}} onClick={clickHandler}>
+                {input.traillingIcon && (
+                    <TraillingIcon>
+                        <FontAwesomeIcon 
+                            icon={input.traillingIcon}
+                            size="lg"
+                        />
+                    </TraillingIcon>
+                )}
                 <Input 
                     id={input.id}
                     type={input.type}
                     name={input.name}
-                    placeholder={input.placeholder}
+                    placeholder={input.required ? `${input.placeholder} \u002A` : input.placeholder}  
                     disabled={input.disabled}
                     style={{...input.fiedlStyle}}
+                    maxLength={input.maxLength ? input.maxLength :  null}
+                    error={touched[input.name] && errors[input.name]}
                 />
-                {!errors[input.name] && (
-                    <Label htmlFor={input.id} style={{...input.labelStyle}}  shown={values[input.name] !== ''}>
-                        {input.label}
+                {(
+                    <Label htmlFor={input.id} style={{...input.labelStyle}}  shown={values[input.name] !== '' || (touched[input.name] && errors[input.name])}>
+                        {input.label} {input.required &&  `\u002A`} 
                     </Label>
                 )}
                 {input.children && input.children()}
@@ -211,6 +221,11 @@ export const RenderNormalInput = props => {
                     <Error>
                         {errors[input.name]} 
                     </Error>
+                )}
+                {input.maxLength && (
+                    <Counter id={`counter`}>
+                        {values[input.name].length} / {input.maxLength}
+                    </Counter>
                 )}
         </Container>
     )

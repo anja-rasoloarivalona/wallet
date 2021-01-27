@@ -10,8 +10,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 export const Container = styled.div`
     position: relative;
     width: 100%;
-    margin-top: 30px;
-    caret-color: ${props => props.theme.clr_primary};
+    padding-bottom: 4.5rem;
+    caret-color: ${props => props.theme.active_text};
+    display: flex;
+    align-items: center;
 
     * {
         box-sizing: border-box;
@@ -65,7 +67,7 @@ export const Container = styled.div`
     }
 
     input::placeholder {
-        color: ${props => props.theme.grey_dark};
+        // color: ${props => props.theme.grey_dark};
     }
 
     input::-webkit-outer-spin-button,
@@ -94,13 +96,18 @@ export const Label = styled.label`
     transition: all .2s ease-in;
     opacity: 0;
     font-size: 1.4rem;
+    background: ${props => props.theme.surface};
+    height: min-content;
+    margin: 0;
+    padding: 0 5px;
 
 
     ${props => {
         if(props.shown){
             return {
-                'transform' : 'translateY(-33px) translateX(-10px)',
-                'opacity' : '1'
+                'transform' : 'translateY(-8.5px) translateX(5px)',
+                'opacity' : '1',
+                'font-size': "12px"
             }
         }
         if(props.textarea){
@@ -128,64 +135,102 @@ export const DateInput = styled(DatePicker)`
     border-radius: 4px;
 `
 export const AppInput = styled.input`
-    height: 40px;
+    height: 45px;
     width: 100%;
-    padding-left: 10px;
+    padding-left: 20px;
     border-radius: 4px;
     font-size: 1.4rem;
     border: none;
-    border-bottom: 1px solid transparent;
+    border: 1px solid ${props => props.theme.text};
 
     ::placeholder {
-        color: ${props => props.theme.text};
+        color: ${props => props.error ? props.theme.red :  props.theme.text};
     }
 
     :focus {
         outline: none;
-        border-bottom: 1px solid ${props => props.theme.clr_primary};
+        border-bottom: 1px solid ${props => props.theme.primary};
+
+        + label {
+            opacity: 1;
+            transform: translateY(-8.5px) translateX(5px);
+            font-size: 12px;
+            color: ${props => props.theme.primary};
+        }
     }
     :not(:placeholder-shown) + label {
         opacity: 1;
-        transform: translateY(-33px) translateX(-10px);
+        transform: translateY(-8.5px) translateX(5px);
+        font-size: 12px;
     }
-    :-webkit-autofill,
-    :-webkit-autofill:hover, 
-    :-webkit-autofill:focus, 
-    :-webkit-autofill:active  {
-    :-webkit-box-shadow: 0 0 0 30px white inset !important;
-        background: white !important;
-
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover, 
+    &:-webkit-autofill:focus, 
+    &:-webkit-autofill:active  {
+        --webkit-box-shadow: 0 0 0 30px ${props => props.theme.surface} inset !important;
     }
 `
 export const Input = styled(Field)`
-    height: 40px;
+    height: 45px;
     width: 100%;
-    padding-left: 10px;
+    padding-left: 20px;
     border-radius: 4px;
     font-size: 1.4rem;
     border: none;
-    border-bottom: 1px solid transparent;
+    border: 1px solid ${props => props.theme.text};
+    transition: all .2s ease-in;
 
     ::placeholder {
-        color: ${props => props.theme.text};
+        color: ${props => props.error ? "transparent" :  props.theme.text};
     }
+
+    ${props => {
+        if(props.error){
+            return {
+                border: `1px solid ${props.theme.red}`,
+                "& + label": {
+                    color: props.theme.red
+                },
+            }
+        }
+    }}
+
+
 
     :focus {
         outline: none;
-        border-bottom: 1px solid ${props => props.theme.clr_primary};
+        border: 1px solid ${props => props.theme.primary};
+
+        & + label {
+            color: ${props => props.theme.primary};
+            opacity: 1;
+            transform: translateY(-8.5px) translateX(5px);
+            font-size: 12px;
+        }
+
+
+        &::placeholder {
+            color: transparent;
+        }
+
+        & ~ #counter {
+            display: block;
+        }
     }
     :not(:placeholder-shown) + label {
         opacity: 1;
-        transform: translateY(-33px) translateX(-10px);
+        transform: translateY(-8.5px) translateX(5px);
+        font-size: 12px;
     }
-    :-webkit-autofill,
-    :-webkit-autofill:hover, 
-    :-webkit-autofill:focus, 
-    :-webkit-autofill:active  {
-    :-webkit-box-shadow: 0 0 0 30px white inset !important;
-        background: white !important;
 
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover, 
+    &:-webkit-autofill:focus, 
+    &:-webkit-autofill:active  {
+        -webkit-box-shadow: 0 0 0 30px ${props => props.theme.surface} inset !important;
     }
+
     ${props => {
         if(props.textarea){
             return {
@@ -263,21 +308,18 @@ export const SelectListItem = styled.li`
 `
 export const InputUnit = styled.div`
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 16px;
     right: 10px;
-    height: 100%;
     display: flex;
     align-items: center;
     color: ${props => props.theme.grey_dark};
+    height: min-content;
 `
 export const Error = styled.div`
     position: absolute;
-    top: calc(100% + 10px);
-    font-size: 1.4rem;
-    top: 0;
-    transform: translateY(-20px);
-
+    bottom: 25px;
+    left: 20px;
+    font-size: 1.3rem;
     z-index: 13;
     color: ${props => props.theme.red};
 `
@@ -320,4 +362,24 @@ export const CheckBox= styled.span`
 export const CheckMark = styled(FontAwesomeIcon)`
 `
 export const CheckLabel = styled.div`
+`
+
+export const Counter = styled.div`
+    text-align: right;
+    font-size: 1.2rem;
+    position: absolute;
+    right: 0px;
+    bottom: 25px;
+    color: ${props => props.theme.active_text};
+    display: none;
+`
+
+export const TraillingIcon = styled.div`
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 12px;
 `

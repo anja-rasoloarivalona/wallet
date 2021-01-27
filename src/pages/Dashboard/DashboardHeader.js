@@ -14,7 +14,7 @@ const Container = styled.div`
     margin-left: ${props => props.full ? "25rem" : "7rem"};
     height: 10rem;
     background: ${props => props.theme.background};
-    padding-left: 4rem;
+    padding-left: 8rem;
     z-index: 10;
     transition: all .3s ease-in;
     padding-right: 25rem;

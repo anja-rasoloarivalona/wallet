@@ -1,33 +1,46 @@
 import styled from 'styled-components'
-import { Form } from 'formik'
-
 
 const Container = styled.div`
     grid-column: 1 / -1;
-    height: calc(100vh - 7.5rem);
+    height: calc(100vh - 5.4rem);
     display: flex;
     flex-direction: column;
     align-items: center;
     background: ${props => props.theme.background};
-    margin-top: 7.5rem;
     padding-top: 7rem;
     overflow-y: overlay;
 `
 
-const LoginForm = styled(Form)`
+const Modal = styled.div`
+    background: ${props => props.theme.surface};
+    padding: 4rem 4rem;
+    width: 90vw;
+    max-width: 56rem; 
+    border-radius: 5px;
+    box-shadow: ${props => props.theme.box_shadow};
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 90vw;
-    max-width: 35rem; 
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 40rem;
+    }
+
+    button {
+        background: ${props => props.theme.primary}
+    }
 `
+
 
 const Title = styled.div`
     color: ${props => props.theme.text};
     font-size: 3rem;
     font-weight: 500;
-    margin-bottom: 2rem;
-    width: 100vw;
+    margin-bottom: 3rem;
     text-align: center;
 `
 
@@ -36,8 +49,8 @@ const Cta = styled.div`
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    margin-top: 2rem;
 `
+
 
 const CtaItem = styled.div`
     font-size: 1.6rem;
@@ -47,23 +60,19 @@ const CtaItem = styled.div`
         text-decoration: underline;
     }
 `
-const ButtonContainer = styled.div`
-    margin-top: 7rem;
-    height: 6rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
+
+const ForgotPassword = styled(CtaItem)`
+    position: absolute;
+    right: 0;
+    bottom: 20px;
+    font-size: 1.4rem;
 `
-
-
-
 
 export {
     Container,
-    LoginForm,
     Title,
     Cta,
     CtaItem,
-    ButtonContainer,
+    Modal,
+    ForgotPassword
 }

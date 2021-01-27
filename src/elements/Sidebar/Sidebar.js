@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { NavLink, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../store/actions'
+import { faFileAlt, faUser,  } from '@fortawesome/free-regular-svg-icons'
 
 const Container = styled.div`
     position: fixed;
@@ -27,7 +28,7 @@ const Container = styled.div`
 const Content = styled.div`
     width: 100%;
     height: 100%;
-    background: ${props => props.theme.surface_secondary};
+    background: ${props => props.theme.primary};
     color: ${props => props.theme.text};
     box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
     position: relative;
@@ -65,16 +66,16 @@ const Toggler = styled.div`
     font-size: 1.6rem;
     position: absolute;
     top: 0;
-    right: -4rem;
-    width: 4rem;
-    height: 4rem;
+    right: -3rem;
+    width: 3rem;
+    height: 3rem;
     background: ${props => props.theme.active_text};
     z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
+    // border-top-right-radius: 1rem;
+    // border-bottom-right-radius: 1rem;
     cursor: pointer;
     transition: all .3s ease-in;
     transform: ${props => props.showToggle ? "translateX(0)" : "translateX(-100%)"};
@@ -86,8 +87,8 @@ const Toggler = styled.div`
         left:  ${props => props.showToggle ? "-100%" : 0};
         z-index: 5;
         background: ${props => props.theme.surface_secondary};
-        width: 4rem;
-        height: 4rem;
+        width: 3rem;
+        height: 3rem;
         transition: all .3s ease-in;
     }
 
@@ -120,19 +121,19 @@ const ListLink = styled(NavLink)`
         position: relative;
     }
     &.active, &:hover {
-        color: ${props => props.theme.active_text};
+        color: ${props => props.theme.surface};
     }
 
     &.active:after {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        margin: auto;
-        width: .5rem;
-        height: 70%;
-        background:  ${props => props.theme.active_text};
+        // content: "";
+        // position: absolute;
+        // top: 0;
+        // bottom: 0;
+        // right: 0;
+        // margin: auto;
+        // width: .5rem;
+        // height: 70%;
+        // background:  ${props => props.theme.text};
     }
 `
 
@@ -193,9 +194,9 @@ const Logout = styled.div`
     }
 
     const links = [
-        { link: `/${text.link_dashboard}`, icon: "project-diagram", label: text.dashboard},
-        { link: `/${text.link_transactions}`, icon: "chart-line", label: text.transactions, exact: false},
-        { link: `/${text.link_profile}`, icon: "user", label: text.profile, exact: false },
+        { link: `/${text.link_dashboard}`, icon: "chart-line", label: text.dashboard},
+        { link: `/${text.link_transactions}`, icon: faFileAlt, label: text.transactions, exact: false},
+        { link: `/${text.link_profile}`, icon: "calculator", label: text.profile, exact: false },
         { link: `/${text.link_settings}`, icon: "cogs", label: text.settings, exact: false}
     ]
 
@@ -206,7 +207,7 @@ const Logout = styled.div`
                     <IconContainer>
                         <FontAwesomeIcon 
                             icon={item.icon}
-                            size="1x"
+                            size="lg"
                         />
                     </IconContainer>
                     <ListItemText shown={showText}>{item.label}</ListItemText>
@@ -245,7 +246,7 @@ const Logout = styled.div`
     const startTimeOut = () => {
         timeout = setTimeout(() => {
             setShowToggle(false)
-        }, 2000)
+        }, 1000)
     }
 
     return (

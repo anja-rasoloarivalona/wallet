@@ -33,3 +33,12 @@ export {
 export {
     Modal
 } from './Modal'
+
+export {
+    EnhancedForm as Form,
+    formFunctions
+} from './Form'
+
+export {
+    SubmitButton
+} from './SubmitButton'

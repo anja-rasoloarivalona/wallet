@@ -5,6 +5,7 @@ import axios from 'axios'
 import 'font-awesome/css/font-awesome.min.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+
 library.add(fas)
 
 

@@ -1,65 +1,95 @@
-import React, { useState } from 'react'
-import { Container } from './Login-style'
-import LoginForm from './LoginForm'
+import React from 'react'
+import {Container, Modal, Title, ForgotPassword } from './Login-style'
+import * as Yup from 'yup'
+import {  Form, formFunctions } from '../../components'
 import { useSelector, useDispatch } from 'react-redux'
+import {client  } from '../../functions'
 import * as actions from '../../store/actions'
-import { client } from '../../functions'
 
+const Login = props => {
 
-const Login = props  => {
-    const dispatch = useDispatch()
-    const [remember, setRemember] = useState(false)
-    const { 
-        text,
-        user : { token }
+    const {
+        text : { currentPage: text, errors: errorText },
     } = useSelector(state => state)
+    const dispatch = useDispatch()
+
+    const inputs = [
+        {   
+            id: "email",
+            type: "email",
+            name: "email",
+            label: text.email,
+            placeholder: text.email,
+            input_type: "input",
+            validation: Yup.string().email(errorText.email_invalid),
+            required: true
+        },
+        {   
+            id: "password",
+            type: "password",
+            name: "password",
+            label: text.password,
+            placeholder: text.password,
+            input_type: "input",
+            validation: Yup.string(),
+            required: true,
+            children: () => <ForgotPassword onClick={() => props.history.push(`/${text["link_forgot-password"]}`)}>
+                                {text.forgot_password}
+                            </ForgotPassword>
+        }
+    ]
 
     const redirectToDashboard = () => {
         props.history.push(`/${text.currentPage.link_dashboard}`)
     }
 
-    const loginHandler = async data => {
+    const login = async data => {
         try {
             const res = await client.post("/login", data)
-
             if(res.status !== 200){
-                return loginFailedHandler(res)
+                return loginFail(res)
             }
             const resData = res.data.data
             const _data = {
                 ...resData.userData,
                 token: resData.token
             }
-            loginSuccessHandler(_data)
-           
+            loginSuccess(_data)
         } catch(err){
-            loginFailedHandler(err)
+            loginFail(err)
         }
     }
 
-    const loginFailedHandler = error => {
-        console.log("[FAILED TO LOGIN]", error)
+    const loginFail = error => {
+        // console.log("[FAILED TO LOGIN]", error)
+        // console.log(error.response)
         dispatch(actions.clearUser())
+        if(error.response.status === 404){
+            formFunctions.setErrors({ email: errorText.no_user_found})
+        }
+        if(error.response.status === 401){
+            formFunctions.setErrors({ password: errorText.wrong_password})
+        }
+        
     }
 
-    const loginSuccessHandler = data => {
+    const loginSuccess = data => {
         dispatch(actions.updateApp(data))
         redirectToDashboard()
     }
 
-    if(token){
-        return redirectToDashboard()
-    }
-
     return (
         <Container>
-            <LoginForm
-                loginHandler={loginHandler}
-                text={text}
-                remember={remember}
-                setRemember={setRemember}
-            />
+            <Modal>
+                <Title>{text.login}</Title>
+                <Form 
+                    inputs={inputs}
+                    submitHandler={login}
+                    buttonLabel={text.login}
+                />
+            </Modal>
         </Container>
+       
     )
 }
 

@@ -1,16 +1,14 @@
 import styled from 'styled-components'
-import { Form } from 'formik'
 import { Button } from '../../components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Container = styled.div`
     grid-column: 1 / -1;
-    height: calc(100vh - 7.5rem);
+    height: calc(100vh - 5.4rem);
     display: flex;
     flex-direction: column;
     align-items: center;
     background: ${props => props.theme.background};
-    margin-top: 7.5rem;
     padding-top: 7rem;
     overflow-y: overlay;
 `
@@ -19,34 +17,42 @@ const Title = styled.div`
     color: ${props => props.theme.text};
     font-size: 3rem;
     font-weight: 500;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     width: 100vw;
     text-align: center;
 `
 
-const SignupForm = styled(Form)`
+const Modal = styled.div`
+    background: ${props => props.theme.surface};
+    padding: 4rem 4rem;
+    width: 90vw;
+    max-width: 56rem; 
+    border-radius: 5px;
+    box-shadow: ${props => props.theme.box_shadow};
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    width: 90vw;
-    max-width: 35rem; 
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 40rem;
+    }
+
+    button {
+        background: ${props => props.theme.primary}
+    }
 `
 
-const SignupButton = styled(Button)`
-    background: ${props => props.theme.active_text};
-    color: ${props => props.theme.text};
-    padding: 0 7rem;
-    border-radius: 2.5rem;
-    
-`
 
 const OrTextContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
-    margin-top: 3rem;
+    // margin-top: 3rem;
 `
 
 const OrText = styled.div`
@@ -67,15 +73,7 @@ const Disclaimer = styled.div`
     max-width: 35rem;
     font-size: 1.3rem;
     text-align: center;
-`
-
-const ButtonContainer = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 100%;
-    height: 6rem;
+    line-height: 1.4;
 `
 
 const SignupOther = styled.div`
@@ -127,9 +125,6 @@ const PasswordReqList = styled.ul`
 export {
     Title,
     Container,
-    SignupForm,
-    ButtonContainer,
-    SignupButton,
     Disclaimer,
     OrTextContainer,
     OrText,
@@ -144,5 +139,6 @@ export {
     EmailSentTitle,
     EmailSentTitleIcon,
     EmailSentModal,
-    EmailSentText
+    EmailSentText,
+    Modal
 }

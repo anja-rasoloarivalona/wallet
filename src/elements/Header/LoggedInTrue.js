@@ -5,6 +5,8 @@ import * as actions from '../../store/actions'
 import { client } from '../../functions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
+import { faBell } from  '@fortawesome/free-regular-svg-icons'
+import { faFileAlt, faUser, faComment  } from '@fortawesome/free-regular-svg-icons'
 
 const Container = styled(HeaderContainer)`
     background: ${props => props.theme.surface};
@@ -17,9 +19,9 @@ const IconContainer = styled.div`
     position: relative;
     cursor: pointer;
     margin-left: 2rem;
-    background: ${props => props.theme.text};
-    width: 3rem;
-    height: 3rem;
+    // background: ${props => props.theme.text};
+    width: 4rem;
+    height: 4rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,14 +31,18 @@ const IconContainer = styled.div`
     svg {
         color:  ${props => props.theme.active_text};
 
-        :hover {
-            // color:  ${props => props.theme.surface};
-        }
+
         
+    }
+
+    :hover {
+        background: ${props => props.theme.background};
     }
 
 
 `
+
+const Logo = styled.div``
 
 const Menu = styled.div`
     position: absolute;
@@ -68,21 +74,24 @@ const Salutation = styled(HeaderSection)`
 `
 
 const Avatar = styled.div`
-    width: 3rem;
-    height: 3rem;
-    border: 2px solid ${props => props.theme.text};
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%;
     text-transform: capitalize;
-    background: ${props => props.theme.surface};
+    cursor: pointer;
+    color:  ${props => props.theme.active_text};
+    margin-left: 2rem;
+    font-size: 1.6rem;
 
-    :hover {
-        color: white;
-        background: ${props => props.theme.active_text};
-        border: 2px solid ${props => props.theme.active_text};
+    svg {
+        margin-left: 1rem;
+        height: min-content;
     }
+
+
+    // :hover {
+    //     color:  ${props => props.theme.active_text};
+    // }
 `
 
 
@@ -122,7 +131,7 @@ const Header = () => {
 
     const RenderAction = props => {
         const [ showList, setShowList ] = useState(false)
-        const { id, icon, list, avatar } = props
+        const { id, icon, list } = props
 
         const renderMenuItem = (item, index) => {
             return (
@@ -138,13 +147,7 @@ const Header = () => {
                 onClick={() => setShowList(prev => !prev)}
                 key={id}
             >
-                {icon && <FontAwesomeIcon icon={icon} size="1x" /> }
-                {avatar && (
-                    <Avatar>
-                        A
-                    </Avatar>
-                )}
-                
+                <FontAwesomeIcon icon={icon} size="lg" />  
                 {showList && (
                     <Menu>
                         {list.map((item, index) => renderMenuItem(item, index))}
@@ -155,19 +158,33 @@ const Header = () => {
     }
 
     const actions = [
-        { id: "other", avatar: true, list: ["Language", "Currency", "Theme", "Design", "Logout"]},
-        { id: "main", icon: "plus", list: ["Language", "Currency", "Theme", "Design", "Logout"]},
-        { id: "other", icon: "bell", list: ["Language", "Currency", "Theme", "Design", "Logout"]},
+        { id: "main", icon: "plus", list: ["Add transaction", "Add buget", "Add asset"]},
+        { id: "other", icon: faComment, list: ["Language", "Currency", "Theme", "Design", "Logout"]},
+        { id: "other", icon: faBell, list: ["Language", "Currency", "Theme", "Design", "Logout"]},
+        { id: "haha", icon: faUser, list: ["Language", "Currency", "Theme", "Design", "Logout"]},
     ]
+
+    let name = 'Matthew J'
 
 
     return (
         <Container>
             <HeaderSection>
-                
+                <Logo>Monetor</Logo>
             </HeaderSection>
             <HeaderSection>
+
                 {actions.map(action => <RenderAction {...action} />)}
+
+                {/* <Avatar>
+                    {name}
+                    <FontAwesomeIcon 
+                        icon={faUser}
+                        size="lg"
+                    />
+                </Avatar> */}
+
+
             </HeaderSection>
 
 
