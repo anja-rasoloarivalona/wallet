@@ -40,12 +40,15 @@ const Login = props => {
     ]
 
     const redirectToDashboard = () => {
-        props.history.push(`/${text.currentPage.link_dashboard}`)
+        props.history.push(`/${text.link_dashboard}`)
     }
 
     const login = async data => {
         try {
             const res = await client.post("/login", data)
+            console.log({
+                res
+            })
             if(res.status !== 200){
                 return loginFail(res)
             }
@@ -61,8 +64,8 @@ const Login = props => {
     }
 
     const loginFail = error => {
-        // console.log("[FAILED TO LOGIN]", error)
-        // console.log(error.response)
+        console.log("[FAILED TO LOGIN]", error)
+        console.log(error.response)
         dispatch(actions.clearUser())
         if(error.response.status === 404){
             formFunctions.setErrors({ email: errorText.no_user_found})

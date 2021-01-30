@@ -13,11 +13,10 @@ import { useWindowSize } from '../../functions'
 
 const Container = styled.div`
     grid-column: 1 / -1;
-    height: calc(100vh - 7.5rem);
+    height: calc(100vh - 5.4rem);
     display: flex;
     justify-content: center;
-    background: ${props => props.theme.background};
-    margin-top: 7.5rem;
+    background: ${props => props.theme.surface};
     width: 100vw;
     overflow-x: hidden;
     position: relative;
@@ -83,7 +82,7 @@ const Section = styled.div`
 
 const Icons = styled.div`
     width: 50vw;
-    background: ${props => props.theme.background};
+    background: ${props => props.theme.surface};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -273,7 +272,7 @@ const Home = () => {
         {
             icon: "columns",
             section: "main",
-            style: { gridColumn: "2 / 3", gridRow: "2/3"},
+            style: { gridColumn: "2 / 3", gridRow: "2/3", backgroundImage: "linear-gradient(45deg,#f5f5f5 16%,#ffffff)"},
             content: {
                 subtitle: text.main_subtitle,
                 title: text.main_title,
@@ -284,7 +283,7 @@ const Home = () => {
         {
             icon: "chart-line",
             section: "stats",
-            style: { gridColumn: "2 / 3", gridRow: "1/2"},
+            style: { gridColumn: "2 / 3", gridRow: "1/2", backgroundImage: "linear-gradient(45deg,#f5f5f5 16%,#ffffff)"},
             content: {
                 subtitle: text.stats_subtitle,
                 title: text.stats_title,
@@ -328,7 +327,7 @@ const Home = () => {
         {
             icon: "globe",
             section: "everywhere",
-            style: {gridColumn: "2/3", gridRow: "3/4"},
+            style: {gridColumn: "2/3", gridRow: "3/4", backgroundImage: "linear-gradient(45deg,#f5f5f5 16%,#ffffff)"},
             content: {
                 subtitle: text.everywhere_subtitle,
                 title: text.everywhere_title,
@@ -409,7 +408,7 @@ const Home = () => {
 
                 {windowWidth > 952 ? <CurrentSection /> : <Slider />}
                 <ButtonContainer>
-                    <Button>
+                    <Button primary>
                         Get started
                     </Button>
                 </ButtonContainer>

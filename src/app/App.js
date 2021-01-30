@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { client } from '../functions'
 import * as actions from '../store/actions'
 import axios from 'axios'
+
 const AddTransaction = styled.button`
     position: fixed;
     z-index: 11;

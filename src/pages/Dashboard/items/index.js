@@ -36,7 +36,10 @@ const MonthlyExpenses = () => {
     return (
         <Item>
             <Title>{text.monthly_expenses}</Title>
-            <Amount value={expense} />
+            <Amount
+                value={expense}
+                className="dashboard_amount"
+            />
         </Item>
     )
 }

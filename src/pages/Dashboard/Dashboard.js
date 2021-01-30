@@ -4,11 +4,12 @@ import "../../../node_modules/react-grid-layout/css/styles.css"
 import "../../../node_modules/react-resizable/css/styles.css"
 import { useSelector } from 'react-redux'
 import { Container, GridContainer,  GridItem } from './Dashboard-style'
-import {History, Transactions, Balance, MonthlyExpenses, MonthlyIncomes, ComparedToLastMonth, Expenses, Budget, Assets } from './items'
+import {History, Transactions, MonthlyExpenses, MonthlyIncomes, ComparedToLastMonth, Expenses, Budget, Assets } from './items'
 import Header from './DashboardHeader'
 import { client } from '../../functions'
 import * as actions from '../../store/actions'
 import { useDispatch } from 'react-redux'
+
 
 const Dashboard = props => {
     const dispatch = useDispatch()

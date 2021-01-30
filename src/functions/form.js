@@ -64,27 +64,35 @@ const DropdownIndicator = props => {
     );
 };
 
-const selectStyle = theme => {
-    const borderStyle = `1px solid ${theme.grey_dark}`
+const selectStyle = (theme, customStyle) => {
+    const borderStyle = `1px solid ${theme.text}`
+    const background = customStyle && customStyle.input && customStyle.input.background ? customStyle.input.background :  theme.surface
+
+
     return {
-        control: (provided, state) => ({
-          ...provided,
-          boxShadow: "none",
-          height: "40px",
-          border: state.isFocused ? borderStyle : borderStyle,
-          backgroundColor: theme.surface,
-          cursor: 'pointer',
-          '&:hover': {
-            border: state.isFocused ? borderStyle : borderStyle,
-          },
-          '& svg': {
-              color: theme.text
-          }
-        }),
+        control: (provided, state) => {
+            console.log({ state, provided })
+            return  {
+                ...provided,
+                boxShadow: "none",
+                height: "45px",
+                border: state.isFocused ? `1px solid ${theme.active_text}`  :  borderStyle,
+                backgroundColor: background,
+                cursor: 'pointer',
+                paddingLeft: "12px",
+                '& svg': {
+                    color: theme.text
+                },
+                '&:hover': {
+                    border: state.isFocused ? `1px solid ${theme.active_text}`  :  borderStyle,
+                }
+            }
+        },
         placeholder: (provided) => ({
             ...provided,
             color: theme.grey_dark,
-            fontSize: "1.4rem"
+            fontSize: "1.4rem",
+            marginLeft: 0,
         }),
         menuList: (provided) => ({
             ...provided,
@@ -92,35 +100,36 @@ const selectStyle = theme => {
             paddingBottom: 0,
             borderRadius: '4px',
             boxShadow: theme.box_shadow,
-            backgroundColor: theme.background,
+            backgroundColor: theme.surface,
         }),
         option: (provided, state) => ({
             ...provided,
             fontSize: "1.4rem",
-            color: theme.text,
-            backgroundColor: state.isSelected ? 'white' : theme.background,
-            cursor: 'pointer',
             '&:hover': {
-                backgroundColor: theme.active_text
-            }
+                backgroundColor: theme.primary,
+                color: theme.surface
+            },
+            backgroundColor: state.isSelected ? theme.primary : theme.surface,
+            cursor: 'pointer',
         })
       }
 } ;
 
 export const SelectInput = props => {
-    const { id, options, onChange, placeholder, currentValue, isSearchable } = props
+    const { id, options, onChange, placeholder, currentValue, isSearchable, customStyle } = props
     const {
         theme 
     } = useSelector(state => state)
+    const _options = options.filter(option => option.value !== currentValue)
     return (
         <Container key={id}>
-            <ListContainer>
+            <ListContainer className="select-input">
                 <ReactSelect 
                     id={id}
-                    options={options}
+                    options={_options}
                     onChange={onChange}
                     isSearchable={isSearchable}
-                    styles={selectStyle(theme)}
+                    styles={selectStyle(theme, customStyle)}
                     placeholder={placeholder}
                     value={options.filter(({value}) => value === currentValue)}
                     components={{
@@ -296,6 +305,7 @@ const RenderDatePicker = props => {
 
 
 const CategoriesContainer = styled(Container)`
+    width: 100%;
     @media (max-width: 590px){
         grid-column: 1 / -1;
     }
@@ -312,7 +322,7 @@ const CategoryList = styled.li`
     margin: 0;
     padding: 0;
 
-    border-bottom: 1px solid ${props => props.theme.clr_primary};
+    border-bottom: 1px solid ${props => props.theme.text};
 
     &:last-child {
         border-bottom: none !important;
@@ -335,11 +345,7 @@ const CategoryListItemValue = styled.div`
 
     
     :hover {
-        background: ${props => props.theme.clr_primary};
-        color: white;
-        .select-category_icon {
-            color: white;
-        }   
+        background: ${props => props.theme.background}; 
     }
     .select-category_icon {
         position: absolute;
@@ -370,11 +376,10 @@ const SubcategoryListItem = styled.li`
         }
     }}
     &:first-child {
-        border-top: 1px solid ${props => props.theme.clr_primary}
+        border-top: 1px solid ${props => props.theme.text}
     }
     :hover {
-        background: ${props => props.theme.clr_primary};
-        color: ${props => props.theme.white};
+        background: ${props => props.theme.background};
     }
 `
 

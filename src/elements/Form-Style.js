@@ -16,7 +16,7 @@ const Content = styled.div`
     position: absolute;
     top: 0;
     right: 0;
-    background: ${props => props.theme.clr_background};
+    background: ${props => props.theme.surface};
     transform: translateX(40vw);
     transition: all .3s ease-in;
 

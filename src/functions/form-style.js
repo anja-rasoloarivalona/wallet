@@ -27,6 +27,15 @@ export const Container = styled.div`
         background: red;
     }
 
+    .react-datepicker__triangle {
+        left: 40px !important;
+    }
+
+    .react-datepicker-wrapper {
+        border: 1px solid ${props => props.theme.text};
+        border-radius: 4px;
+    }
+
     .react-datepicker-wrapper, .react-datepicker__input-container , .react-datepicker__input-container > input {
         width: 100%;
         height: 100%;
@@ -40,6 +49,12 @@ export const Container = styled.div`
     .react-datepicker__input-container > input {
         border: 0px solid black !important;
         padding: 12px 6px;
+        padding-left: 20px;
+  
+
+        ::placeholder {
+            color: ${props => props.theme.text};
+        }
         :focus {
             outline: none;
         }
@@ -72,8 +87,8 @@ export const Container = styled.div`
 
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+        -webkit-appearance: none;
+        margin: 0;
     }
 
     ${props => {
@@ -100,6 +115,7 @@ export const Label = styled.label`
     height: min-content;
     margin: 0;
     padding: 0 5px;
+    z-index: 1; 
 
 
     ${props => {
@@ -246,8 +262,10 @@ export const Select = styled.div`
     display: flex;
     align-items: center;
     position: relative;
-    height: 100%;
-    height: 40px;
+    width: 100%;
+    height: 45px;
+   
+    border-radius: 4px;
 
     .select-category_icon {
         position: absolute;
@@ -268,17 +286,19 @@ export const SelectValue = styled.div`
     font-size: 1.4rem !important;
     display: flex;
     align-items: center;
+    border: 1px solid ${props => props.theme.text};
 
 `
 export const SelectList = styled.ul`
     position: absolute;
     top: calc(100% + 7px);
     left: 0;
+    right: 0;
+    margin: auto;
     width: 100%;
     list-style: none;
     padding: 0;
-    margin: 0;
-    border: ${props => props.showList ? '1px' : '0px'} solid ${props => props.theme.grey_dark};
+    border: ${props => props.showList ? '1px' : '0px'} solid ${props => props.theme.text};
     transition: height .3s ease-in;
     height: ${props => props.showList ? 'unset' : '0px'};
     z-index: 14;
@@ -290,7 +310,7 @@ export const SelectList = styled.ul`
         if(props.maxHeight){
             return {
                 'maxHeight': props.maxHeight,
-                'overflow': 'auto'
+                'overflow': 'overlay'
             }
         }
     }}
@@ -302,8 +322,7 @@ export const SelectListItem = styled.li`
     align-items: center;
     cursor: pointer;
     :hover {
-        background: ${props => props.theme.clr_primary};
-        color: ${props => props.theme.white};
+        background: ${props => props.theme.background};
     }
 `
 export const InputUnit = styled.div`
@@ -324,22 +343,8 @@ export const Error = styled.div`
     color: ${props => props.theme.red};
 `
 export const ListContainer = styled.div`
-
-    > div > div {
-        border: none;
-        :hover {
-            border: none;
-        }
-    }
-    > div > div:first-child > div:first-child {
-        overflow: unset;
-    }
-    > div > div:first-child {
-        z-index: 14;
-    }
-    > div > div:not(:first-child):last-child {
-        z-index: 15;
-    }
+    width: 100%;
+    border-radius: 4px;
 `
 
 export const CheckContainer = styled.div`

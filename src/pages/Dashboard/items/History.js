@@ -93,6 +93,8 @@ const History = () => {
                     data: [],
                     backgroundColor: gradient,
                     label: text.balance_variation,
+                    lineTension: 0
+                    
                 }
             ]
         }
@@ -113,13 +115,15 @@ const History = () => {
 
     const options = {
         type: 'line',
+        tooltips: {
+            mode: "x-axis"
+        },
         elements: {
             point:{
-                radius: 2,
-                hoverRadius: 6
+                radius: 0
             }
         },
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         scales: {
             xAxes: [{
                 ticks: {
@@ -131,13 +135,23 @@ const History = () => {
                 },
             }],
             yAxes: [{
+                ticks: {
+                    precision: 0,
+                    maxTicksLimit: 6
+                },
+                afterUpdate: function(value){
+                    console.log({
+                        value
+                    })
+                },
                 gridLines: {
                   drawBorder: false,
                 },
             }]
         },
         layout: {
-        }
+        },
+ 
     }
 
 

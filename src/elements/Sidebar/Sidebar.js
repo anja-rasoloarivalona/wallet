@@ -66,34 +66,27 @@ const Toggler = styled.div`
     font-size: 1.6rem;
     position: absolute;
     top: 0;
-    right: -3rem;
-    width: 3rem;
-    height: 3rem;
-    background: ${props => props.theme.active_text};
+    bottom: 0;
+    right: -2rem;
+    margin: auto;
+    border-radius: 50%;
+    width: 4rem;
+    height: 4rem;
+    background: ${props => props.theme.surface};
     z-index: 2;
     display: flex;
     align-items: center;
     justify-content: center;
-    // border-top-right-radius: 1rem;
-    // border-bottom-right-radius: 1rem;
     cursor: pointer;
     transition: all .3s ease-in;
-    transform: ${props => props.showToggle ? "translateX(0)" : "translateX(-100%)"};
+    box-shadow: ${props => props.theme.box_shadow };
+    border: 1px solid ${props => props.theme.primary};
+    opacity: ${props => props.showToggle ? 1 : 0};
 
-    &::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left:  ${props => props.showToggle ? "-100%" : 0};
-        z-index: 5;
-        background: ${props => props.theme.surface_secondary};
-        width: 3rem;
-        height: 3rem;
-        transition: all .3s ease-in;
-    }
+
 
     svg {
-        color: ${props => props.theme.surface}
+        color: ${props => props.theme.primary}
     }
 `
 
@@ -164,7 +157,6 @@ const Logout = styled.div`
     padding-left: ${props => props.shown ? "3rem" : "0"};
     transition: all .3s ease-in;
 `
-
 
 
  const SideBar = props => {
@@ -263,7 +255,7 @@ const Logout = styled.div`
                 >
                     <FontAwesomeIcon 
                         icon={sidebar.isShown ? "chevron-left" : "chevron-right"}
-                        size="1x"
+                        size="lg"
                     />
                 </Toggler>
                 <List>

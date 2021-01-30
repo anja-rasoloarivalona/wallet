@@ -12,8 +12,8 @@ const Button = styled.button`
     min-width: 14rem;
     margin: 0 .5rem;
 
-    background: ${props => props.theme.active_text};
-    color: ${props => props.theme.text};
+    background: ${props => props.theme.primary};
+    color: ${props => props.theme.surface};
     padding: 0 7rem;
     border-radius: 2.5rem;
 

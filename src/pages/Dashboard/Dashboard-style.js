@@ -4,8 +4,8 @@ import styled from 'styled-components'
 const Container = styled.div`
     grid-column: 1 / -1;
     width: 100%;
-    padding-top: 10rem;
-    padding-left: 1rem;
+    padding-top: 9rem;
+    padding-left: 2rem;
     display: flex;
     justify-content: center;
     background: ${props => props.theme.background};
@@ -56,12 +56,11 @@ const HiddenButton = styled.button`
     display: none;
 `
 
-
 export {
     Container,
     GridContainer,
     GridItem,
     Item,
     Title,
-    HiddenButton
+    HiddenButton,
 }

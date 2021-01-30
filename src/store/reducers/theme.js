@@ -1,6 +1,28 @@
 import * as actionTypes from '../actions/actionTypes'
 import { updatedObject } from '../utility'
 
+
+const form = {
+    unfocused: {
+        border_color:  "#c5c5c5",
+        label_color: "#c5c5c5",
+        icon_fill_color: "#c5c5c5",
+    },
+    focused: {
+        border_color: "#161616",
+        label_color: "#161616",
+        icon_fill_color: "#161616",
+   
+    },
+    background_color: "#ffffff",
+    error_color: "#ff3333",
+    caret_color: "#2E3E4E",
+    active: "#2E3E4E",
+
+ 
+}
+
+
 const themes = {
     light: {
         background: "#f5f5f5",
@@ -9,6 +31,7 @@ const themes = {
         text: "#c5c5c5",
         active_text: "#161616",
         box_shadow: "0px 1px 2px -1px rgb(113 113 113 / 75%)",
+        box_shadow_dark: " 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);",
         box_shadow_inset: "inset 2px 2px 3px 0 rgb(143 143 143 / 20%), inset -2px -2px 6px 0 rgb(255 255 255 / 80%)",
         gradient: function(level){
             return `rgba(0, 0, 0, ${level})`
@@ -44,7 +67,10 @@ const initialState = {
     clr_surface: "rgb(20, 20, 20)",
     clr_on_surface: "rgb(46, 46, 46)",
 
-    ...themes.light
+    ...themes.light,
+    form: {
+        ...form
+    }
 }
 
 

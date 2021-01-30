@@ -12,12 +12,15 @@ const Container = styled.div`
     left: 0;
     width: ${props => props.full ?  "calc(100vw - 25rem)" : "calc(100vw - 7rem)"};
     margin-left: ${props => props.full ? "25rem" : "7rem"};
-    height: 10rem;
+    height: 9rem;
     background: ${props => props.theme.background};
-    padding-left: 8rem;
+    
+    padding-left: 4rem;
+    padding-right: 3rem;
+
     z-index: 10;
     transition: all .3s ease-in;
-    padding-right: 25rem;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -35,75 +38,69 @@ const BalanceText = styled.div`
     margin-bottom: .8rem;
     font-weight: 600;
     color: ${props => props.theme.text};
+
 `
-const Cta = styled.div`
-     width: 30vw;
-     max-width: 40rem;
-     height: 5rem;
-     border-radius: 2rem;
-    box-shadow: ${props => props.theme.box_shadow_inset};
+
+const CtaContainer = styled.div`
+    width: 22rem;
+    height: 6rem;
+    position: relative;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
-    padding: 0 2rem;
+    justify-content: flex-end;
 `
 
-const CtaItem = styled.div`
-     margin: 0 1rem;
-     font-size: 1.4rem;
-     display: flex;
-     align-items: center;
-     cursor: pointer;
-     color: ${props => props.theme.text};
-
-     svg {
-         margin-right: 1rem;
-     }
-
-     :hover {
-        color: ${props => props.theme.active_text};
-     }
-
-     ${props => {
-         if(props.active){
-             return {
-                 color: props.theme.active_text
-             }
-         }
-     }}
-`
-
-const SaveContainer = styled.div`
-    position: fixed;
-    z-index: 11;
-    right: 5rem;
-    top: 3rem;
-    height: 4.5rem;
-    padding: 0 2rem;
-    background: ${props => props.theme.active_text};
+const Cta = styled.div`
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    background: ${props => props.theme.primary};
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
-    border-radius: 1rem;
-    color: white;
-    min-width: 12rem;
+    font-size: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+
+    svg {
+        color: ${props => props.theme.surface};
+    }
+
+`
+const CtaList = styled.ul`
+    position: absolute;
+    top: 6rem;
+    right: 0;
+    width: 22rem;
+    background: ${props => props.theme.surface};
+    box-shadow: ${props => props.theme.box_shadow_dark};
+    list-style:none;
+    font-size: 1.6rem;
+    border-radius: 3px;
+    overflow: hidden;
+
 `
 
-const Save = styled.div`
-
+const CtaListItem = styled.li`
+    padding: 1rem;
+    cursor: pointer;
+    :hover {
+        background: ${props => props.theme.background};
+    }
 `
 
-const CtaItemText = styled.div``
 
 const DashboardHeader = props  => {
     const { isSubmitting,saveDashboard } = props
     const dispatch = useDispatch()
     const {
         ui : { sidebar, dashboard },
-        user: { assets }
+        user: { assets },
+        text: { currentPage: text}
     } = useSelector(state => state)
+
     const [balance, setBalance] = useState(0)
+    const [showList, setShowList ] = useState(false)
 
     useEffect(() => {
         if(assets){
@@ -123,46 +120,44 @@ const DashboardHeader = props  => {
         }
     }
 
+    const ctaDta = [
+        {label: text.add_transaction, form: "transactionForm"},
+        {label: text.add_asset, form: "assetForm"},
+        {label: text.add_budget, form: "budgetForm"}
+    ]
+
     return (
-        <Container full={sidebar.isShown}>
+        <Container
+            full={sidebar.isShown}
+            onMouseLeave={() => setShowList(false)}
+        >
             <BalanceContainer>
                 <BalanceText>Balance</BalanceText>
                 <Amount value={balance}/>
             </BalanceContainer>
-            {/* <Cta>
-                <CtaItem onClick={() => actionHandler("isEditing")} active={dashboard.action === "isEditing"}>
-                    <FontAwesomeIcon 
-                        icon="pencil-alt"
-                        size="1x"
-                    />
-                    <CtaItemText>Edit</CtaItemText>
-                </CtaItem>
-                <CtaItem>
-                    <FontAwesomeIcon 
-                        icon="plus"
-                        size="1x"
-                    />
-                    <CtaItemText>Add</CtaItemText>
-                </CtaItem>
-                <CtaItem>
-                    <FontAwesomeIcon 
-                        icon="trash"
-                        size="1x"
-                    />
-                    <CtaItemText>Remove</CtaItemText>
-                </CtaItem>
-                {dashboard.isManaging && (
-                    <SaveContainer>
-                        {isSubmitting ? 
-                               <Loader /> :
-                               <Save onClick={saveDashboard}>
-                                 Save
-                              </Save>
-                        }    
-                    </SaveContainer>
-                )}
+            <CtaContainer
+                onMouseEnter={() => setShowList(true)}
+            >
+                <Cta>
+                        <FontAwesomeIcon 
+                            icon="plus"
+                        />
+                        {showList && (
+                            <CtaList>
+                                {ctaDta.map((action, index) => (
+                                    <CtaListItem
+                                        key={index}
+                                        onClick={() => dispatch(actions.toggleForm({ form: action.form}))}
+                                    >
+                                        {action.label}
+                                    </CtaListItem>
+                                ))}
+                            </CtaList>              
+                        )}
+   
+                </Cta>
+            </CtaContainer>
 
-            </Cta> */}
         </Container>
     )
 }

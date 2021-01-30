@@ -7,6 +7,7 @@ import { Amount } from "../../../components";
 import { renderAmount } from "../../../functions";
 import { SelectInput } from "../../../functions/form";
 import moment from 'moment'
+import _ from 'lodash'
 
 const ExpensesTitle = styled(Title)`
     margin-bottom: 1.2rem;
@@ -24,6 +25,10 @@ const Container = styled.div`
         margin-top: 0;
         z-index: 30;
     }
+
+
+
+
 `;
 
 const ChartContainer = styled.div`
@@ -182,6 +187,17 @@ const Expenses = () => {
     labels: expensesLabels,
   };
 
+  if(_.isEmpty(data.labels)){
+    // data.datasets[0].backgroundColor.push(theme.background)
+    // data.datasets[0].data.push(100)
+    // data.datasets[0].hoverBorderColor = theme.surface
+    // data.datasets[0].hoverBackgroundColor = theme.background
+  }
+
+  console.log({
+    data
+  })
+
   const options = {
     elements: {
       arc: {
@@ -196,6 +212,7 @@ const Expenses = () => {
       display: false,
     },
     tooltips: {
+      enabled: !_.isEmpty(data.labels),
       callbacks: {
         title: function (tooltipItem, data) {
           return `${
@@ -258,7 +275,6 @@ const Expenses = () => {
     }
   ];
 
-//   console.log(optionsA)
 
   return (
     <Item>
@@ -271,13 +287,18 @@ const Expenses = () => {
           placeholder="All"
           currentValue={filter}
           isSearchable={false}
+          customStyle={{
+            input: {
+              background: theme.background
+            }
+          }}
         />
       </Container>
       <ChartContainer>
         <Doughnut data={data} options={options} />
-        <Total>
-          <Amount value={total} />
-        </Total>
+          <Total>
+            <Amount value={total} />
+          </Total>
       </ChartContainer>
     </Item>
   );

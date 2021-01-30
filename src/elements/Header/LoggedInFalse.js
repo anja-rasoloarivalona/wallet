@@ -108,7 +108,7 @@ const Header = props => {
     return (
         <HeaderContainer>
             <HeaderSection>
-                <Logo src={logoDark} alt="logo" onClick={() => props.history.push("/")}/>
+                {/* <Logo src={logoDark} alt="logo" onClick={() => props.history.push("/")}/> */}
             </HeaderSection>
             <HeaderSection>
                 {items.map(item => renderItem(item))}

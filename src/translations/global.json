@@ -255,6 +255,18 @@
         "fr": "Envoyez",
         "en": "Send"
     },
+    "add_transaction": {
+        "fr": "Ajouter transaction",
+        "en": "Add transaction"
+    },
+    "add_budget": {
+        "fr": "Nouveau budget",
+        "en": "New budget"
+    },
+    "add_asset": {
+        "fr": "Nouveau actif",
+        "en": "Add asset"
+    },
 
 
     "link_connexion": {

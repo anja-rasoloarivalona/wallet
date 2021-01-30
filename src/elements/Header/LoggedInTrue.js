@@ -158,7 +158,7 @@ const Header = () => {
     }
 
     const actions = [
-        { id: "main", icon: "plus", list: ["Add transaction", "Add buget", "Add asset"]},
+        // { id: "main", icon: "plus", list: ["Add transaction", "Add buget", "Add asset"]},
         { id: "other", icon: faComment, list: ["Language", "Currency", "Theme", "Design", "Logout"]},
         { id: "other", icon: faBell, list: ["Language", "Currency", "Theme", "Design", "Logout"]},
         { id: "haha", icon: faUser, list: ["Language", "Currency", "Theme", "Design", "Logout"]},
