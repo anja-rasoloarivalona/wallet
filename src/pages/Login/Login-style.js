@@ -64,7 +64,7 @@ const CtaItem = styled.div`
 const ForgotPassword = styled(CtaItem)`
     position: absolute;
     right: 0;
-    bottom: 20px;
+    top: calc(100% + 5px);
     font-size: 1.4rem;
 `
 

@@ -19,6 +19,9 @@ const Content = styled.div`
     background: ${props => props.theme.surface};
     transform: translateX(40vw);
     transition: all .3s ease-in;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     ${props => {
         if(props.mounted){
@@ -27,6 +30,11 @@ const Content = styled.div`
             }
         }
     }}
+
+    form {
+        width: 90%;
+        max-width: 57rem;
+    }
 `
 
 const Top = styled.div`
@@ -49,6 +57,9 @@ const TopText = styled.div`
     font-size: 2rem;
     padding-left: 8rem;
 `
+
+
+
 
 
 

@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { SelectCategory, renderInput } from '../../functions/form'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../store/actions'
-import { withFormik } from 'formik'
 import * as Yup from 'yup'
-import { Button, Loader } from '../../components'
 import { client } from '../../functions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Content, Top, TopText, FormComponent, ButtonContainer, LoaderContainer, LoaderText } from '../Form-Style'
-
+import { Container, Content, Top, TopText } from '../Form-Style'
+import { Form, formFunctions } from '../../components/form/index'
 
 const TransactionForm = props => {
+
     const dispatch = useDispatch()
     const [mounted, setMounted] = useState(false)
-    const { errors, touched, handleChange, values, handleBlur, setFieldValue, isSubmitting, setValues } = props
+
     const {
         settings,
         categories: { expense, income },
@@ -21,6 +19,7 @@ const TransactionForm = props => {
         user: { assets},
         ui: { transactionForm }
     } = useSelector(state => state)
+
 
     const data = [ {...income, master: "income" } ]
     Object.keys(expense).forEach(item => {
@@ -47,7 +46,6 @@ const TransactionForm = props => {
             const master_id = edited.type === "income" ? income.master_id : expense[edited.category.master_name].master_id
             const color = edited.type === "income" ? income.color : expense[edited.category.master_name].color
            
-           
            const data = {
                id: edited.id,
                category: text[edited.category.sub_name],
@@ -66,9 +64,8 @@ const TransactionForm = props => {
                }
            }
 
-           setValues(data)
-           
-           
+           formFunctions.setValues(data)
+
         }
         return () => {
             setMounted(false)
@@ -77,6 +74,13 @@ const TransactionForm = props => {
 
 
     const inputs = [
+        {   
+            id: "category",
+            name: "category",
+            input_type: "category",
+            categories: data,
+            required: true
+        },
         {
             id: "amount",
             input_type: "input",
@@ -84,7 +88,8 @@ const TransactionForm = props => {
             placeholder: text.amount,
             label: text.amount,
             name: "amount",
-            unit: settings.currency.symbol
+            unit: settings.currency.symbol,
+            required: true
         },
         {
             id: "date",
@@ -92,6 +97,7 @@ const TransactionForm = props => {
             placeholder: text.date,
             label: text.date,
             name: "date",
+            required: true
         },
         {
             id: "counterparty",
@@ -99,7 +105,7 @@ const TransactionForm = props => {
             placeholder: text.counterparty_placeholder,
             label: text.counterparty,
             name: "counterparty",
-            type: "text"
+            type: "text",
         },
         {
             id: "asset_id",
@@ -107,13 +113,44 @@ const TransactionForm = props => {
             placeholder: text.asset,
             label: text.asset,
             options: assetsOptions,
-            name: "asset_id"
+            name: "asset_id",
+            required: true
         }
     ]
 
-    useEffect(() => {
-        console.log(values.data)
-    },[values])
+
+
+    const submit = async values => {
+        const data = {
+            sub_id: values.data.sub_id,
+            asset_id: values.asset_id,
+            date: values.date,
+            amount: values.amount,
+            counterparty: values.counterparty,
+            type: values.data.type,
+            id: values.id
+        }
+    
+        const action = values.id ? 'edit' : 'add'
+        const method = values.id ? "put" : "post"
+    
+        try {
+            const res = await client({
+                method,
+                url: `/transaction/${action}`,
+                data
+            })
+            props.submitFormHandler(res.data.data, "transactionForm")
+        } catch(err){
+            console.log(err, "Failed to add/edit transaction")
+        }
+    
+    }        
+
+    const cancel = () => {
+        dispatch(actions.toggleForm({ form: "transactionForm"}))
+    }
+
 
     return (
         <Container>
@@ -126,97 +163,15 @@ const TransactionForm = props => {
                     />
                     <TopText>{text.transaction}</TopText>
                 </Top>
-                <FormComponent>
-                    <SelectCategory 
-                            data={data}
-                            values={values}
-                            errors={errors}
-                            touched={touched}
-                            setFieldValue={setFieldValue}
-                    />
-                    {inputs.map((input, index) => renderInput({
-                            input,
-                            index,
-                            errors,
-                            touched,
-                            handleChange,
-                            values,
-                            onBlur: handleBlur,
-                            onChange: setFieldValue
-                    }))}
-                    <ButtonContainer>
-                        {!isSubmitting ?
-                                <>
-                                    <Button square="true" secondary="true">
-                                        {text.cancel}
-                                    </Button>
-                                    <Button square="true" type="submit">
-                                        {transactionForm.edited ? text.edit : text.add}
-                                    </Button>
-                                </> :
-                                <LoaderContainer>
-                                        <Loader size="medium"/>
-                                        <LoaderText>{transactionForm.edited ? text.transaction_editing : text.transaction_adding}</LoaderText>
-                                </LoaderContainer>
-                        }
-                    </ButtonContainer>
-                </FormComponent>
+                <Form
+                    inputs={inputs}
+                    submitHandler={submit}
+                    cancelHandler={cancel}
+                    buttonLabel={transactionForm.edited ? text.edit : text.add}
+                />
             </Content>
         </Container>
     )
 }
 
-const EnhancedTransactionForm = withFormik({
-    mapPropsToValues: () => {
-        return {
-            category: "",
-            data: {},
-            amount: "",
-            date: "",
-            counterparty: "",
-            asset_id: "",
-            id: ""
-        }
-    },
-    validationSchema: ({ errorText }) => {
-        const empty = errorText.required_field
-        return Yup.object().shape({
-            category: Yup.string().required(empty),
-            amount: Yup.string().required(empty),
-            date: Yup.date().required(empty),
-            asset_id: Yup.string().required(empty),
-            
-        })
-    },
-    handleSubmit: async (values, {props}) => {
-
-        const { submitFormHandler } = props
-
-        const data = {
-            sub_id: values.data.sub_id,
-            asset_id: values.asset_id,
-            date: values.date,
-            amount: values.amount,
-            counterparty: values.counterparty,
-            type: values.data.type,
-            id: values.id
-        }
-
-        const action = values.id ? 'edit' : 'add'
-        const method = values.id ? "put" : "post"
-
-        try {
-            const res = await client({
-                method,
-                url: `/transaction/${action}`,
-                data
-            })
-            submitFormHandler(res.data.data, "transactionForm")
-        } catch(err){
-            console.log(err, "Failed to add/edit transaction")
-        }
-
-    }
-})(TransactionForm)
-
-export default EnhancedTransactionForm
+export default TransactionForm

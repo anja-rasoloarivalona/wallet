@@ -33,13 +33,16 @@ const Amount = props => {
         return <div></div>
     }
 
+    const valueIsEmpty = value === ""
+
+
     if(lang === "fr"){
         return <Container {...props}>
-                    {numberWithSpaces(amount.toFixed(2))} {currency.symbol}
+                    {!valueIsEmpty && numberWithSpaces(amount.toFixed(2))} {currency.symbol}
                 </Container>
     } else {
         return  <Container {...props}>
-                    {currency.symbol} {numberWithSpaces(amount.toFixed(2))}
+                    {currency.symbol} {!valueIsEmpty && numberWithSpaces(amount.toFixed(2))}
                 </Container>  
     }
 }

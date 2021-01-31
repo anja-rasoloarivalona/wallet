@@ -13,14 +13,25 @@ const Container = styled.div`
 `
 
 const SubmitButton = props => {
-    const { isSubmitting, label, onClick } = props
+    const { isSubmitting, label, onClick, onCancel } = props
     return (
         <Container>
             {isSubmitting ?
                 <Loader /> :
-                <Button onClick={onClick} type="submit">
-                    {label}
-                </Button>
+                <>  
+                    {onCancel && (
+                        <Button
+                            onClick={onCancel}
+                            type="button"
+                            secondary
+                        >
+                            Cancel
+                         </Button>
+                    )}
+                    <Button onClick={onClick} type="submit">
+                        {label}
+                    </Button>
+                </>
             }
         </Container>
     )

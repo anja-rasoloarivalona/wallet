@@ -1,27 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import { renderInput } from '../../functions/form'
-import { withFormik } from 'formik'
 import * as Yup from 'yup'
 import * as actions from '../../store/actions'
 import { useSelector, useDispatch } from 'react-redux'
-import { Button } from '../../components'
-import { SelectCategory  } from '../../functions/form'
-import { Loader } from '../../components'
 import { setDate, client } from '../../functions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Container, Content, Top, TopText, FormComponent, ButtonContainer, LoaderContainer, LoaderText } from '../Form-Style'
-
+import { Container, Content, Top, TopText } from '../Form-Style'
+import { Form, formFunctions } from '../../components/form/index'
 
 const BudgetForm = props => {
-    const { errors, touched, handleChange, values, handleBlur, setValues, setFieldValue, isSubmitting } = props
     const dispatch = useDispatch()
     const [mounted, setMounted] = useState(false)
+
     const {
         text : { currentPage : text },
-        settings: { lang, currency },
-        categories: { expense : data},
+        settings: { currency },
+        categories: { expense},
         ui: { budgetForm }
     } = useSelector(state => state)
+
+
+    const data = []
+    Object.keys(expense).forEach(item => {
+        data.push({
+            ...expense[item],
+            master: item
+        })
+    })
 
     useEffect(() => {
         setTimeout(() => {
@@ -44,11 +48,18 @@ const BudgetForm = props => {
                 amount,
                 category: text[master_name]
             }
-            setValues(data)
+            formFunctions.setValues(data)
         }
     },[])
      
     const inputs = [
+        {   
+            id: "category",
+            name: "category",
+            input_type: "category",
+            categories: data,
+            required: true
+        },
         {
             id: "amount",
             input_type: "input",
@@ -60,68 +71,7 @@ const BudgetForm = props => {
         },
     ]
 
-    return (
-        <Container>   
-            <Content mounted={mounted}>
-                <Top>
-                    <FontAwesomeIcon 
-                        icon="times-circle"
-                        size="3x"
-                        onClick={() => dispatch(actions.toggleForm({ form: "budgetForm"}))}
-                    />
-                    <TopText>{text.budget}</TopText>
-                </Top>
-                <FormComponent>
-                        <SelectCategory 
-                            data={data}
-                            values={values}
-                            errors={errors}
-                            touched={touched}
-                            setFieldValue={setFieldValue}
-                        />
-                        {inputs.map((input, index) => renderInput({
-                            input,
-                            index,
-                            errors,
-                            touched,
-                            handleChange,
-                            values,
-                            onBlur: handleBlur,
-                            onChange: setFieldValue
-                        }))}
-                        <ButtonContainer>
-                        {!isSubmitting ? 
-                            <Button square="true" type="submit">{budgetForm.edited ? text.edit : text.add}</Button>
-                            :   
-                            <LoaderContainer>
-                                <Loader size="medium"/>
-                                <LoaderText>{budgetForm.edited ? text.budget_editing : text.budget_adding}</LoaderText>
-                            </LoaderContainer>
-                        }
-                        </ButtonContainer>
-                </FormComponent>
-            </Content>
-        </Container>
-    )
-}
-
-const Budget = withFormik({
-    mapPropsToValues: () => {
-        return {
-            category: "",
-            amount: "",
-            data: {}
-        }
-    },
-    validationSchema: ({ errorText }) => {
-        const empty = errorText.required_field
-        return Yup.object().shape({
-            category: Yup.string().required(empty),
-            amount: Yup.string().required(empty),
-        })
-    },
-    handleSubmit: async (values, { props }) => {
-        const { submitFormHandler, budgetForm} = props
+    const submit = async values => {
         try {
             const data = {
                 sub_id: values.data.sub_id,
@@ -135,15 +85,38 @@ const Budget = withFormik({
                 data
             })
             const resData = res.data.data
-            submitFormHandler(resData, "budgetForm")
+            props.submitFormHandler(resData, "budgetForm")
 
-        } catch(err){
-            console.log(err)
-        }
-
-        
+            } catch(err){
+                console.log(err)
+            }
     }
-})(BudgetForm)
+
+    const cancel = () => {
+        dispatch(actions.toggleForm({ form: "budgetForm"}))
+    }
+
+    return (
+        <Container>   
+            <Content mounted={mounted}>
+                <Top>
+                    <FontAwesomeIcon 
+                        icon="times-circle"
+                        size="3x"
+                        onClick={() => dispatch(actions.toggleForm({ form: "budgetForm"}))}
+                    />
+                    <TopText>{text.budget}</TopText>
+                </Top>
+                <Form 
+                    inputs={inputs}
+                    submitHandler={submit}
+                    cancelHandler={cancel}
+                    buttonLabel={budgetForm.edited ? text.edit : text.add}
+                />
+            </Content>
+        </Container>
+    )
+}
 
 
-export default Budget
+export default BudgetForm

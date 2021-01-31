@@ -34,6 +34,10 @@ const AssetContainer = styled.div`
         font-size: 2.3rem;
     }
 
+    .amount {
+        grid-column: 1 / -1 !important;
+    }
+
 `
 
 const AssetName = styled.div`
@@ -52,13 +56,13 @@ const Asset = props => {
     const { currentPage: text } = useSelector(state => state.text)
     const { asset } = props
     return (
-        <Item style={{padding: 0}}>
+        <Item style={{padding: 0, ...props.style}}>
             <AssetContainer type={asset.type}>
                 <Type>
                     {asset.type === "cash" ? <Money /> : <Chip />}
                     {text[asset.type]}
                 </Type>
-                <Amount value={asset.amount} />
+                <Amount value={asset.amount} className="amount"/>
                 <AssetName>{asset.name}</AssetName>
             </AssetContainer>
         </Item>

@@ -18,6 +18,11 @@ const form = {
     error_color: "#ff3333",
     caret_color: "#2E3E4E",
     active: "#2E3E4E",
+    box_shadow: " 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)",
+    select: {
+        optionHoverBackground: "#f5f5f5",
+        optionColor: "black"
+    }
 
  
 }

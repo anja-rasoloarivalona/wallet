@@ -29,8 +29,8 @@ const Button = styled.button`
         if(props.secondary){
             return {
                 background: "white",
-                color: props.theme.clr_primary,
-                border: `1px solid ${props.theme.clr_primary}`
+                color: props.theme.primary,
+                border: `1px solid ${props.theme.primary}`
             }
         }
     }}

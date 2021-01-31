@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import {Container, Modal, Title, OrTextContainer, OrText, OrTextLine, SignupOther, PasswordReqList, Disclaimer } from './Signup-style'
-import { formFunctions, Tail } from '../../components'
+import { Tail } from '../../components'
+import { Form, formFunctions } from '../../components/form/index'
 import { useSelector, useDispatch } from 'react-redux'
 import * as Yup from 'yup'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Form } from '../../components'
 import * as actions from '../../store/actions'
 import { client  } from '../../functions'
 import EmailSent from './EmailSent'
@@ -46,7 +46,8 @@ const Signup = () => {
             placeholder: text.email,
             input_type: "input",
             children: null,
-            required: true
+            required: true,
+            validation: Yup.string().email(errorText.email_invalid),
         },
         {   
             id: "password",
