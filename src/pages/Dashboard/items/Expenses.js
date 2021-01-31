@@ -5,7 +5,7 @@ import { Doughnut } from "react-chartjs-2";
 import styled from "styled-components";
 import { Amount } from "../../../components";
 import { renderAmount } from "../../../functions";
-import { SelectInput } from "../../../functions/form";
+import { Select } from "../../../components/form/unvalidate";
 import moment from 'moment'
 import _ from 'lodash'
 
@@ -230,9 +230,8 @@ const Expenses = () => {
     },
   };
 
-  const toggleTheme = (theme) => {
-    setFilter(theme.value);
-    // dispatch(actions.updateTheme(theme.value))
+  const filterHandler = value => {
+    setFilter(value);
   };
 
 
@@ -280,18 +279,13 @@ const Expenses = () => {
     <Item>
       <ExpensesTitle> Expenses </ExpensesTitle>
       <Container>
-        <SelectInput
-          id="theme"
-          options={optionsA}
-          onChange={toggleTheme}
-          placeholder="All"
-          currentValue={filter}
-          isSearchable={false}
-          customStyle={{
-            input: {
-              background: theme.background
-            }
+        <Select
+          input={{
+            options: optionsA,
+            isSearchable: false,
           }}
+          currentValue={filter}
+          onChange={filterHandler}
         />
       </Container>
       <ChartContainer>

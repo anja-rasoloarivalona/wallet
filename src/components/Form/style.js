@@ -217,7 +217,7 @@ const SelectInput = props => {
                     ...provided,
                     boxShadow: "none",
                     height,
-                    border: touched[input.name] && errors[input.name] ?  errorStyle : state.isFocused ? focusedBorderStyle : unfocusedBorderStyle,
+                    border: touched && errors && touched[input.name] && errors[input.name] ?  errorStyle : state.isFocused ? focusedBorderStyle : unfocusedBorderStyle,
                     backgroundColor: background,
                     cursor: 'pointer',
                     paddingLeft: space_input_left,
@@ -284,13 +284,13 @@ const SelectInput = props => {
                 // menuIsOpen={true}
                 components={{
                     IndicatorSeparator: () => null,
-                    // DropdownIndicator,
                     DropdownIndicator: input.isDisabled || _options.length === 0 ? () => null : DropdownIndicator
                 }}
             />
         </SelectListContainer>
     )
 }
+
 
 const DateInput = styled(ReactDatePicker)`
     border: 1px solid ${props => props.theme.form.unfocused.border_color};

@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import styled from 'styled-components'
 import { faBell } from  '@fortawesome/free-regular-svg-icons'
 import { faFileAlt, faUser, faComment  } from '@fortawesome/free-regular-svg-icons'
+import SearchBar from './SearchBar'
 
 const Container = styled(HeaderContainer)`
     background: ${props => props.theme.surface};
@@ -19,7 +20,6 @@ const IconContainer = styled.div`
     position: relative;
     cursor: pointer;
     margin-left: 2rem;
-    // background: ${props => props.theme.text};
     width: 4rem;
     height: 4rem;
     display: flex;
@@ -29,10 +29,7 @@ const IconContainer = styled.div`
 
 
     svg {
-        color:  ${props => props.theme.active_text};
-
-
-        
+        color:  ${props => props.theme.text};
     }
 
     :hover {
@@ -40,6 +37,10 @@ const IconContainer = styled.div`
     }
 
 
+`
+
+const LogoContainer = styled(HeaderSection)`
+    width: 25rem;
 `
 
 const Logo = styled.div``
@@ -57,7 +58,7 @@ const Menu = styled.div`
 
 const MenuItem = styled.div`
     padding: 1rem;
-    color: ${props => props.theme.active_text};   
+    color: ${props => props.theme.text};   
 `
 
 const Dynamic = styled(HeaderSection)`
@@ -66,7 +67,6 @@ const Dynamic = styled(HeaderSection)`
     div {
         margin-right: 4rem;
     }
-    // background: red;
 `
 const Salutation = styled(HeaderSection)`
     width: 45rem;
@@ -93,7 +93,10 @@ const Avatar = styled.div`
     //     color:  ${props => props.theme.active_text};
     // }
 `
-
+const ActionContainer = styled(HeaderSection)`
+    padding-right: 5rem;
+    width: 25rem;
+`
 
 const Header = () => {
     const {
@@ -169,23 +172,13 @@ const Header = () => {
 
     return (
         <Container>
-            <HeaderSection>
+            <LogoContainer>
                 <Logo>Monetor</Logo>
-            </HeaderSection>
-            <HeaderSection>
-
+            </LogoContainer>
+            <SearchBar />
+            <ActionContainer>
                 {actions.map(action => <RenderAction {...action} />)}
-
-                {/* <Avatar>
-                    {name}
-                    <FontAwesomeIcon 
-                        icon={faUser}
-                        size="lg"
-                    />
-                </Avatar> */}
-
-
-            </HeaderSection>
+            </ActionContainer>
 
 
         </Container>

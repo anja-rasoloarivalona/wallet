@@ -9,8 +9,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Container = styled.div`
     width: 100%;
-    height: 100vh;
+    height: 100%;
     position : relative;
+    max-width: 80rem;
 `
 const Title = styled.div`
     font-size: 2rem;
@@ -20,10 +21,10 @@ const Title = styled.div`
 const Content = styled.div`
     background: ${props => props.theme.surface};
     width: 100%;
-    height: 60vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 30vh;
 `
 
 const BudgetTable = styled.div`

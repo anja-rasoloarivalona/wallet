@@ -29,7 +29,7 @@ const Container = styled.div`
 const BalanceContainer = styled.div`
      & > div:last-child {
         font-size: 2.5rem;
-        color: ${props => props.theme.active_text};
+        color: ${props => props.theme.text};
      }
 `
 
@@ -37,7 +37,7 @@ const BalanceText = styled.div`
     font-size: 1.6rem;
     margin-bottom: .8rem;
     font-weight: 600;
-    color: ${props => props.theme.text};
+    color: ${props => props.theme.text_light};
 
 `
 

@@ -8,14 +8,12 @@ const HeaderContainer = styled.div`
     left: 0;
     height: 5.4rem;
     width: 100vw;
-    padding: 0 5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background: ${props => props.theme.surface};
     color: ${props => props.theme.text};
     z-index: 14;
-    // box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
 `
 
 const HeaderSection = styled.div`
@@ -51,7 +49,7 @@ const HeaderSectionItem = styled.div`
     ${props => {
         if(props.showList){
             return {
-                background: props.theme.clr_primary,
+                background: props.theme.surface,
                 "ul": {
                     display: "flex"
                 }
@@ -92,7 +90,7 @@ const LanguageToggle = styled.div`
     border-top-right-radius: 4px;
 
     :hover {
-        background: ${props => props.theme.clr_primary};
+        background: ${props => props.theme.background};
     }
 
 
@@ -120,7 +118,7 @@ const LanguageToggleListItem = styled.li`
     width: 100%;
     cursor: pointer;
     text-transform: uppercase;
-    background: ${props => props.theme.grey_dark};
+    background: ${props => props.theme.surface};
 `
 
 export {

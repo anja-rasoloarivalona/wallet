@@ -18,7 +18,8 @@ const Title = styled.div`
 
 const Content = styled.div`
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    
     margin-right: 5rem;
 `
 

@@ -90,7 +90,7 @@ const AssetForm = props => {
                 {value: "credit_card", label: text.credit_card},
                 {value: "cash", label: text.cash}
             ],
-            disabled: assetForm.edited ? true : false,
+            isDisabled: assetForm.edited ? true : false,
             required: true
         },
         {

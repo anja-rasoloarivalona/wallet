@@ -4,15 +4,40 @@ import { useSelector } from 'react-redux'
 import { Line } from 'react-chartjs-2'
 import styled from 'styled-components'
 import { setDate } from '../../../functions'
+import { ScrollDrag } from '../../../components'
 
 
 const ChartContainer = styled.div`
-position: relative;
-width: 100%;
-height: 90%;
+    position: relative;
+    width: 80vw;
+    height: 90%;
+`
+
+const FixedYAxis = styled.div`
+    position: absolute;
+    left: 2rem;
+    bottom: 7.8rem;
+    top: 7.8rem;
+    margin: auto;
+    height: calc(100% - 14.4rem);
+    width: 4rem;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    background: white;
+    z-index: 2;
+
+`
+
+const FixedYAxisLabel = styled.div`
+    font-size: 1.2rem;
 `
 
 const History = () => {
+
+    const [yLabels, setYlabels] = useState([])
 
     const { 
         budget,
@@ -111,6 +136,15 @@ const History = () => {
     }
 
 
+    useEffect(() => {
+        console.log({
+            yLabels
+        })
+    },[yLabels])
+
+ 
+
+
   
 
     const options = {
@@ -118,17 +152,19 @@ const History = () => {
         tooltips: {
             mode: "x-axis"
         },
+        legend: {
+            display: false
+         },
         elements: {
             point:{
                 radius: 0
             }
         },
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         scales: {
             xAxes: [{
                 ticks: {
                     autoSkip: true,
-                    maxTicksLimit: 15
                 },
                 gridLines: {
                     display: false,
@@ -137,12 +173,21 @@ const History = () => {
             yAxes: [{
                 ticks: {
                     precision: 0,
-                    maxTicksLimit: 6
+                    maxTicksLimit: 6,
                 },
                 afterUpdate: function(value){
-                    console.log({
-                        value
+                    let mustUpdate = false
+                    value.ticksAsNumbers.forEach((tick, index) => {
+                        if(tick !== yLabels[index]){
+                            mustUpdate = true
+                        }
                     })
+
+                    if(mustUpdate){
+                        setYlabels(value.ticksAsNumbers)
+                    }
+
+           
                 },
                 gridLines: {
                   drawBorder: false,
@@ -150,8 +195,7 @@ const History = () => {
             }]
         },
         layout: {
-        },
- 
+        }
     }
 
 
@@ -159,10 +203,16 @@ const History = () => {
     return (
         <Item>
             <Title>{text.balance_variation}</Title>
-            <ChartContainer>
-                <Line data={test} options={options} />
-            </ChartContainer>
-      
+            <ScrollDrag style={{height: "95%", paddingTop: "2.5rem"}}>
+                {yLabels.length > 0 && (
+                        <FixedYAxis>
+                            {yLabels.map(label => (<FixedYAxisLabel key={label} length={yLabels.length}>{label}</FixedYAxisLabel>))}
+                        </FixedYAxis>
+                )}
+                <ChartContainer>
+                    <Line data={test} options={options} />
+                </ChartContainer>
+            </ScrollDrag>
         </Item>
     )
 }

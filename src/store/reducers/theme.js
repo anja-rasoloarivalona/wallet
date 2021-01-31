@@ -33,8 +33,12 @@ const themes = {
         background: "#f5f5f5",
         surface: "#ffffff",
         primary: "#2E3E4E",
-        text: "#c5c5c5",
-        active_text: "#161616",
+        text: "#161616",
+        text_light: "#c5c5c5",
+        white: "#ffffff",
+
+
+        active_text: "red",
         box_shadow: "0px 1px 2px -1px rgb(113 113 113 / 75%)",
         box_shadow_dark: " 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);",
         box_shadow_inset: "inset 2px 2px 3px 0 rgb(143 143 143 / 20%), inset -2px -2px 6px 0 rgb(255 255 255 / 80%)",

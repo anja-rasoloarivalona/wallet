@@ -16,20 +16,14 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-
     transition:  ${props => props.openedForm ? "all 0s ease-in" : "all .3s ease-in"};
-
-    // background: red;
-
-
-
 `
 
 const Content = styled.div`
     width: 100%;
     height: 100%;
     background: ${props => props.theme.primary};
-    color: ${props => props.theme.text};
+    // color: ${props => props.theme.text_light};
     box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
     position: relative;
     z-index: 3;
@@ -46,7 +40,6 @@ const IconContainer = styled.div`
     cursor: pointer;
     position: relative;
     z-index: 10;
-    // background:  ${props => props.theme.surface};
 
     ${props => {
         if(!props.header){
@@ -56,9 +49,6 @@ const IconContainer = styled.div`
         }
     }}
 `
-
-
-
 
 const Toggler = styled.div`
     display: flex;
@@ -82,8 +72,6 @@ const Toggler = styled.div`
     box-shadow: ${props => props.theme.box_shadow };
     border: 1px solid ${props => props.theme.primary};
     opacity: ${props => props.showToggle ? 1 : 0};
-
-
 
     svg {
         color: ${props => props.theme.primary}
@@ -110,23 +98,11 @@ const ListItem = styled.li`
 const ListLink = styled(NavLink)`
     &, &:visited {
         text-decoration: none;
-        color: ${props => props.theme.text};
+        color: ${props => props.theme.text_light};
         position: relative;
     }
     &.active, &:hover {
         color: ${props => props.theme.surface};
-    }
-
-    &.active:after {
-        // content: "";
-        // position: absolute;
-        // top: 0;
-        // bottom: 0;
-        // right: 0;
-        // margin: auto;
-        // width: .5rem;
-        // height: 70%;
-        // background:  ${props => props.theme.text};
     }
 `
 
@@ -156,6 +132,7 @@ const Logout = styled.div`
     font-size: 1.8rem;
     padding-left: ${props => props.shown ? "3rem" : "0"};
     transition: all .3s ease-in;
+    color: ${props => props.theme.text_light};
 `
 
 

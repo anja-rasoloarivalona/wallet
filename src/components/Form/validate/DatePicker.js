@@ -86,10 +86,10 @@ const DatePicker = props  => {
                 selected={values[input.name]}
                 onChange={date => onChange(input.name, date)}
                 autoComplete="off"
-                placeholderText={input.label}
+                placeholderText={input.required ? `${input.label} \u002A` : input.label}
             />
             <Label htmlFor={input.id} style={{...input.labelStyle}} shown={values[input.name] !== ''} >
-                {input.label}
+                {input.label} {input.required &&  `\u002A`} 
             </Label>
             {touched[input.name] && errors[input.name] && (
                     <Error>

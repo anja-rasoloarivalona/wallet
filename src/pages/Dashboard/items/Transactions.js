@@ -41,11 +41,10 @@ const LabelText = styled.div`
     font-size: 1.4rem;
     line-height: 1.4;
     color: ${props => props.theme.text};
-    // font-weight: 600;
 `
 const LabelDate = styled.div`
     font-size: 1.2rem;
-    color: ${props => props.theme.text};
+    color: ${props => props.theme.text_light};
 `
 
 const IconContainer = styled.div`
@@ -65,7 +64,7 @@ const AmountContainer = styled.div`
     align-items: center;
     height: 100%;
     font-size: 1.4rem;
-    color: ${props => props.theme.active_text};
+    color: ${props => props.theme.text};
 `
 
 const Transactions = () => {

@@ -24,8 +24,6 @@ const GridItem = styled.div`
     background: ${props => props.theme.surface};
     border-radius: 1.5rem;
     box-shadow: ${props => props.theme.box_shadow};
-    // z-index: -1 !important;
-
 
     .react-resizable-handle.react-resizable-handle-se {
         bottom: 1rem !important;
@@ -37,8 +35,6 @@ const Item = styled.div`
     width: 100%;
     height: 100%;
     padding: 2rem;
-    // z-index: -1 !important;
-
 
     .dashboard_amount {
         font-size: 1.8rem;
@@ -49,7 +45,7 @@ const Item = styled.div`
 const Title = styled.div`
     font-size: 1.6rem;
     margin-bottom: .8rem;
-    color: ${props => props.theme.active_text}
+    color: ${props => props.theme.text_light};
 `
 
 const HiddenButton = styled.button`

@@ -8,8 +8,8 @@ const Profile = () => {
         <Container>
             <Title>Profile</Title>
             <Content>
-                <Budget />
                 <Assets />
+                <Budget /> 
             </Content>
         </Container>
     )

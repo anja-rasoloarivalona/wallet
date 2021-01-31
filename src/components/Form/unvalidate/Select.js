@@ -8,14 +8,13 @@ const Select = props => {
     const handleChange = option => {
         props.onChange(option.value)
     }
-
     
     return (
-        <Container key={input.id}  style={{...input.containerStyle}}>
+        <Container key={input.id}  style={input.containerStyle ? {...input.containerStyle} : {}}>
             {input.label && (
                 <Label
                     shown={currentValue !== ""}
-                    style={{...input.labelStyle}}
+                    style={input.labelStyle ? {...input.labelStyle} : {}}
                 >
                     {input.label}
                 </Label>
