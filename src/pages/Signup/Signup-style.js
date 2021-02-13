@@ -52,20 +52,19 @@ const OrTextContainer = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    // margin-top: 3rem;
 `
 
 const OrText = styled.div`
     font-size: 20px;
     font-weight: 500;
-    color: ${props => props.theme.text};
+    color: ${props => props.theme.text_light};
     margin: 0 2rem;
 `
 
 const OrTextLine = styled.div`
     width: 100%;
     height: 1px;
-    background: ${props => props.theme.text};
+    background: ${props => props.theme.text_light};
 `
 
 const Disclaimer = styled.div`
@@ -88,13 +87,14 @@ const EmailSentContainer = styled.div`
     justify-content: center;
     align-items: center;
     width: 90vw;
-    max-width: 35rem; 
-    transform: translateY(-8vh);
+    max-width: 35rem;
 `
 
-const EmailSentTitle = styled(Title)`
+const EmailSentTitle = styled.div`
     margin-bottom: 0;
     font-size: 4rem;
+    font-weight: 500;
+    text-align: center;
 `
 const EmailSentTitleContainer = styled.div`
     display: flex;
@@ -104,7 +104,7 @@ const EmailSentTitleContainer = styled.div`
 
 const EmailSentTitleIcon = styled(FontAwesomeIcon)`
     margin-right: 2rem;
-    color: ${props => props.theme.text};
+    color: ${props => props.theme.text_light};
 `
 
 const EmailSentModal = styled.div`

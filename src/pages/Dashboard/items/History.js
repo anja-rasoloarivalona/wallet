@@ -16,10 +16,10 @@ const ChartContainer = styled.div`
 const FixedYAxis = styled.div`
     position: absolute;
     left: 2rem;
-    bottom: 7.8rem;
+    bottom: 6.8rem;
     top: 7.8rem;
     margin: auto;
-    height: calc(100% - 14.4rem);
+    height: calc(100% - 13.4rem);
     width: 4rem;
     background: white;
     display: flex;
@@ -28,6 +28,16 @@ const FixedYAxis = styled.div`
     align-items: flex-end;
     background: white;
     z-index: 2;
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        right: -4px;
+        width: 6.5rem;
+        height: 3rem;
+        background: white;
+    }
 
 `
 
@@ -106,7 +116,7 @@ const History = () => {
 
 
         const ctx = canvas.getContext("2d");
-        var gradient = ctx .createLinearGradient(0, 0, 0, 400);
+        var gradient = ctx .createLinearGradient(0, 0, 0, 140);
         gradient.addColorStop(0, theme.gradient(0.5));
         gradient.addColorStop(0.5, theme.gradient(0.25));
         gradient.addColorStop(1, theme.gradient(0));
@@ -174,6 +184,8 @@ const History = () => {
                 ticks: {
                     precision: 0,
                     maxTicksLimit: 6,
+                    min: 4000,
+                    max: 6000
                 },
                 afterUpdate: function(value){
                     let mustUpdate = false

@@ -9,7 +9,10 @@ const LabelContainer = styled.div`
     align-items: center;
 `
 
-const LabelText = styled.div``
+const LabelText = styled.div`
+    display: flex;
+    flex-direction: column;
+`
 
 const IconContainer = styled.div`
     width: 3rem;
@@ -20,6 +23,10 @@ const IconContainer = styled.div`
     border-radius: 50%;
     margin-right: 2rem;
     background: ${props => props.background};
+
+    svg {
+        color: white !important;
+    }
 `
 
 const Select = styled.div`
@@ -204,7 +211,10 @@ const CategoryLabel = props => {
                     color="white"
                 />
             </IconContainer>
-            <LabelText>{labelData.text}</LabelText>
+            <LabelText>
+                {labelData.text}
+                {props.children}
+            </LabelText>
         </LabelContainer>
     )
 }

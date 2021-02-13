@@ -1,21 +1,13 @@
 import * as actionTypes from '../actions/actionTypes'
 import { updatedObject } from '../utility'
+import moment from 'moment'
 
 const initialState = {
-    transactionForm: {
+    form: {
         isOpened: false,
-        action: null,
-        edited: null
-    },
-    budgetForm: {
-        isOpened: false,
-        action: null,
-        edited: null
-    },
-    assetForm: {
-        isOpened: false,
-        action: null,
-        edited: null
+        current: null,
+        edited: null,
+        action: null
     },
     sidebar: {
         isShown: true
@@ -23,34 +15,68 @@ const initialState = {
     dashboard: {
         isManaging: false,
         action: null,
+        layout: {
+            sm: null,
+            md: null,
+            lg: null
+        },
+        updated: {
+            type: null,
+            layout: null
+        }
     },
-    openedForm: null
+    filters: {
+        all: "all",
+        this_week:  {
+            start: moment().startOf('week').toDate(),
+            end: moment().endOf('week').toDate()
+        },
+        this_month: {
+            start: moment().startOf('month').toDate(),
+            end: moment().endOf('month').toDate()
+        },
+        this_year: {
+            start: moment().startOf('year').toDate(),
+            end: moment().endOf('year').toDate()
+        },
+        "7_days": {
+            start: moment().subtract(7, 'd').toDate(),
+            end: moment().toDate()
+        },
+        "30_days": {
+            start: moment().subtract(30, 'd').toDate(),
+            end: moment().toDate()
+        },
+        "3_months": {
+            start: moment().subtract(3, 'months').toDate(),
+            end: moment().toDate()
+        },
+        "6_months": {
+            start: moment().subtract(6, 'months').toDate(),
+            end: moment().toDate()
+        },
+        "1_year": {
+            start: moment().subtract(6, 'year').toDate(),
+            end: moment().toDate()
+        }
+    }
 }
 
 
 const toggleForm = (state, action) => {
     const { data } = action
-    if(!state[data.form] ){
-        return state
-    }
-
-    if(state[data.form].isOpened){
+    if(data){
         return updatedObject(state, {
-            [data.form]: {
-                isOpened: false,
-                action: null,
-                edited: null
-            },
-            openedForm: null
+            form: {
+                isOpened: true,
+                current: data.form,
+                edited: data.edited,
+                action: data.edited ? "edit" : "add"
+            }
         })
     } else {
         return updatedObject(state, {
-            [data.form]: {
-                isOpened: true,
-                action: data.edited ? "edit" : "add",
-                edited: data.edited,
-            },
-            openedForm: data.form
+            form: initialState.form
         })
     }
 }
@@ -68,6 +94,7 @@ const toggleDashboard = (state, action) => {
     if(action.action && action.action !== undefined){
         return updatedObject(state, {
             dashboard: {
+                ...state.dashboard,
                 isManaging: true,
                 action: action.action
             }
@@ -75,6 +102,7 @@ const toggleDashboard = (state, action) => {
     } else {
         return updatedObject(state, {
             dashboard: {
+                ...state.dashboard,
                 isManaging: false,
                 action: null,
             }
@@ -82,11 +110,25 @@ const toggleDashboard = (state, action) => {
     }
 }
 
+const updateDashboardLayout = (state, action) => {
+    const {  layout, size = "md" } = action
+    return updatedObject(state, {
+        dashboard: {
+            ...state.dashboard,
+            updated: {
+                size,
+                layout,
+            }
+        }
+    })
+}
+
 const reducer = (state = initialState, action) => {
     switch(action.type){
         case actionTypes.TOGGLE_FORM: return toggleForm(state, action)
         case actionTypes.TOGGLE_SIDE_BAR: return toggleSidebar(state)
         case actionTypes.TOGGLE_DASHBOARD: return toggleDashboard(state, action)
+        case actionTypes.UPDATE_DASHBOARD_LAYOUT: return updateDashboardLayout(state, action)
         default: return state
     }
 }

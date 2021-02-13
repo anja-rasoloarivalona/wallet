@@ -20,8 +20,16 @@ const toggleDashboard = action => {
     }
 }
 
+const updateDashboardLayout = (layout, size) => {
+    return {
+        type: actionTypes.UPDATE_DASHBOARD_LAYOUT,
+        layout,
+        size
+    }
+}
 export {
     toggleForm,
     toggleSideBar,
-    toggleDashboard
+    toggleDashboard,
+    updateDashboardLayout
 }

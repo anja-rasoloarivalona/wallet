@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Content, Title, Arrow, ArrowContainer } from './Setup-style'
+import { Container, Content, Arrow, ArrowContainer } from './Setup-style'
 import Currency from './sections/Currency'
 import Assets from './sections/Assets'
 import Budget from './sections/Budget'
@@ -7,22 +7,29 @@ import { useSelector, useDispatch } from 'react-redux'
 import SideBar from './SideBar'
 import * as actions from "../../store/actions" 
 import { client } from '../../functions'
+import _ from 'lodash'
 
 const Setup = props => {
     const dispatch = useDispatch()
-    const {  text: { errors: errorText, currentPage: text } , user: { token } } = useSelector(state => state)
+    const {
+        text: { errors: errorText, currentPage: text } ,
+        user: { assets, budgets },
+        settings: { currency }
+    } = useSelector(state => state)
+
+
     const [currentSection, setCurrentSection] = useState(0)
     const [submitting, setSubmitting] = useState(false)
 
-    const [currency, setCurrency] = useState(null)
-    const [assets, setAssets] = useState([])
-    const [budget, setBudget] = useState([])
+    const initialSections = [
+        {id: "currency", ref: currency, name: text.currency, action: "Choose", isValid: false, icon: "money-bill"},
+        {id: "assets", ref: assets, name: text.assets, action: "Add", isValid: false, icon: "credit-card"},
+        {id: "budgets", ref: budgets, name: text.budget, action: "Set", isValid: false, icon: "coins"},
+    ]
 
-    const [sections, setSections] = useState([
-        {name: text.currency, isValid: false},
-        {name: text.assets, isValid: false},
-        {name: text.budget, isValid: false},
-    ])
+
+    const [sections, setSections] = useState(initialSections)
+
 
     useEffect(() => {
         const updatedSections = sections.map(section => ({...section}))
@@ -34,14 +41,19 @@ const Setup = props => {
 
     useEffect(() => {
         const updatedSections = sections.map(section => ({...section}))
-        if(currency){
-            dispatch(actions.setCurrency(currency))
-            if(!sections[0].isValid){
-                updatedSections[0].isValid = true
-                setSections(updatedSections)
+        let shouldupdate = false
+        updatedSections.forEach((section, index) => {
+            if(!_.isEmpty(initialSections[index].ref) && !sections[index].isValid){
+                updatedSections[index].isValid = true
+                shouldupdate = true
             }
+        })
+        if(shouldupdate){
+            setSections(updatedSections)
         }
-    }, [currency])
+    }, [currency, assets, budgets])
+
+
 
     const changeSection = direction => {
         if(direction === "previous" && currentSection > 0){
@@ -67,7 +79,7 @@ const Setup = props => {
             }
             const res = await client.post("/setup/init", {
                 currency,
-                budget,
+                budget: budgets,
                 assets: userAssets
             })
 
@@ -104,41 +116,26 @@ const Setup = props => {
         )
     }
 
-
     return (
         <Container>
             <SideBar 
                 sections={sections}
                 currentSection={currentSection}
             />
-            <Title>
-                {sections[currentSection].name}
-            </Title>
             <Content>
                 {navigator()}
                 <Currency 
-                    setCurrency={setCurrency}
                     currentSection={currentSection}
-                    text={text}
-                    errorText={errorText}
                     changeSection={changeSection}
                 />
-                {currency && (
+                {currency && currency.symbol && (
                     <>
                         <Assets 
-                            setAssets={setAssets}
-                            assets={assets}
                             currentSection={currentSection}
-                            currency={currency}
-                            errorText={errorText}
                             changeSection={changeSection}
                         />
                         <Budget 
-                            setBudget={setBudget}
-                            budget={budget}
                             currentSection={currentSection}
-                            currency={currency}
-                            errorText={errorText}
                             submitting={submitting}
                             submitHandler={submitHandler}
                         />

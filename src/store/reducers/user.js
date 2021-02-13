@@ -12,7 +12,8 @@ const initialState = {
     transactions: null,
     budgets: null,
     appIsReady: false,
-    current_period: setDate(new Date(), "mm-yyyy", "en")
+    current_period: setDate(new Date(), "mm-yyyy", "en"),
+    goal: null
 }
 
 const setUser = (state, action) => {  
@@ -55,8 +56,11 @@ const clearUser = state => {
         email: null,
         isLoggedIn: false,
         assets: null,
+        budgets: null,
+        goal: null,
         transactions: null,
-        appIsReady: true
+        appIsReady: true,
+ 
     })
 }
 const reducer = (state = initialState, action) => {
@@ -64,6 +68,8 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_USER: return setUser(state, action)
         case actionTypes.CLEAR_USER: return clearUser(state, action)
         case actionTypes.SET_ASSETS: return updatedObject(state, {assets: action.assets})
+        case actionTypes.SET_BUDGETS: return updatedObject(state, {budgets: action.budgets})
+        case actionTypes.SET_GOAL: return updatedObject(state, {goal: action.goal})
         case actionTypes.SET_TOKEN: return setToken(state, action)
         default: return state
     }

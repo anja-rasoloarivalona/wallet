@@ -32,6 +32,7 @@ const Routes = props => {
     useEffect(() => {
         if(token){
             const isNotReady = !currency || !assets || assets.length === 0  
+            
             if(isNotReady && pathname !== `/${text.link_setup}`){
                 props.history.push(`/${text.link_setup}`)
             }
@@ -46,14 +47,8 @@ const Routes = props => {
     useEffect(() => {
         const pathname = location.pathname.split("/")[1]
         if(text && pathname !== ""){
-            console.log({
-                pathname
-            })
             const currentPath =  text[`link_${pathname}`]
             if(pathname !== currentPath){
-                console.log({
-                    currentPath
-                })
                 if(currentPath !== undefined){
                     props.history.push(`/${currentPath}`)
                 }
@@ -88,7 +83,7 @@ const Routes = props => {
                 <Route exact path="/" component={Home} />
                 <Route path={`/${text.link_login}`} component={Login}/>
                 <Route path={`/${text.link_signup}`} component={Signup}/>
-                <Route path={`/${text.link_signup_activate}`} component={ActivateAccount} />
+                <Route path={`/${text.link_activate}`} component={ActivateAccount} />
                 <Route path={`/${text["link_forgot-password"]}`} component={ForgotPassword} />
                 <Route path={`/${text["link_reset-password"]}`} component={ResetPassword} />
                 <Redirect to="/"/> 

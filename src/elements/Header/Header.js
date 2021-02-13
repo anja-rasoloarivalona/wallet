@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import LoggedInTrue from "./LoggedInTrue"
+import LoggedInTrue from "./LoggedInTrue/LoggedInTrue"
 import LoggedInFalse from './LoggedInFalse'
 
 

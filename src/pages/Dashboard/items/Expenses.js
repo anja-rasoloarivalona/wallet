@@ -1,48 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Item, Title } from "../Dashboard-style";
 import { useSelector } from "react-redux";
 import { Doughnut } from "react-chartjs-2";
 import styled from "styled-components";
 import { Amount } from "../../../components";
 import { renderAmount } from "../../../functions";
+import { CategoryLabel } from "../../../components/form/custom/CategoryInput-style";
 import { Select } from "../../../components/form/unvalidate";
-import moment from 'moment'
-import _ from 'lodash'
+import _ from "lodash";
+
+const Container = styled(Item)`
+  display: flex;
+  flex-direction: column;
+`;
 
 const ExpensesTitle = styled(Title)`
-    margin-bottom: 1.2rem;
-`
-
-const Container = styled.div`
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    width: 20rem;
-    max-width: 40%;
-    z-index: 30;
-
-    > div {
-        margin-top: 0;
-        z-index: 30;
-    }
-
-
-
-
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 50%;
 `;
-
-const ChartContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 90%;
-  padding: 1rem;
-  padding-top: 2rem;
-
-  canvas {
-    height: 100%;
-  }
-`;
-
 const Total = styled.div`
   position: absolute;
   top: 0;
@@ -63,140 +41,264 @@ const Total = styled.div`
   font-size: 1.6rem;
 `;
 
+const SelectContainer = styled.div`
+  margin-left: 2rem;
+  width: 40%;
+  min-width: 12.5rem;
+  width: 15rem;
+  z-index: 30;
+
+  > div {
+    margin-top: 0;
+    margin-bottom: 0;
+    z-index: 30;
+  }
+`;
+
+const ChartContainer = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+`;
+
+const Chart = styled.div`
+  width: 40%;
+  height: 100%;
+  position: relative;
+
+  canvas {
+    height: 100%;
+  }
+`;
+
+const ChartSummary = styled.div`
+  width: calc(50% + 8px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const ChartSummaryItem = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+
+  :hover {
+    background: ${(props) => props.theme.form.select.optionHoverBackground};
+  }
+`;
+
+const ChartSummaryItemLabel = styled.div``;
+
+const ChartSummaryItemLabelPercentage = styled.div`
+  color: ${(props) => props.theme.text_light};
+`;
+
+const ChartSummaryItemValue = styled.div``;
+
+const EmptyContainer = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 0;
+`
+
+const EmptyItem = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 4% 0;
+`
+
+const EmptyItemLabel = styled.div`
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: ${props => props.theme.background};
+`
+
+const EmptyItemBar = styled.div`
+  flex: 1;
+  height: 2rem;
+  background: ${props => props.theme.background};
+  margin-left: 1rem;
+`
+
 const Expenses = () => {
   const {
     settings: { lang, currency },
-    user: { transactions: _transactions },
+    user: { transactions },
     categories: { expense },
     theme,
     text: { currentPage: text },
+    ui: { filters },
   } = useSelector((state) => state);
 
   const [filter, setFilter] = useState("all");
 
-  const expensesData = [];
-  const expensesBackgroundColor = [];
-  const expensesLabels = [];
+  const [currentCategory, setCurrentCategory] = useState("all");
+  const [expensesData, setExpensesData] = useState(null);
+  const [chartData, setChartData] = useState(null);
+  const [currentTotal, setCurrentTotal] = useState(0);
+
   const expensesMasterName = [];
   const expensesSubName = [];
 
-  let total = 0;
-  let transactions = []
-
-  const filters = {
-    all: "all",
-    this_week:  {
-        start: moment().startOf('week').toDate(),
-        end: moment().endOf('week').toDate()
-    },
-    this_month: {
-        start: moment().startOf('month').toDate(),
-        end: moment().endOf('month').toDate()
-    },
-    this_year: {
-        start: moment().startOf('year').toDate(),
-        end: moment().endOf('year').toDate()
-    },
-    "7_days": {
-        start: moment().subtract(7, 'd').toDate(),
-        end: moment().toDate()
-    },
-    "30_days": {
-        start: moment().subtract(30, 'd').toDate(),
-        end: moment().toDate()
-    },
-    "3_months": {
-        start: moment().subtract(3, 'months').toDate(),
-        end: moment().toDate()
-    },
-    "6_months": {
-        start: moment().subtract(6, 'months').toDate(),
-        end: moment().toDate()
-    },
-    "1_year": {
-        start: moment().subtract(6, 'year').toDate(),
-        end: moment().toDate()
-    }
-  }
-
-  if(filter === "all"){
-    transactions = _transactions
-  } else {
-      transactions = _transactions.filter(transaction => new Date(transaction.date) <= filters[filter].end && new Date(transaction.date) >= filters[filter].start )
-  }
-
-  const tempData = {};
-  if (transactions && transactions.length > 0) {
-    transactions.forEach((transaction) => {
-      if (transaction.type === "expense") {
-        if (!tempData[transaction.category.sub_name]) {
-          tempData[transaction.category.sub_name] = {
-            amount: parseInt(transaction.amount),
-            master_name: transaction.category.master_name,
-          };
-        } else {
-          tempData[transaction.category.sub_name].amount += parseInt(
-            transaction.amount
-          );
-          tempData[transaction.category.sub_name].master_name =
-            transaction.category.master_name;
+  useEffect(() => {
+    const tempData = {};
+    if (transactions && transactions.length > 0) {
+      transactions.forEach((transaction) => {
+        if (transaction.type === "expense") {
+          if (!tempData[transaction.category.sub_name]) {
+            tempData[transaction.category.sub_name] = {
+              amount: parseInt(transaction.amount),
+              master_name: transaction.category.master_name,
+            };
+          } else {
+            tempData[transaction.category.sub_name].amount += parseInt(
+              transaction.amount
+            );
+            tempData[transaction.category.sub_name].master_name =
+              transaction.category.master_name;
+          }
         }
+      });
+    }
 
-        total += parseInt(transaction.amount);
+    const formatData = {};
+    Object.keys(tempData).forEach((item) => {
+      if (!formatData[tempData[item].master_name]) {
+        formatData[tempData[item].master_name] = {};
+        formatData[tempData[item].master_name][item] = {
+          ...tempData[item],
+        };
+      } else {
+        formatData[tempData[item].master_name][item] = {
+          ...tempData[item],
+        };
       }
     });
-  }
+    setExpensesData(formatData);
+  }, [transactions]);
 
-  const formatData = {};
-  Object.keys(tempData).forEach((item) => {
-    if (!formatData[tempData[item].master_name]) {
-      formatData[tempData[item].master_name] = {};
-      formatData[tempData[item].master_name][item] = {
-        ...tempData[item],
-      };
-    } else {
-      formatData[tempData[item].master_name][item] = {
-        ...tempData[item],
-      };
+  useEffect(() => {
+    const data = [];
+    const expensesBackgroundColor = [];
+    const expensesLabels = [];
+    const expenseLocale = [];
+
+    if (expensesData) {
+      if (currentCategory === "all") {
+        Object.keys(expensesData).forEach((item) => {
+          expenseLocale.push(item);
+          expensesLabels.push(text[item]);
+          expensesBackgroundColor.push(expense[item].color);
+          let _total = 0;
+          Object.keys(expensesData[item]).forEach((i) => {
+            _total += expensesData[item][i].amount;
+          });
+          data.push(_total);
+        });
+      } else {
+        const categoryData = expensesData[currentCategory];
+        Object.keys(categoryData).forEach((subCat) => {
+          expenseLocale.push(subCat);
+          expensesLabels.push(text[subCat]);
+          expensesBackgroundColor.push(expense[currentCategory].color);
+          data.push(categoryData[subCat].amount);
+        });
+      }
+
+      setChartData({
+        datasets: [
+          {
+            data,
+            backgroundColor: expensesBackgroundColor,
+            borderColor: theme.surface,
+          },
+        ],
+        labels: expensesLabels,
+        expenseLocale,
+      });
+
+      let _currentTotal = 0;
+      data.forEach((expense) => (_currentTotal += expense));
+      setCurrentTotal(_currentTotal);
     }
-  });
+  }, [expensesData]);
 
-  Object.keys(formatData).forEach((item) => {
-    for (const i in formatData[item]) {
-      expensesMasterName.push(item);
-    }
-    Object.keys(formatData[item]).forEach((i) => {
-      expensesSubName.push(i);
-      expensesData.push(formatData[item][i].amount);
-      expensesBackgroundColor.push(expense[item].color);
-      expensesLabels.push(text[i]);
-    });
-  });
-  
+  // if(filter === "all"){
+  //   transactions = _transactions
+  // } else {
+  //     transactions = _transactions.filter(transaction => new Date(transaction.date) <= filters[filter].end && new Date(transaction.date) >= filters[filter].start )
+  // }
 
-  const data = {
-    datasets: [
-      {
-        data: expensesData,
-        backgroundColor: expensesBackgroundColor,
-        borderColor: theme.surface,
-        expensesMasterName,
-        expensesSubName,
-      },
-    ],
-    labels: expensesLabels,
+  const filterHandler = (value) => {
+    setFilter(value);
   };
 
-  if(_.isEmpty(data.labels)){
-    // data.datasets[0].backgroundColor.push(theme.background)
-    // data.datasets[0].data.push(100)
-    // data.datasets[0].hoverBorderColor = theme.surface
-    // data.datasets[0].hoverBackgroundColor = theme.background
+  const optionsA = [
+    {
+      label: text.all_f,
+      value: "all",
+    },
+    {
+      label: text.this_week,
+      value: "this_week",
+    },
+    {
+      label: text.this_month,
+      value: "this_month",
+    },
+    {
+      label: text.this_year,
+      value: "this_year",
+    },
+    {
+      label: `7 ${text.days}`,
+      value: "7_days",
+    },
+    {
+      label: `30 ${text.days}`,
+      value: "30_days",
+    },
+    {
+      label: `3 ${text.months}`,
+      value: "3_months",
+    },
+    {
+      label: `6 ${text.months}`,
+      value: "6_months",
+    },
+    {
+      label: `1 ${text.year}`,
+      value: "1_year",
+    },
+  ];
+
+  if (!chartData) {
+    return <div></div>;
   }
 
-  console.log({
-    data
-  })
+  if (_.isEmpty(chartData.datasets[0].data)) {
+    setChartData({
+      datasets: [
+        {
+          backgroundColor: [theme.background],
+          data: [100],
+          hoverBorderColor: theme.surface,
+          hoverBackgroundColor: theme.background,
+        },
+      ],
+      isEmpty: true,
+    });
+  }
 
   const options = {
     elements: {
@@ -206,13 +308,12 @@ const Expenses = () => {
     },
     responsive: true,
     maintainAspectRatio: false,
-    // onClick: (e, arr) => test(e, arr),
     cutoutPercentage: 80,
     legend: {
       display: false,
     },
     tooltips: {
-      enabled: !_.isEmpty(data.labels),
+      enabled: chartData && !chartData.isEmpty ? true : false,
       callbacks: {
         title: function (tooltipItem, data) {
           return `${
@@ -220,7 +321,7 @@ const Expenses = () => {
           }`;
         },
         label: function (tooltipItem, data) {
-          return `${data.labels[tooltipItem.index]}: ${renderAmount(
+          return `${data.labels[tooltipItem.index]}:    ${renderAmount(
             data.datasets[0].data[tooltipItem.index],
             lang,
             currency.symbol
@@ -230,71 +331,84 @@ const Expenses = () => {
     },
   };
 
-  const filterHandler = value => {
-    setFilter(value);
-  };
-
-
-  const optionsA = [
-    {
-      label:  text.all_f,
-      value: "all"
-    },
-    {
-        label: text.this_week,
-        value: "this_week"
-    },
-    {
-        label: text.this_month,
-        value: "this_month"
-    },
-    {
-        label: text.this_year,
-        value: "this_year"
-    },
-    {
-        label: `7 ${text.days}`,
-        value: "7_days"
-    },
-    {
-        label: `30 ${text.days}`,
-        value: "30_days"
-    },
-    {
-        label: `3 ${text.months}`,
-        value: "3_months"
-    },
-    {
-      label: `6 ${text.months}`,
-      value: "6_months"
-    },
-    {
-        label: `1 ${text.year}`,
-        value: "1_year"
-    }
-  ];
+  const renderEmpty = () => {
+    const node = []
+    for(let i = 0; i < 3; i++ ){
+      node.push(
+          <EmptyItem key={i}>
+              <EmptyItemLabel />
+              <EmptyItemBar />
+          </EmptyItem>
+    )}
+    return (
+      <EmptyContainer>
+          {node}
+      </EmptyContainer>
+    )
+  }
 
 
   return (
-    <Item>
-      <ExpensesTitle> Expenses </ExpensesTitle>
-      <Container>
-        <Select
-          input={{
-            options: optionsA,
-            isSearchable: false,
-          }}
-          currentValue={filter}
-          onChange={filterHandler}
-        />
-      </Container>
+    <Container>
+      <ExpensesTitle>
+        Expenses
+        {!chartData.isEmpty && (
+          <SelectContainer>
+            <Select
+              input={{
+                options: optionsA,
+                isSearchable: false,
+                customStyle: {
+                  custom_control: {
+                    height: "3.8rem",
+                    borderRadius: "1rem",
+                  },
+                },
+              }}
+              currentValue={filter}
+              onChange={filterHandler}
+            />
+          </SelectContainer>
+        )}
+
+      </ExpensesTitle>
+
       <ChartContainer>
-        <Doughnut data={data} options={options} />
+        <ChartSummary>
+          {chartData &&
+            chartData.expenseLocale &&
+            chartData.expenseLocale.slice(0, 3).map((d, index) => (
+              <ChartSummaryItem key={index}>
+                <ChartSummaryItemLabel>
+                  <CategoryLabel
+                    type="master"
+                    item={{
+                      master_name: d,
+                    }}
+                  >
+                    <ChartSummaryItemLabelPercentage>
+                      {Math.round(
+                        (chartData.datasets[0].data[index] / currentTotal) * 100
+                      )}
+                      %
+                    </ChartSummaryItemLabelPercentage>
+                  </CategoryLabel>
+                </ChartSummaryItemLabel>
+                <ChartSummaryItemValue>
+                  <Amount value={chartData.datasets[0].data[index]} />
+                </ChartSummaryItemValue>
+              </ChartSummaryItem>
+            ))}
+            {chartData.isEmpty && renderEmpty()}
+        </ChartSummary>
+        <Chart>
+          <Doughnut data={chartData} options={options} />
           <Total>
-            <Amount value={total} />
+            <Amount value={currentTotal} />
           </Total>
+        </Chart>
       </ChartContainer>
-    </Item>
+    </Container>
   );
 };
 

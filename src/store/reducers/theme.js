@@ -67,7 +67,7 @@ const initialState = {
     white: "#FEFDFB",
     black: "#1B1A19",
     red: "#ff3333",
-    green: "#0dc30d",
+    green: "#2c8541",
     clr_primary: "#7b7b7b",
     clr_text: "#f5f5f5",
     clr_text_semi_dark: "#bbbbbb",

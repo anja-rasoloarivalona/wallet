@@ -15,15 +15,7 @@ const Button = styled.button`
     background: ${props => props.theme.primary};
     color: ${props => props.theme.surface};
     padding: 0 7rem;
-    border-radius: 2.5rem;
-
-    ${props => {
-        if(props.square){
-            return {
-                borderRadius: ".5rem"
-            }
-        }
-    }}
+    border-radius: ${props => props.square ? ".5rem" : "2.5rem"};
 
     ${props => {
         if(props.secondary){

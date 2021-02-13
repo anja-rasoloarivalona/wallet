@@ -1,66 +1,16 @@
 import { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import Config from './config'
-import { CategoriesForm, AssetForm, TransactionsForm, BudgetForm, Header, Sidebar} from '../elements'
+import { ThemeProvider } from 'styled-components'
+import { AssetForm, TransactionsForm, BudgetForm, GoalForm, Header, Sidebar} from '../elements'
 import ErrorModal from '../components/ErrorModal'
 import Routes from './routes'
 import { useSelector, useDispatch } from 'react-redux'
-import { client } from '../functions'
 import * as actions from '../store/actions'
-import axios from 'axios'
-
-const AddTransaction = styled.button`
-    position: fixed;
-    z-index: 11;
-    right: 5rem;
-    top: 2.7rem;
-    height: 4.5rem;
-    padding: 0 2rem;
-    background: ${props => props.theme.surface};
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    border-radius: 2rem;
-    color: white;
-    min-width: 12rem;
-    cursor: pointer;
-    border: none;
-    :focus {
-        outline: none;
-    }
-`
-const Background = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
-    background: rgba(0, 0, 0, .5);
-    opacity: -1;
-    transition: opacity .1s ease-in;
-
-    ${props => {
-        if(props.show){
-            return {
-                zIndex: 30,
-                opacity: 1
-            }
-        }
-    }}
-`
-const options = {
-    method: 'GET',
-    url: 'https://bloomberg-market-and-financial-news.p.rapidapi.com/market/get-full',
-    params: {id: 'adsmi:ind,aex:ind,co1:com,gc1:com'},
-    headers: {
-      'x-rapidapi-key': '12d9747c82msh1d4e33f960313cdp1383d0jsn7a1c42dec694',
-      'x-rapidapi-host': 'bloomberg-market-and-financial-news.p.rapidapi.com'
-    }
-  };
-  
-
+import { BrowserRouter } from 'react-router-dom'
+import 'font-awesome/css/font-awesome.min.css';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { GlobalStyle, Container, Background } from './AppStyle'
+library.add(fas)
 
 
 
@@ -70,22 +20,24 @@ const App = () => {
     const { initApp } = actions
     const { 
         text : { header, errors: errorText },
-        settings : { lang },
         error : { error },
         categories: {expense, income},
+        categories,
         user: { isLoggedIn, appIsReady },
-        ui: { openedForm,  dashboard, budgetForm }
+        ui: { form, sidebar },
+        theme
     } = useSelector(state => state)
 
     const forms = {
         transactionForm: TransactionsForm,
         budgetForm: BudgetForm,
-        assetForm: AssetForm
+        assetForm: AssetForm,
+        goalForm: GoalForm
     }
-    const CurrentForm = openedForm ? forms[openedForm] : null
+    const CurrentForm = form.isOpened ? forms[form.current] : null
 
-    useEffect(async () => {
-        dispatch(initApp())        
+    useEffect(() => {
+        dispatch(initApp())    
     },[])
 
     useEffect(() => {
@@ -95,9 +47,9 @@ const App = () => {
     },[header, expense, income, appIsReady])
 
 
-    const submitFormHandler = (data, form) => {
+    const submitFormHandler = (data) => {
         dispatch(actions.updateApp(data))
-        dispatch(actions.toggleForm({ form }))
+        dispatch(actions.toggleForm())
     }
 
 
@@ -108,26 +60,29 @@ const App = () => {
     }
 
     return (
-        <Config>
-            <Header />
-            {/* <CategoriesForm /> */}
-            {/* {!dashboard.isManaging && (
-                <AddTransaction onClick={() => dispatch(actions.toggleForm({ form: "transactionForm" }))}>
-                    Add transaction
-                </AddTransaction>
-            )} */}
-            {isLoggedIn && <Sidebar />}
-            <Background  show={openedForm} />
-            {openedForm && (
-                    <CurrentForm 
-                        errorText={errorText}
-                        submitFormHandler={submitFormHandler}
-                        budgetForm={budgetForm}
-                    />
-            )}
-            <Routes />
-            {error && <ErrorModal />}
-        </Config>
+        <BrowserRouter>
+            <ThemeProvider
+                theme={{
+                    ...theme,
+                    ...categories
+                }} 
+            >
+                <GlobalStyle />
+                <Container full={sidebar.isShown} isLoggedIn={isLoggedIn}>
+                    <Header />
+                    <Sidebar />
+                    <Background  show={form.isOpened} />
+                    {CurrentForm && (
+                        <CurrentForm 
+                            errorText={errorText}
+                            submitFormHandler={submitFormHandler}
+                        />
+                    )}
+                    <Routes />
+                    {error && <ErrorModal />}
+                </Container>
+            </ThemeProvider>
+        </BrowserRouter>
     )
 }
 

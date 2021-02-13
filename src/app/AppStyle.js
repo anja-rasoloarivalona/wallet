@@ -1,13 +1,4 @@
-import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
-import { BrowserRouter } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import axios from 'axios'
-import 'font-awesome/css/font-awesome.min.css';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-
-library.add(fas)
-
+import styled, { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
     body {
@@ -17,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
         }
     }
 `
+
 const Container = styled.div`
     width: ${props => props.full ? " calc(100vw - 25rem)" : "calc(100vw - 7rem)"};
     margin-left: ${props => props.full ? "25rem" : "7rem"};
@@ -29,8 +21,6 @@ const Container = styled.div`
     transition: all .3s ease-in;
     padding-top: 5.4rem;
     min-height: calc(100vh - 5.4rem);
-
-
 
     ${props => {
         if(props.isLoggedIn && window.location.pathname !== "/"){
@@ -52,37 +42,36 @@ const Container = styled.div`
             }
         }
     }}
+
+    @media (max-width: 767px){
+        width: 100vw;
+        margin-left: 0;
+    }
 `
 
-const Config = props => {
-    const {
-        theme,
-        ui: { sidebar },
-        user: { isLoggedIn },
-        categories
-    }= useSelector(state => state)
-    axios.defaults.baseURL = process.env.REACT_APP_API_URL  
+const Background = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    background: rgba(0, 0, 0, .5);
+    opacity: -1;
+    transition: opacity .1s ease-in;
 
-    return (
-        (
-            <BrowserRouter>
-                <ThemeProvider
-                    theme={{
-                        ...theme,
-                        ...categories
-                    }}
-                >
-                    <GlobalStyle />
-                    <Container
-                        full={sidebar.isShown}
-                        isLoggedIn={isLoggedIn}
-                    >
-                        {props.children}
-                    </Container>
-                </ThemeProvider>
-            </BrowserRouter>
-        )
-    )
+    ${props => {
+        if(props.show){
+            return {
+                zIndex: 30,
+                opacity: 1
+            }
+        }
+    }}
+`
+
+export {
+    GlobalStyle,
+    Container,
+    Background
 }
-
-export default Config

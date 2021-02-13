@@ -24,6 +24,7 @@ const Section = styled.div`
 const Title = styled.div`
     font-size: 2rem;
     margin-bottom: 2rem;
+    color: ${props => props.theme.text_light};
 `
 
 const TextContainer = styled.div`

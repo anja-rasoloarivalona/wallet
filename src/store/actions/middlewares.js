@@ -9,7 +9,7 @@ import { client } from '../../functions'
 const updateApp = data => {
     return async function(dispatch){
 
-        const { assets, budgets, email, id, setting, username, transactions: _transactions, token } = data
+        const { assets, budgets, email, id, setting, username, transactions: _transactions, token, goal } = data
 
         if(setting){
             if(setting.currency){
@@ -31,7 +31,8 @@ const updateApp = data => {
             email,
             assets,
             transactions,
-            budgets
+            budgets,
+            goal
         })) 
 
         if(token){

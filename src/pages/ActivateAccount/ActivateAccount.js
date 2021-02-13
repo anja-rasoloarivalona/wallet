@@ -19,6 +19,7 @@ const ActivateAccount = props => {
     } = queryString.parse(window.location.search)
 
     useEffect(() => {
+        console.log("mounted")
         const activateAccountHandler = async () => {
             try {
                 const res = await client({

@@ -15,7 +15,7 @@ const BudgetForm = props => {
         text : { currentPage : text },
         settings: { currency },
         categories: { expense},
-        ui: { budgetForm }
+        ui: { form }
     } = useSelector(state => state)
 
 
@@ -37,8 +37,8 @@ const BudgetForm = props => {
     },[])
 
     useEffect(() => {
-        if(budgetForm.isOpened && budgetForm.edited){
-            const { amount, category: { master_name, sub_name }, sub_id } = budgetForm.edited
+        if(form.isOpened && form.edited){
+            const { amount, category: { master_name, sub_name }, sub_id } = form.edited
             const data = {
                 data : {
                     sub_name,
@@ -78,22 +78,18 @@ const BudgetForm = props => {
                 amount: values.amount,
                 period: setDate(new Date(), "mm-yy", "en")
             }
-            const method = budgetForm.edited ? "put" : "post"
+            const method = form.edited ? "put" : "post"
             const res = await client({
                 method: method,
                 url: "/budget",
                 data
             })
             const resData = res.data.data
-            props.submitFormHandler(resData, "budgetForm")
+            props.submitFormHandler(resData)
 
             } catch(err){
                 console.log(err)
             }
-    }
-
-    const cancel = () => {
-        dispatch(actions.toggleForm({ form: "budgetForm"}))
     }
 
     return (
@@ -103,15 +99,15 @@ const BudgetForm = props => {
                     <FontAwesomeIcon 
                         icon="times-circle"
                         size="3x"
-                        onClick={() => dispatch(actions.toggleForm({ form: "budgetForm"}))}
+                        onClick={() => dispatch(actions.toggleForm())}
                     />
                     <TopText>{text.budget}</TopText>
                 </Top>
                 <Form 
                     inputs={inputs}
                     submitHandler={submit}
-                    cancelHandler={cancel}
-                    buttonLabel={budgetForm.edited ? text.edit : text.add}
+                    cancelHandler={() => dispatch(actions.toggleForm())}
+                    buttonLabel={form.edited ? text.edit : text.add}
                 />
             </Content>
         </Container>

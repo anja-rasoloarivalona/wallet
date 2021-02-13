@@ -14,7 +14,7 @@ const Loader = styled.div`
     bottom: 0;
     margin: auto;
     border: 4px solid #f3f3f3;
-    border-top: 4px solid #3498db;
+    border-top: 4px solid ${props => props.theme.primary};
     border-radius: 50%;
     width: 6rem;
     height: 6rem;

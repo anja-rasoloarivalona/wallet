@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from 'react'
-import { Section, Title, Text, SetupForm, ButtonContainer } from '../Setup-style'
-import { renderInput } from '../../../functions/form'
-import { withFormik } from 'formik'
+import React, { useState } from 'react'
+import { Section, Text, ButtonContainer } from '../Setup-style'
 import * as Yup from 'yup'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Button } from '../../../components'
-import { SelectCategory, renderLabel } from '../../../functions/form'
+import { CategoryLabel } from '../../../components/form/custom/CategoryInput-style'
 import styled from 'styled-components'
 import { Loader, Amount } from '../../../components'
 import { setDate } from '../../../functions'
+import { Form } from '../../../components/form/index'
+import * as actions from '../../../store/actions'
 
+const Container = styled(Section)`
+    form {
+        margin-top: 4rem !important;
+    }
+`
 
 const BudgetSection = styled.div`
     display: flex;
@@ -60,14 +65,50 @@ const LoaderText = styled.div`
 `
 
 
-const Form = props => {
-    const { errors, touched, handleChange, values, handleBlur, setFieldValue, currentSection, budget, currency, setErrors, submitting, submitHandler } = props
-    const { currentPage : text } = useSelector(state => state.text)
-    const { lang } = useSelector(state => state.settings)
-    const { expense : data } = useSelector(state => state.categories)
+const Budget = props => {
+
+    const dispatch = useDispatch()
+
+    const { currentSection, submitting, submitHandler } = props
+
+    const {
+        text: { currentPage: text},
+        settings: { currency },
+        categories: { expense },
+        user: { budgets }
+    } = useSelector(state => state)
+
     const [action, setAction] = useState("adding")
+
+
+    const data = []
+    Object.keys(expense).forEach(item => {
+        data.push({
+            ...expense[item],
+            master: item
+        })
+    })
     
     const inputs = [
+        {   
+            id: "category",
+            name: "category",
+            input_type: "category",
+            categories: data,
+            required: true
+        },
+        {
+            id: "type",
+            name: "type",
+            input_type: "select",
+            required: true,
+            placeholder: "Type",
+            label: "Type",
+            options: [
+                {label: text.variable, value: "variable"},
+                {label: text.fixed, value: "fixed"}
+            ]
+        },
         {
             id: "amount",
             input_type: "input",
@@ -75,56 +116,68 @@ const Form = props => {
             placeholder: text.amount,
             label: text.amount,
             name: "amount",
-            unit: currency.symbol
+            unit: currency.symbol,
+            required: true
         },
     ]
 
-    useEffect(() => {
-        if(budget.length > 0){
-            setAction("viewing")
-        }
-    }, [budget])
+    // useEffect(() => {
+    //     if(budgets.length > 0){
+    //         setAction("viewing")
+    //     }
+    // }, [budgets])
 
-    useEffect(() => {
-        if(Object.keys(errors).length > 0){
-            setErrors({})
-        }
-    },[currentSection, errors])
+    // useEffect(() => {
+    //     if(Object.keys(errors).length > 0){
+    //         setErrors({})
+    //     }
+    // },[currentSection, errors])
 
+
+    const addBugetHandler = values => {
+        const updatedBudget = budgets.map(item => ( {...item}))
+
+        console.log({
+            values,
+            updatedBudget
+        })
+
+        const budgetData = {
+            master_name: values.data.master_name,
+            sub_name: values.data.sub_name,
+            category: values.category,
+            sub_id: values.data.sub_id,
+            sub_icon: values.data.sub_icon,
+            amount: values.amount,
+            used: 0,
+            period: setDate(new Date(), "mm-yy", "en"),
+            color: values.data.color
+        }
+        updatedBudget.push(budgetData)
+        dispatch(actions.setBudgets(updatedBudget))
+        setAction("viewing")
+    }
+
+    
 
     const budgetForm = (
-        <SetupForm>
-            <SelectCategory 
-                data={data}
-                values={values}
-                errors={errors}
-                touched={touched}
-                setFieldValue={setFieldValue}
-            />
-            {inputs.map((input, index) => renderInput({
-                input,
-                index,
-                errors,
-                touched,
-                handleChange,
-                values,
-                onBlur: handleBlur,
-                onChange: setFieldValue
-            }))}
-            {!submitting && (
-                <ButtonContainer>
-                    {budget.length === 0  &&  <Button square="true" secondary="true" onClick={submitHandler}>{text.skip}</Button> }
-                    {budget.length > 0 && action === "adding" &&  <Button square="true" secondary="true" onClick={() => setAction("viewing")}>{text.cancel}</Button>}   
-                    <Button square="true" type="submit">{text.add}</Button>
-                </ButtonContainer>
-            )}
-        </SetupForm>
+        <Form 
+            inputs={inputs}
+            submitHandler={addBugetHandler}
+            buttonLabel={text.add}
+            cancelLabel={text.skip}
+            cancelHandler={submitHandler}
+            submitButtonStyle="full"
+        />
     )
+
 
     const renderBudgetItem = item => {
         return (
             <BudgetSectionItem key={item.sub_id}>
-                <BudgetSectionItemLabel>{renderLabel(item, "sub")}</BudgetSectionItemLabel>
+                <BudgetSectionItemLabel>
+                    <CategoryLabel  item={item} type="sub"/>
+                </BudgetSectionItemLabel>
                 <BudgetSectionItemAmount>
                     <Amount value={item.amount}/>
                 </BudgetSectionItemAmount>
@@ -143,11 +196,11 @@ const Form = props => {
                     {text.amount}
                     </BudgetSectionItemTitle>      
                 </BudgetSectionItem>
-                {budget.map(item => renderBudgetItem(item))}
+                {budgets.map(item => renderBudgetItem(item))}
             </BudgetSection>
             {!submitting && (
                 <ButtonContainer>
-                    <Button square="true" secondary="true" onClick={() => setAction("adding")}>{text.add}</Button>
+                    <Button square="true" secondary="true" onClick={() => dispatch(actions.toggleForm({form: "budgetForm"}))}>{text.add}</Button>
                     <Button square="true" onClick={submitHandler}>{text.finish}</Button>
                 </ButtonContainer>
             )}
@@ -155,8 +208,10 @@ const Form = props => {
         </>
     )
 
+
+
     return (
-        <Section
+        <Container
             currentSection={currentSection}
             active={2}
         >   
@@ -169,42 +224,8 @@ const Form = props => {
                     <LoaderText>Setting up your account...</LoaderText>
                 </LoaderContainer>
             )}
-        </Section>
+        </Container>
     )
 }
-
-const Budget = withFormik({
-    mapPropsToValues: () => {
-        return {
-            category: "",
-            amount: "",
-            data: {}
-        }
-    },
-    validationSchema: ({ errorText }) => {
-        const empty = errorText.required_field
-        return Yup.object().shape({
-            category: Yup.string().required(empty),
-            amount: Yup.string().required(empty),
-        })
-    },
-    handleSubmit: (values, {props}) => {
-        const { budget, setBudget} = props
-        const updatedBudget = budget.map(item => ( {...item}))
-
-        const budgetData = {
-            category: values.category,
-            sub_id: values.data.sub_id,
-            sub_icon: values.data.sub_icon,
-            amount: values.amount,
-            used: 0,
-            period: setDate(new Date(), "mm-yy", "en"),
-            color: values.data.color
-        }
-        updatedBudget.push(budgetData)
-        setBudget(updatedBudget)
-    }
-})(Form)
-
 
 export default Budget

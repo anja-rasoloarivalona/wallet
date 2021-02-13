@@ -17,7 +17,7 @@ const TransactionForm = props => {
         categories: { expense, income },
         text: { currentPage: text },
         user: { assets},
-        ui: { transactionForm }
+        ui: { form }
     } = useSelector(state => state)
 
 
@@ -41,7 +41,7 @@ const TransactionForm = props => {
         setTimeout(() => {
             setMounted(true)
         }, 0)
-        const { isOpened, action, edited } = transactionForm
+        const { isOpened, action, edited } = form
         if(isOpened && action === "edit" && edited){
             const master_id = edited.type === "income" ? income.master_id : expense[edited.category.master_name].master_id
             const color = edited.type === "income" ? income.color : expense[edited.category.master_name].color
@@ -140,17 +140,12 @@ const TransactionForm = props => {
                 url: `/transaction/${action}`,
                 data
             })
-            props.submitFormHandler(res.data.data, "transactionForm")
+            props.submitFormHandler(res.data.data)
         } catch(err){
             console.log(err, "Failed to add/edit transaction")
         }
     
     }        
-
-    const cancel = () => {
-        dispatch(actions.toggleForm({ form: "transactionForm"}))
-    }
-
 
     return (
         <Container>
@@ -159,15 +154,15 @@ const TransactionForm = props => {
                     <FontAwesomeIcon 
                         icon="times-circle"
                         size="3x"
-                        onClick={() => dispatch(actions.toggleForm({ form: "transactionForm"}))}
+                        onClick={() => dispatch(actions.toggleForm())}
                     />
                     <TopText>{text.transaction}</TopText>
                 </Top>
                 <Form
                     inputs={inputs}
                     submitHandler={submit}
-                    cancelHandler={cancel}
-                    buttonLabel={transactionForm.edited ? text.edit : text.add}
+                    cancelHandler={() => dispatch(actions.toggleForm())}
+                    buttonLabel={form.edited ? text.edit : text.add}
                 />
             </Content>
         </Container>

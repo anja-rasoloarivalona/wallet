@@ -21,6 +21,20 @@ const setAssets = assets => {
     }
 }
 
+const setBudgets = budgets => {
+    return {
+        type: actionTypes.SET_BUDGETS,
+        budgets
+    }
+}
+
+const setGoal = goal => {
+    return {
+        type: actionTypes.SET_GOAL,
+        goal
+    }
+}
+
 const setToken = token => {
     return {
         type: actionTypes.SET_TOKEN,
@@ -33,5 +47,7 @@ export {
     setUser,
     clearUser,
     setAssets,
-    setToken
+    setToken,
+    setBudgets,
+    setGoal
 }

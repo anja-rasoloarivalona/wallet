@@ -41,6 +41,21 @@ const Container = styled.div`
         grid-column: 1 / -1 !important;
     }
 
+    ${props => {
+        if(props.size){
+            if(props.size === "small"){
+                return {
+                    width: "32rem",
+                    maxWidth: "32rem",
+                    height: "17rem",
+                    "div.amount": {
+                        fontSize: "2rem"
+                    }
+                }
+            }
+        }
+    }}
+
 `
 
 const AssetName = styled.div`
@@ -87,7 +102,11 @@ const Asset = props => {
     }
 
     return (
-        <Container type={asset.type} style={asset.style ? {...asset.style} : {}}>
+        <Container
+            type={asset.type}
+            size={asset.size}
+            style={asset.style ? {...asset.style} : {}}
+        >
             <Type>
                 {asset.type === "cash" ? <Money /> : <Chip />}
                 {text[asset.type]}

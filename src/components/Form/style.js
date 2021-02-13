@@ -25,7 +25,7 @@ const inputStyle = {
 }
 const showLabelStyle = {
     opacity: 1,
-    transform: "translateY(-8.5px) translateX(5px)"
+    transform: "translateY(-8.5px) translateX(5px)",
 }
 
 const Container = styled.div`
@@ -50,7 +50,7 @@ const Label = styled.label`
     left: 10px;
     top: 0;
     bottom: 0;
-    color: ${props => props.theme.form.focused.label_color};
+    color: ${props => props.theme.form.unfocused.label_color};
     transition: all .2s ease-in;
     opacity: 0;
     height: min-content;
@@ -63,6 +63,14 @@ const Label = styled.label`
     ${props => {
         if(props.shown){
             return {...showLabelStyle}
+        }
+    }}
+
+    ${props => {
+        if(props.isFocused){
+            return {
+                color: props.theme.form.focused.label_color
+            }
         }
     }}
     
@@ -82,6 +90,7 @@ const AppInput = styled.input`
             color: transparent;
         }
         & + label {
+            color: ${props => props.theme.form.focused.label_color};
             ${{...showLabelStyle}}
         }
         & ~ #counter {
@@ -125,6 +134,7 @@ const Field = styled(FormikField)`
             color: transparent;
         }
         & + label {
+            color: ${props => props.theme.form.focused.label_color};
             ${{...showLabelStyle}}
         }
         & ~ #counter {
@@ -203,13 +213,21 @@ const SelectInput = props => {
         );
     };
 
-    const selectStyle = theme => {
+    const selectStyle = (theme, customStyle) => {
 
         const unfocusedBorderStyle = `1px solid ${theme.form.unfocused.border_color}`
         const focusedBorderStyle = `1px solid ${theme.form.focused.border_color}`
         const errorStyle = `1px solid ${theme.form.error_color}`
   
         const background = theme.form.background_color
+        let custom_control = {}
+
+        if(customStyle){
+             if(customStyle.custom_control){
+                custom_control = customStyle.custom_control
+             }
+        }
+
 
         return {
             control: (provided, state) => {
@@ -233,18 +251,19 @@ const SelectInput = props => {
                         " > div": {
                             marginLeft: 0
                         }
-                    }
+                    },
+                    ...custom_control
                 }
             },
-            placeholder: (provided) => ({
+            placeholder: (provided, state) => ({
                 ...provided,
-                color: theme.form.unfocused.label_color,
+                color: state.isFocused ? "transparent" : theme.form.unfocused.label_color,
                 fontSize: font_size,
                 marginLeft: 0,
             }),
             menu: (provided) => ({
                 ...provided,
-                zIndex: 2
+                zIndex: 14
             }),
             menuList: (provided) => ({
                 ...provided,
@@ -253,6 +272,7 @@ const SelectInput = props => {
                 borderRadius: border_radius,
                 boxShadow: theme.form.box_shadow,
                 backgroundColor: theme.form.background_color,
+                zIndex: 14
             }),
             option: (provided, state) => ({
                 ...provided,
@@ -275,13 +295,13 @@ const SelectInput = props => {
             <ReactSelect 
                 onChange={onChange}
                 onBlur={onBlur ? onBlur : null}
+                onFocus={props.focusHandler}
                 options={_options}
                 placeholder={input.required ? `${input.placeholder} \u002A` : input.placeholder}  
                 isDisabled={input.isDisabled || _options.length === 0}
                 isSearchable={input.isSearchable ? true : false}
                 value={input.options.filter(({value}) => value === _value)}
-                styles={selectStyle(theme)}
-                // menuIsOpen={true}
+                styles={selectStyle(theme, input.customStyle)}
                 components={{
                     IndicatorSeparator: () => null,
                     DropdownIndicator: input.isDisabled || _options.length === 0 ? () => null : DropdownIndicator

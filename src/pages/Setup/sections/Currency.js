@@ -1,19 +1,24 @@
 import React from 'react'
 import { currencies } from '../../../assets/currencies'
-import { Section, Text, SetupForm, ButtonContainer } from '../Setup-style'
-import { renderInput } from '../../../functions/form'
-import { withFormik } from 'formik'
-import * as Yup from 'yup'
-import { useSelector } from 'react-redux'
-import { Button } from '../../../components'
+import { Section, Text } from '../Setup-style'
+import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { Form } from '../../../components/form/index'
+import * as actions from '../../../store/actions'
 
 const SectionCurrency = styled(Section)`
     padding-top: 15vh;
+
+    form {
+        width: 40rem;
+        margin-top: 2rem !important;
+    };
+
 `
 
-const Form = props => {
-    const { errors, touched, handleChange, values, handleBlur, setFieldValue, currentSection } = props
+const Currency = props => {
+    const dispatch = useDispatch()
+    const { currentSection, changeSection } = props
     const { currentPage : text } = useSelector(state => state.text)
 
     const currenciesOptions = []
@@ -25,6 +30,7 @@ const Form = props => {
         })
     })
 
+
     const input = {
         id: "currency",
         input_type: "select",
@@ -33,9 +39,16 @@ const Form = props => {
         placeholder: text.choose_currency,
         options: currenciesOptions,
         isSearchable: true,
+        required: true,
+
         labelStyle: {
             display: "none"
         }
+    }
+
+    const chooseCurrency = ({currency}) => {
+        dispatch(actions.setCurrency(currency))
+        changeSection("next")
     }
 
     return (
@@ -45,54 +58,13 @@ const Form = props => {
         >
             <Text>{text.currency_text_a}</Text>
             <Text>{text.currency_text_b}</Text>
-            <SetupForm>
-                {renderInput({
-                    input,
-                    index: 0,
-                    errors,
-                    touched,
-                    handleChange,
-                    values,
-                    onBlur: handleBlur,
-                    onChange: setFieldValue
-                })}
-                <ButtonContainer>
-                    <Button type="submit" square="true">{text.next}</Button>
-                </ButtonContainer>
-            </SetupForm>
+            <Form 
+                inputs={[input]}
+                submitHandler={chooseCurrency}
+                buttonLabel={text.next}
+            />
         </SectionCurrency>
     )
 }
-
-const Currency = withFormik({
-    mapPropsToValues: () => {
-        return {
-            currency: ""
-        }
-    },
-    validationSchema: ({ errorText, text }) => {
-        const empty = errorText.required_field
-        return Yup.lazy(values => {
-            if(values.currency === "" || values.currency === undefined){
-                return Yup.object().shape({
-                    currency: Yup.string()
-                    .required(empty)
-                })
-            } else {
-                const currency = values.currency.symbol
-                return Yup.object().shape({
-                    currency: Yup.string()
-                    .required(empty)
-                })
-            }
-        })
-    },
-    handleSubmit: (values, {props}) => {
-        const { currency } = values
-        const { setCurrency, changeSection } = props
-        setCurrency(currency)
-        changeSection("next")
-    }
-})(Form)
 
 export default Currency

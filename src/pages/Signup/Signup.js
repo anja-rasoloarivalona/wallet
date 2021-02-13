@@ -17,6 +17,7 @@ const Signup = () => {
     const {
         text: { currentPage: text, errors: errorText },
         theme: { green, grey_dark },
+        settings: { lang }
     } = useSelector(state => state)
    
     const [showPassword, setShowPassword] = useState(false)
@@ -75,7 +76,10 @@ const Signup = () => {
             const res = await client({
                 method: "post",
                 url: "/signup",
-                data: data
+                data: {
+                    ...data,
+                    lang
+                }
             })
             if(res.status !== 201){
                 return dispatch(actions.setError({error: errorText.signup_failed}))
@@ -196,26 +200,34 @@ const Signup = () => {
 
     return (
         <Container>
-            <Modal>   
-                <Title>
-                    {text.title}
-                </Title>     
-                <Form
-                    inputs={inputs}
-                    submitHandler={signupHandler}
-                    buttonLabel={text.signup}
-                    getValues={values => getValues(values)}
-                    getErrors={errors => getErrors(errors)}
-                >
-                    <OrTextContainer>
-                        <OrTextLine />
-                            <OrText> {text.or}</OrText>
-                        <OrTextLine />
-                    </OrTextContainer>
-                    <SignupOther>
-                        {text.signup_google_facebook}
-                    </SignupOther>
-                </Form>
+            <Modal>  
+                {!userEmail && (
+                    <>
+                    <Title>
+                        {text.title}
+                    </Title>     
+                    <Form
+                        inputs={inputs}
+                        submitHandler={signupHandler}
+                        buttonLabel={text.signup}
+                        getValues={values => getValues(values)}
+                        getErrors={errors => getErrors(errors)}
+                    >
+                        <OrTextContainer>
+                            <OrTextLine />
+                                <OrText> {text.or}</OrText>
+                            <OrTextLine />
+                        </OrTextContainer>
+                        <SignupOther>
+                            {text.signup_google_facebook}
+                        </SignupOther>
+                    </Form>    
+                    </>
+                )}
+                {userEmail && (
+                    <EmailSent email={userEmail} />
+                )}
+
             </Modal>
             {!userEmail && (
                 <Disclaimer>

@@ -1,31 +1,32 @@
 import React, { useState, useEffect } from 'react'
-import { Section, Title, Text, SetupForm, ButtonContainer, AssetsList, AssetItem} from '../Setup-style'
-import { renderInput } from '../../../functions/form'
-import { withFormik } from 'formik'
-import * as Yup from 'yup'
-import { useSelector } from 'react-redux'
-import { Button, Card } from '../../../components'
+import { Section, Text, ButtonContainer, AssetsList } from '../Setup-style'
+import { useSelector, useDispatch } from 'react-redux'
+import { Button, Asset } from '../../../components'
+import { Form } from '../../../components/form/index'
+import _ from 'lodash'
+import styled from 'styled-components'
+import * as actions from '../../../store/actions'
 
-const Form = props => {
-    const { errors, touched, handleChange, values, handleBlur, setFieldValue, currentSection, assets, currency, changeSection, setErrors } = props
-    const { currentPage : text } = useSelector(state => state.text)
-    const { lang } = useSelector(state => state.settings)
-    const [action, setAction] = useState("adding")
+const Container = styled(Section)`
+    form {
+        margin-top: 4rem !important;
+    }
+`
 
-    useEffect(() => {
-        if(assets.length > 0){
-            setAction("viewing")
-        }
-    },[assets])
+const Assets = props => {
+    const dispatch = useDispatch()
+    const { currentSection, changeSection } = props
+    const [ action, setAction ] = useState("adding")
+    const [ values, getValues ] = useState(null)
 
-    useEffect(() => {
-        if(Object.keys(errors).length > 0){
-            setErrors({})
-        }
-    },[currentSection, errors])
+    const {
+        text: { currentPage: text},
+        user: { assets },
+        settings: { currency }
+    } = useSelector(state => state)
 
 
-    const inputs = [
+    const initialInputs = [
         {
             id: "type",
             input_type: "select",
@@ -36,7 +37,8 @@ const Form = props => {
                 {value: "debit_card", label: text.debit_card},
                 {value: "credit_card", label: text.credit_card},
                 {value: "cash", label: text.cash}
-            ]
+            ],
+            required: true
         },
         {
             id: "name",
@@ -44,7 +46,8 @@ const Form = props => {
             type: "text",
             placeholder: text.name,
             label: text.name,
-            name: "name"
+            name: "name",
+            required: true
         },
         {
             id: "amount",
@@ -53,85 +56,85 @@ const Form = props => {
             placeholder: text.balance,
             label: text.balance,
             name: "amount",
-            unit: currency ? currency.symbol : null
+            unit: currency ? currency.symbol : null,
+            required: true
         }
     ]
 
+    const [inputs, setInputs] = useState(initialInputs)
 
-    const assetForm = (
-        <SetupForm>
-            {inputs.map((input, index) => renderInput({
-                input,
-                index,
-                errors,
-                touched,
-                handleChange,
-                values,
-                onBlur: handleBlur,
-                onChange: setFieldValue
-            }))}
-            <ButtonContainer>
-                {assets.length === 0 && <Button square="true" secondary="true" onClick={() => changeSection("next")}>{text.skip}</Button>}
-                <Button square="true" type="submit">{text.add}</Button>
-                {assets.length > 0 && action === "adding" &&  <Button square="true" secondary="true" onClick={() => setAction("viewing")}>{text.cancel}</Button>}
-    
-            </ButtonContainer>
-        </SetupForm>
-    )
+
+    useEffect(() => {
+        if(values){
+            if(values.type === "credit_card" && inputs.length === 3){
+                const updatedInputs = inputs.map(input => ({...input}))
+                updatedInputs.push({
+                    id: "credit_limit",
+                    input_type: "input",
+                    type: "number",
+                    placeholder: "Limit",
+                    label: "Limit",
+                    name: "credit_limit",
+                    unit: currency ? currency.symbol : null,
+                    required: true
+                })
+                setInputs(updatedInputs)
+            }
+
+            if(values.type !== "credit_card" && inputs.length > 3){
+                const updatedInputs =  inputs.map(input => ({...input}))
+                updatedInputs.splice(inputs.length - 1)
+                setInputs(updatedInputs)
+            }
+
+        }
+    },[values])
+
+    const addAssetHandler = asset => {
+        const updatedAssets = assets.map(asset => ({...asset}))
+        updatedAssets.push(asset)
+        dispatch(actions.setAssets(updatedAssets))
+        setAction("viewing")
+    }
+
+    const assetForm = <Form 
+                        inputs={inputs}
+                        buttonLabel={text.add}
+                        submitHandler={addAssetHandler}
+                        cancelLabel={text.skip}
+                        cancelHandler={() => changeSection("next")}
+                        getValues={values => getValues(values)}
+                        submitButtonStyle="full"
+                      />
 
     const assetsList = (
         <>
         <AssetsList>
-            {assets.map((asset, index) => (
-                <Card
-                    card={asset}
-                    key={index}
-                />
-            ))}
+            {assets.map(asset => <Asset asset={{
+                ...asset,
+                size:"small",
+                style: {
+                    boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)"
+                }
+            }} />)}
         </AssetsList>
         <ButtonContainer>
-            <Button square="true" secondary="true" onClick={() => setAction("adding")}>{text.add}</Button>
+            <Button square="true" secondary="true" onClick={() => dispatch(actions.toggleForm({form: "assetForm"}))}>{text.add}</Button>
             <Button square="true"  onClick={() => changeSection("next")}>{text.next}</Button>
         </ButtonContainer>
         </>
-    ) 
+    )
+
     return (
-        <Section
+        <Container
             currentSection={currentSection}
             active={1}
-        >   
+        >
             <Text>{text.assets_text}</Text>
-            {action === "viewing" && assetsList}
-            {action === "adding" && assetForm}
-        </Section>
+            {!_.isEmpty(assets) && action === "viewing" && assetsList}
+            {_.isEmpty(assets)  && assetForm}
+        </Container>
     )
 }
-
-const Assets = withFormik({
-    mapPropsToValues: () => {
-        return {
-            type: "",
-            name: "",
-            amount: ""
-        }
-    },
-    validationSchema: ({ errorText }) => {
-        const empty = errorText.required_field
-        return Yup.object().shape({
-            type: Yup.string().required(empty),
-            name: Yup.string().required(empty),
-            amount: Yup.string().required(empty)
-        })
-    },
-    handleSubmit: (values, {props}) => {
-        const { assets, setAssets} = props
-        const updatedAssets = assets.map(asset => ( {...asset}))
-        updatedAssets.push({
-            ...values
-        })
-        setAssets(updatedAssets)
-    }
-})(Form)
-
 
 export default Assets

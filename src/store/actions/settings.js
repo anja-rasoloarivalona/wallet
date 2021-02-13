@@ -15,6 +15,9 @@ const setTheme = theme => {
 }
 
 const setCurrency = currency => {
+    console.log({
+        currency
+    })
     return {
         type: actionTypes.SET_CURRENCY,
         currency

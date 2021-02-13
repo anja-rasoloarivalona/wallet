@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Button } from './Button'
 import { Loader } from './Loader'
+import { useSelector } from 'react-redux'
 
 const Container = styled.div`
     width: 100%;
@@ -10,12 +11,32 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
+
+    ${props => {
+        if(props.submitButtonStyle === "full"){
+            return {
+                justifyContent: "space-between",
+                "button": {
+                    width: "100% !important",
+                    margin: "0",
+                    "&:first-child": {
+                        marginRight: "1rem"
+                    }
+                }
+            }
+        }
+    }}
 `
 
 const SubmitButton = props => {
-    const { isSubmitting, label, onClick, onCancel } = props
+
+    const {
+        text: { currentPage: text }
+    } = useSelector(state => state)
+
+    const { isSubmitting, label,cancelLabel, onClick, onCancel, submitButtonStyle } = props
     return (
-        <Container>
+        <Container submitButtonStyle={submitButtonStyle}>
             {isSubmitting ?
                 <Loader /> :
                 <>  
@@ -24,11 +45,12 @@ const SubmitButton = props => {
                             onClick={onCancel}
                             type="button"
                             secondary
+                            square
                         >
-                            Cancel
+                           {cancelLabel ? cancelLabel : text.cancel }
                          </Button>
                     )}
-                    <Button onClick={onClick} type="submit">
+                    <Button onClick={onClick} type="submit"  square>
                         {label}
                     </Button>
                 </>

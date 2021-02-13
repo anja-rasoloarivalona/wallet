@@ -56,6 +56,9 @@ const Budget = () => {
             }],
             xAxes: [{
                 ticks: {
+                    maxTicksLimit: 8,
+                    min: 0,
+                    max: 50,
                     callback: function(value, index, values) {
 
                         return settings.currency ?  value + settings.currency.symbol : value;

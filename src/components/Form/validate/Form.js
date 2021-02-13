@@ -45,8 +45,10 @@ const Form = props => {
             <SubmitButton 
                 isSubmitting={isSubmitting}
                 label={props.buttonLabel}
+                cancelLabel={props.cancelLabel}
                 onClick={props.onClickButton}
                 onCancel={props.cancelHandler}
+                submitButtonStyle={props.submitButtonStyle}
             />
         </FormComponent>
     )

@@ -2,8 +2,8 @@ import React from 'react'
 import {EmailSentContainer, EmailSentTitleContainer, EmailSentTitle, EmailSentTitleIcon, EmailSentModal, EmailSentText } from './Signup-style'
 
 const EmailSent = props => {
-    const { user } = props
-    if(!user){
+    const { email } = props
+    if(!email){
         return <div></div>
     }
     return (
@@ -18,7 +18,7 @@ const EmailSent = props => {
                 </EmailSentTitle>
             </EmailSentTitleContainer>
             <EmailSentModal>
-                {user.email}
+                {email}
             </EmailSentModal>
             <EmailSentText>
                 Please check it out to activate your account

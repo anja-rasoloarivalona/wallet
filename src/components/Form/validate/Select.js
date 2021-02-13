@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Container, Label, Error, SelectInput } from '../style'
 import _ from 'lodash'
 
 const Select = props => {
     const {input, errors, touched, values } = props
+    const [isFocused, setIsFocused] = useState(false)
 
     const handleChange = option => {
         props.onChange(input.name, option.value)
@@ -11,6 +12,7 @@ const Select = props => {
 
     const handleBlur = () => {
         props.onBlur(input.name, true)
+        setIsFocused(false)
     }
 
     useEffect(() => {
@@ -24,7 +26,8 @@ const Select = props => {
             <Label
                 htmlFor={input.id}
                 style={{...input.labelStyle}}
-                shown={!_.isEmpty(values[input.name])}
+                shown={!_.isEmpty(values[input.name]) || isFocused}
+                isFocused={isFocused}
             >
                 {input.label} {input.required &&  `\u002A`} 
             </Label>
@@ -35,6 +38,7 @@ const Select = props => {
                 values={values}
                 touched={touched}
                 errors={errors}
+                focusHandler={() => setIsFocused(true) }
             />
             {touched[input.name] && errors[input.name] && (
                 <Error>

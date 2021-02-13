@@ -21,25 +21,21 @@ const setPosition = (currentSection, active) => {
 }
 
 const Container = styled.div`
-    width: 100vw;
-    min-height: 100vh;
     position: fixed;
-    top: 0;
+    top: 5.4rem;
     left: 0;
+    width: 100vw;
     z-index: 25;
+    min-height: calc(100vh - 5.4rem);
     display: flex;
     justify-content: center;
-    padding-left: 30rem;
-    background: ${props => props.theme.background};
+    background: ${props => props.theme.surface};
 `
 
 const Content = styled.div`
-    top: 7.5rem;
+    width: calc(100vw - 25rem);
+    margin-left: 25rem;
     position: relative;
-    width: calc(100vw - 30rem);
-    height: calc(100vh - 15rem);
-    overflow-y: overlay;
-    overflow-x: hidden;
 `
 
 const Section = styled.div`
@@ -47,12 +43,17 @@ const Section = styled.div`
     top: 0;
     left: 0;
     width: 100%;
+    min-height: calc(100vh - 5.4rem);
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: all .3s ease-in;
     padding-top: 10vh;
-    // background: red;
+
+    form {
+        width: 40rem;
+        margin-top: 2rem;
+    };
 
     ${props => {
         return setPosition(props.currentSection, props.active)
@@ -137,10 +138,15 @@ const ArrowContainer = styled.div`
 `
 
 const AssetsList = styled.ul`
-    width: 50%;
+    width: 100%;
     list-style: none;
     margin: 4rem;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    grid-template-rows: max-content;
+    grid-auto-rows: max-content;
+    row-gap: 2rem;
+    column-gap: 2rem;
     justify-content: center;
 `
 

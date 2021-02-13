@@ -267,8 +267,18 @@
         "fr": "Nouveau actif",
         "en": "Add asset"
     },
-
-
+    "variable": {
+        "fr": "Variable",
+        "en": "Variable"
+    },
+    "fixed": {
+        "fr": "Fixe",
+        "en": "Fixed"
+    },
+    "skip": {
+        "fr": "Passer",
+        "en": "Skip"
+    },
     "link_connexion": {
         "fr": "connexion",
         "en": "login"
@@ -277,9 +287,9 @@
         "fr": "inscription",
         "en": "signup"
     },
-    "link_inscription_activation": {
-        "fr": "inscription/activation",
-        "en": "signup/activate"
+    "link_activation": {
+        "fr": "activation",
+        "en": "activate"
     },
     "link_configuration": {
         "fr": "configuration",
@@ -318,9 +328,9 @@
         "fr": "inscription",
         "en": "signup"
     },
-    "link_signup_activate": {
-        "fr": "inscription/activation",
-        "en": "signup/activate"
+    "link_activate": {
+        "fr": "activation",
+        "en": "activate"
     },
     "link_setup": {
         "fr": "configuration",
@@ -346,5 +356,38 @@
     "link_reset-password": {
         "fr": "mot-de-passe-modification",
         "en": "reset-password"
+    },
+
+
+
+    "link_general": {
+        "fr": "général",
+        "en": "general"
+    },
+    "link_général": {
+        "fr": "général",
+        "en": "general"
+    },
+    "link_my-account": {
+        "fr": "mon-compte",
+        "en": "my-account"
+    },
+    "link_mon-compte": {
+        "fr": "mon-compte",
+        "en": "my-account"
+    },
+
+    "logout": {
+        "fr": "Se déconnecter",
+        "en": "Log out"
+    },
+    "language": {
+        "fr": "Language",
+        "en": "Language"
+    },
+    "theme": {
+        "fr": "Thème",
+        "en": "Theme"
     }
+  
 }

@@ -6,6 +6,7 @@ import AssetForm from './AssetForm/AssetForm'
 import BudgetForm from './BudgetForm/BudgetForm'
 import TransactionsForm from './TransactionForm/TransactionForm'
 import TransactionsTable from './TransactionsTable/TransactionsTable'
+import GoalForm from "./GoalForm/GoalForm"
 
 export {
     Header,
@@ -14,5 +15,6 @@ export {
     AssetForm,
     BudgetForm,
     TransactionsForm,
-    TransactionsTable
+    TransactionsTable,
+    GoalForm
 }
