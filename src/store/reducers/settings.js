@@ -4,16 +4,8 @@ import { updatedObject } from '../utility'
 const initialState = {
     lang: "en",
     currency: null,
-    dashboard: null,
+    dashboard: {},
     theme: "light"
-}
-
-const setDashboard = (state, action) => {
-    const dashboard = JSON.parse(action.dashboard)
-    return updatedObject(state, {
-        dashboard
-    })
-
 }
 
 const setLang = (state, action ) => {
@@ -28,12 +20,33 @@ const setTheme = (state, action) => {
     return updatedObject(state, { theme })
 }
 
+const setDashboard = (state, action) => {
+    const { size, data } = action.dashboard
+    return updatedObject(state, {
+        dashboard: {
+            ...state.action,
+            [size]: data
+        }
+    })
+}
+
+const initDashboard = (state, action) => {
+    console.log({
+        action
+    })
+    return updatedObject(state, {
+        dashboard: action.dashboard
+    })
+}
+
 const reducer = (state = initialState, action) => {
     switch(action.type){
         case actionTypes.SET_LANG: return setLang(state, action)
         case actionTypes.SET_CURRENCY: return updatedObject(state, {currency: action.currency})
-        case actionTypes.SET_DASHBOARD: return setDashboard(state, action)
         case actionTypes.SET_THEME: return setTheme(state, action)
+
+        case actionTypes.SET_DASHBOARD: return setDashboard(state, action)
+        case actionTypes.INIT_DASHBOARD: return initDashboard(state, action)
         default: return  state
     }
 }

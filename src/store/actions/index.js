@@ -6,7 +6,8 @@ export {
     setLang,
     setTheme,
     setCurrency,
-    setDashboard
+    setDashboard,
+    getDashboard
 } from './settings'
 
 export {
@@ -31,7 +32,7 @@ export {
     toggleForm,
     toggleSideBar,
     toggleDashboard,
-    updateDashboardLayout
+    updateDashboardLayout,
 } from './interface'
 
 export {

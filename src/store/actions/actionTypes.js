@@ -5,6 +5,8 @@ export const SET_TEXT_PATHNAME = "SET_TEXT_PATHNAME"
 export const SET_LANG = "SET_LANG"
 export const SET_CURRENCY = "SET_CURRENCY"
 export const SET_TOKEN = "SET_TOKEN"
+
+export const INIT_DASHBOARD = "INIT_DASHBOARD"
 export const SET_DASHBOARD = "SET_DASHBOARD"
 
 export const SET_ERROR = "SET_ERROR"

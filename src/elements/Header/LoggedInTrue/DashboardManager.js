@@ -45,20 +45,33 @@ const DashboardManager = () => {
 
     const dispatch = useDispatch()
     const {
-        ui : { dashboard }
+        ui : { dashboard },
+        settings: { dashboard: userDashboard }
     } = useSelector(state => state)
     const [isSubmitting, setIsSubmitting] = useState(false)
 
     const saveDashboard = async () => {
         try {
+
+            const method =  userDashboard[dashboard.updated.size] ? "put" : "post"
             setIsSubmitting(true)
-            const res = await client.post("/settings/dashboard", {data: dashboard.updated.layout})
-            const resData = res.data.data
-            const _dashboard = resData.dashboard
-            dispatch(actions.setDashboard(_dashboard))
+            const res = await client({
+                method,
+                url: "/dashboard",
+                data: {
+                    data: dashboard.updated.layout,
+                    size: dashboard.updated.size
+                }
+            })
+            const resData = res.data.data            
+            dispatch(actions.setDashboard({
+                size: resData.size,
+                data: JSON.parse(resData.data)
+            }))
             dispatch(actions.toggleDashboard())
             setIsSubmitting(false)
         } catch(err){
+            console.log(err)
             setIsSubmitting(false)
             console.log(err.message)
         }

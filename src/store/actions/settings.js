@@ -1,4 +1,7 @@
 import * as actionTypes from './actionTypes'
+import { client } from '../../functions'
+import _ from 'lodash'
+
 
 const setLang = lang => {
     return {
@@ -24,6 +27,37 @@ const setCurrency = currency => {
     }
 }
 
+const getDashboard = () => {
+    console.log("getting dashboard")
+    return async function ( dispatch ){
+        try {
+            const res = await client.get("/dashboard")
+            console.log({
+                res
+            })
+            const resData = res.data.data
+            const dashboard = {}
+            if(!_.isEmpty(resData)){
+                resData.forEach(layout => {
+                    dashboard[layout.size] = JSON.parse(layout.data)
+                })
+            }
+            dispatch(initDashboard(dashboard))
+        } catch(err){
+            console.log({
+                err
+            })
+        }
+    }
+}
+
+const initDashboard = dashboard => {
+    return {
+        type: actionTypes.INIT_DASHBOARD,
+        dashboard
+    }
+}
+
 const setDashboard = dashboard => {
     return {
         type: actionTypes.SET_DASHBOARD,
@@ -43,5 +77,6 @@ export {
     setTheme,
     setCurrency,
     setDashboard,
-    updateThemeColors
+    updateThemeColors,
+    getDashboard
 }

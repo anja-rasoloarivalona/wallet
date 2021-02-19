@@ -1,0 +1,100 @@
+{
+    "layout": {
+        "max": [
+            { "w": 14, "h": 7, "x": 0, "y": 11, "i": "history", "display": true },
+            { "w": 8, "h": 4, "x": 0, "y": 0, "i": "this-period", "display": true },
+            { "w": 5, "h": 3, "x": 5, "y": 0, "i": "monthly-expenses", "display": false },
+            { "w": 5, "h": 3, "x": 0, "y": 0,  "i": "monthly-incomes", "display": false },
+            { "w": 10, "h": 7, "x": 14, "y": 11, "i": "goal", "display": true },
+            { "w": 7, "h": 4, "x": 17, "y": 0, "i": "compared-to-last-month", "display": false },
+            { "w": 14, "h": 7, "x": 0, "y": 4, "i": "stats", "display": true },
+            { "w": 10, "h": 7, "x": 14, "y": 4, "i": "expenses", "display": true },
+            { "w": 16, "h": 8, "x": 8, "y": 18, "i": "budget", "display": true },
+            { "w": 8, "h": 8, "x": 0, "y": 18, "i": "transactions", "display": true }
+        ],
+        "xxl": [
+            { "w": 14, "h": 7, "x": 0, "y": 11, "i": "history", "display": true },
+            { "w": 8, "h": 4, "x": 0, "y": 0, "i": "this-period", "display": true },
+            { "w": 5, "h": 3, "x": 5, "y": 0, "i": "monthly-expenses", "display": false },
+            { "w": 5, "h": 3, "x": 0, "y": 0,  "i": "monthly-incomes", "display": false },
+            { "w": 10, "h": 7, "x": 14, "y": 11, "i": "goal", "display": true },
+            { "w": 7, "h": 4, "x": 17, "y": 0, "i": "compared-to-last-month", "display": false },
+            { "w": 14, "h": 7, "x": 0, "y": 4, "i": "stats", "display": true },
+            { "w": 10, "h": 7, "x": 14, "y": 4, "i": "expenses", "display": true },
+            { "w": 16, "h": 8, "x": 8, "y": 18, "i": "budget", "display": true },
+            { "w": 8, "h": 8, "x": 0, "y": 18, "i": "transactions", "display": true }
+        ],
+        "xl": [
+            { "w": 14, "h": 7, "x": 0, "y": 11, "i": "history", "display": true },
+            { "w": 8, "h": 4, "x": 0, "y": 0, "i": "this-period", "display": true },
+            { "w": 5, "h": 3, "x": 5, "y": 0, "i": "monthly-expenses", "display": false },
+            { "w": 5, "h": 3, "x": 0, "y": 0,  "i": "monthly-incomes", "display": false },
+            { "w": 10, "h": 7, "x": 14, "y": 11, "i": "goal", "display": true },
+            { "w": 7, "h": 4, "x": 17, "y": 0, "i": "compared-to-last-month", "display": false },
+            { "w": 14, "h": 7, "x": 0, "y": 4, "i": "stats", "display": true },
+            { "w": 10, "h": 7, "x": 14, "y": 4, "i": "expenses", "display": true },
+            { "w": 16, "h": 8, "x": 8, "y": 18, "i": "budget", "display": true },
+            { "w": 8, "h": 8, "x": 0, "y": 18, "i": "transactions", "display": true }
+        ],
+        "lg": [
+            { "w": 14, "h": 7, "x": 0, "y": 11, "i": "history", "display": true },
+            { "w": 10, "h": 4, "x": 0, "y": 0, "i": "this-period", "display": true },
+            { "w": 5, "h": 3, "x": 5, "y": 0, "i": "monthly-expenses", "display": false },
+            { "w": 5, "h": 3, "x": 0, "y": 0,  "i": "monthly-incomes", "display": false },
+            { "w": 10, "h": 7, "x": 14, "y": 11, "i": "goal", "display": true },
+            { "w": 7, "h": 4, "x": 17, "y": 0, "i": "compared-to-last-month", "display": false },
+            { "w": 14, "h": 7, "x": 0, "y": 4, "i": "stats", "display": true },
+            { "w": 10, "h": 7, "x": 14, "y": 4, "i": "expenses", "display": true },
+            { "w": 12, "h": 8, "x": 12, "y": 18, "i": "budget", "display": true },
+            { "w": 12, "h": 8, "x": 0, "y": 18, "i": "transactions", "display": true }
+        ],
+        "md": [
+            { "w": 12, "h": 8, "x": 0, "y": 18, "i": "history", "display": true },
+            { "w": 10, "h": 4, "x": 0, "y": 0, "i": "this-period", "display": true },
+            { "w": 5, "h": 3, "x": 5, "y": 0, "i": "monthly-expenses", "display": false },
+            { "w": 5, "h": 3, "x": 0, "y": 0,  "i": "monthly-incomes", "display": false },
+            { "w": 8, "h": 7, "x": 12, "y": 0, "i": "goal", "display": true },
+            { "w": 7, "h": 4, "x": 17, "y": 0, "i": "compared-to-last-month", "display": false },
+            { "w": 12, "h": 7, "x": 0, "y": 3, "i": "stats", "display": true },
+            { "w": 10, "h": 7, "x": 0, "y": 11, "i": "expenses", "display": true },
+            { "w": 8, "h": 8, "x": 12, "y": 18, "i": "budget", "display": true },
+            { "w": 10, "h": 7, "x": 10, "y": 11, "i": "transactions", "display": true }
+        ],
+        "sm": [
+            { "w": 12, "h": 8, "x": 0, "y": 4, "i": "history", "display": true },
+            { "w": 12, "h": 4, "x": 0, "y": 0, "i": "this-period", "display": true },
+            { "w": 12, "h": 3, "x": 0, "y": 0, "i": "monthly-expenses", "display": false },
+            { "w": 12, "h": 3, "x": 0, "y": 0,  "i": "monthly-incomes", "display": false },
+            { "w": 6, "h": 6, "x": 0, "y": 0, "i": "goal", "display": true },
+            { "w": 12, "h": 4, "x": 0, "y": 0, "i": "compared-to-last-month", "display": false },
+            { "w": 12, "h": 7, "x": 0, "y": 3, "i": "stats", "display": true },
+            { "w": 12, "h": 7, "x": 0, "y": 3, "i": "expenses", "display": true },
+            { "w": 12, "h": 6, "x": 0, "y": 12, "i": "budget", "display": true },
+            { "w": 12, "h": 8, "x": 0, "y": 10, "i": "transactions", "display": true }
+        ],
+        "xs": [
+            { "w": 14, "h": 7, "x": 0, "y": 11, "i": "history", "display": true },
+            { "w": 10, "h": 4, "x": 0, "y": 0, "i": "this-period", "display": true },
+            { "w": 5, "h": 3, "x": 5, "y": 0, "i": "monthly-expenses", "display": false },
+            { "w": 5, "h": 3, "x": 0, "y": 0,  "i": "monthly-incomes", "display": false },
+            { "w": 10, "h": 7, "x": 14, "y": 11, "i": "goal", "display": true },
+            { "w": 7, "h": 4, "x": 17, "y": 0, "i": "compared-to-last-month", "display": false },
+            { "w": 14, "h": 7, "x": 0, "y": 4, "i": "stats", "display": true },
+            { "w": 10, "h": 7, "x": 14, "y": 4, "i": "expenses", "display": true },
+            { "w": 16, "h": 8, "x": 8, "y": 18, "i": "budget", "display": true },
+            { "w": 8, "h": 8, "x": 0, "y": 18, "i": "transactions", "display": true }
+        ],
+        "xxs": [
+            { "w": 14, "h": 7, "x": 0, "y": 11, "i": "history", "display": true },
+            { "w": 10, "h": 4, "x": 0, "y": 0, "i": "this-period", "display": true },
+            { "w": 5, "h": 3, "x": 5, "y": 0, "i": "monthly-expenses", "display": false },
+            { "w": 5, "h": 3, "x": 0, "y": 0,  "i": "monthly-incomes", "display": false },
+            { "w": 10, "h": 7, "x": 14, "y": 11, "i": "goal", "display": true },
+            { "w": 7, "h": 4, "x": 17, "y": 0, "i": "compared-to-last-month", "display": false },
+            { "w": 14, "h": 7, "x": 0, "y": 4, "i": "stats", "display": true },
+            { "w": 10, "h": 7, "x": 14, "y": 4, "i": "expenses", "display": true },
+            { "w": 16, "h": 8, "x": 8, "y": 18, "i": "budget", "display": true },
+            { "w": 8, "h": 8, "x": 0, "y": 18, "i": "transactions", "display": true }
+        ]
+    }
+}

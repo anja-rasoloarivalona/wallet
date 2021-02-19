@@ -15,13 +15,8 @@ const initialState = {
     dashboard: {
         isManaging: false,
         action: null,
-        layout: {
-            sm: null,
-            md: null,
-            lg: null
-        },
         updated: {
-            type: null,
+            size: null,
             layout: null
         }
     },
