@@ -6,7 +6,6 @@ import Routes from './routes'
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../store/actions'
 import { BrowserRouter } from 'react-router-dom'
-import 'font-awesome/css/font-awesome.min.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { GlobalStyle, Container, Background } from './AppStyle'
