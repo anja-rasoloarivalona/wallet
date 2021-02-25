@@ -4,11 +4,10 @@ import { useSelector } from "react-redux";
 import { Bar } from "react-chartjs-2";
 import styled from "styled-components";
 import { Amount } from "../../../components";
-import { renderAmount } from "../../../functions";
-import { CategoryLabel } from "../../../components/form/custom/CategoryInput-style";
-import { Select } from "../../../components/form/unvalidate";
+import { setDate } from "../../../functions";
 import moment from "moment";
 import _ from "lodash";
+
 
 const Container = styled(Item)`
   display: flex;
@@ -52,7 +51,6 @@ const Summary = styled.div`
   justify-content: center;
   flex-direction: column;
   padding-bottom: 3rem;
-  // background: green;
 
   > div:first-child {
     margin-bottom: 1rem;
@@ -106,77 +104,65 @@ const ChartContainer = styled.div`
   height: 100%;
   width: 50%;
   min-width: 35rem;
-  // background: salmon;
 `;
 
 const Stats = () => {
   const {
-    settings: { lang, currency },
-    user: { transactions, current_period },
-    categories: { expense, income },
+    user: { transactions },
+    categories: {  income },
     theme,
     text: { currentPage: text },
-    ui: { filters },
   } = useSelector((state) => state);
 
-  let _expense = 0;
-  let _income = 0;
 
-  transactions.forEach((transaction) => {
-    if (transaction.period === current_period) {
-      if (transaction.type === "expense") {
-        _expense += parseInt(transaction.amount);
-      }
-      if (transaction.type === "income") {
-        _income += parseInt(transaction.amount);
-      }
-    }
-  });
-
-  const [filter, setFilter] = useState("all");
-  const [currentCategory, setCurrentCategory] = useState("all");
-  const [expensesData, setExpensesData] = useState(null);
   const [chartData, setChartData] = useState(null);
-  const [currentTotal, setCurrentTotal] = useState(0);
+  const [global, setGlobal] = useState({income: 0, expense: 0})
 
-  const expensesMasterName = [];
-  const expensesSubName = [];
 
   useEffect(() => {
-    if (transactions && transactions.length > 0) {
-      const tempData = {};
-      transactions.forEach((transaction) => {
-        if (transaction.type === "expense") {
-          if (!tempData[transaction.category.sub_name]) {
-            tempData[transaction.category.sub_name] = {
-              amount: parseInt(transaction.amount),
-              master_name: transaction.category.master_name,
-            };
-          } else {
-            tempData[transaction.category.sub_name].amount += parseInt(
-              transaction.amount
-            );
-            tempData[transaction.category.sub_name].master_name =
-              transaction.category.master_name;
-          }
-        }
-      });
+    if (transactions && transactions.length > 0){
+      const _global = {
+        expense: 0,
+        income: 0
+      }
+      const labels = [
+        setDate(moment().subtract(2, "months"), "mm-yy", "en"),
+        setDate(moment().subtract(1, "months"), "mm-yy", "en"),
+        setDate(moment(), "mm-yy", "en")
+      ]
 
-      const formatData = {};
+      const indexes = {}
+      labels.forEach((p, index) => {
+        indexes[p] = index
+      })
+      const _chartData = {
+          labels,
+          datasets: [
+            {
+              barPercentage: 1,
+              barThickness: 20,
+              label: "Income",
+              backgroundColor: income.color,
+              data: [0,0,0],
+            },
+            {
+              barPercentage: 1,
+              barThickness: 20,
+              label: "Expense",
+              backgroundColor: "black",
+              data: [0,0,0],
+            }
+          ]
+      }
+      transactions.forEach(transaction => {
+        _global[transaction.type] += parseInt(transaction.amount)
+        const datasetsindex = transaction.type === 'expense' ? 1 : 0
+        _chartData.datasets[datasetsindex].data[indexes[transaction.period]] += parseInt(transaction.amount)
+      })
 
-      Object.keys(tempData).forEach((item) => {
-        if (!formatData[tempData[item].master_name]) {
-          formatData[tempData[item].master_name] = {};
-          formatData[tempData[item].master_name][item] = {
-            ...tempData[item],
-          };
-        } else {
-          formatData[tempData[item].master_name][item] = {
-            ...tempData[item],
-          };
-        }
-      });
-      setExpensesData(formatData);
+      setChartData(_chartData)
+      setGlobal(_global)
+
     } else {
       setChartData({
         isEmpty: true,
@@ -201,100 +187,7 @@ const Stats = () => {
     } 
   }, [transactions]);
 
-  useEffect(() => {
-    const data = [];
-    const expensesBackgroundColor = [];
-    const expensesLabels = [];
-    const expenseLocale = [];
 
-    if (expensesData) {
-      if (currentCategory === "all") {
-        Object.keys(expensesData).forEach((item) => {
-          expenseLocale.push(item);
-          expensesLabels.push(text[item]);
-          expensesBackgroundColor.push(expense[item].color);
-          let _total = 0;
-          Object.keys(expensesData[item]).forEach((i) => {
-            _total += expensesData[item][i].amount;
-          });
-          data.push(_total);
-        });
-      } else {
-        const categoryData = expensesData[currentCategory];
-        Object.keys(categoryData).forEach((subCat) => {
-          expenseLocale.push(subCat);
-          expensesLabels.push(text[subCat]);
-          expensesBackgroundColor.push(expense[currentCategory].color);
-          data.push(categoryData[subCat].amount);
-        });
-      }
-
-      setChartData({
-        datasets: [
-          {
-            data,
-            backgroundColor: expensesBackgroundColor,
-            borderColor: theme.surface,
-          },
-        ],
-        labels: expensesLabels,
-        expenseLocale,
-      });
-
-      let _currentTotal = 0;
-      data.forEach((expense) => (_currentTotal += expense));
-      setCurrentTotal(_currentTotal);
-    }
-  }, [expensesData]);
-
-  // if(filter === "all"){
-  //   transactions = _transactions
-  // } else {
-  //     transactions = _transactions.filter(transaction => new Date(transaction.date) <= filters[filter].end && new Date(transaction.date) >= filters[filter].start )
-  // }
-
-  const filterHandler = (value) => {
-    setFilter(value);
-  };
-
-  const optionsA = [
-    {
-      label: text.all_f,
-      value: "all",
-    },
-    {
-      label: text.this_week,
-      value: "this_week",
-    },
-    {
-      label: text.this_month,
-      value: "this_month",
-    },
-    {
-      label: text.this_year,
-      value: "this_year",
-    },
-    {
-      label: `7 ${text.days}`,
-      value: "7_days",
-    },
-    {
-      label: `30 ${text.days}`,
-      value: "30_days",
-    },
-    {
-      label: `3 ${text.months}`,
-      value: "3_months",
-    },
-    {
-      label: `6 ${text.months}`,
-      value: "6_months",
-    },
-    {
-      label: `1 ${text.year}`,
-      value: "1_year",
-    },
-  ];
 
   const options = {
     maintainAspectRatio: false,
@@ -315,7 +208,6 @@ const Stats = () => {
       ],
       xAxes: [{
         gridLines: {
-            // display: false,
         },
     }],
     },
@@ -346,19 +238,22 @@ const Stats = () => {
         <Summary>
           <SummaryItem className="income">
             <SummaryItemTitle>Income</SummaryItemTitle>
-            <Amount className="amount" value={_income} income />
+            <Amount className="amount" value={global.income} income />
           </SummaryItem>
           <SummaryItem>
             <SummaryItemTitle>Expense</SummaryItemTitle>
-            <Amount className="amount" value={_expense} />
+            <Amount className="amount" value={global.expense} />
           </SummaryItem>
         </Summary>
         <Spacer />
         <ChartContainer>
-          <Bar
-            data={chartData}
-            options={options}
-          />
+          {chartData && (
+            <Bar
+              data={chartData}
+              options={options}
+            />
+          )}
+
         </ChartContainer>
       </Content>
     </Container>

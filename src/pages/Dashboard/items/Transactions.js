@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { setDate } from '../../../functions'
-
+import _ from 'lodash'
 
 const Container = styled.div`
     width: 100%;
@@ -67,6 +67,29 @@ const AmountContainer = styled.div`
     color: ${props => props.theme.text};
 `
 
+const EmptyTransaction = styled.div`
+    display: flex;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1rem;
+`
+
+const EmptyTransactionCircle = styled.div`
+    width: 4rem;
+    min-width: 4rem;
+    height: 4rem;
+    margin-right: 1.5rem;
+    border-radius: 50%;
+    background: ${props => props.theme.background};
+`
+
+const EmptyTransactionBar = styled.div`
+    height: 4rem;
+    width: 100%;
+    background: ${props => props.theme.background};
+`
+
 const Transactions = () => {
     const {
         text: { currentPage: text },
@@ -103,12 +126,28 @@ const Transactions = () => {
             </Transaction>
         )
     }
-  
+
+    const renderEmpty = () => {
+        const res = []
+        for(let i = 0; i <= 2; i++){
+            res.push(
+                <EmptyTransaction key={i}>
+                    <EmptyTransactionCircle />
+                    <EmptyTransactionBar />
+                </EmptyTransaction>
+            )
+        }
+        return res
+    }
+
     return (
         <Item >
             <Title>Recent Transactions</Title>
             <Table>
-                {transactions && transactions.slice(0, 5).map((transaction, index) => renderTransactionItem(transaction, index))}
+                {_.isEmpty(transactions) ?
+                    renderEmpty() :
+                    transactions.slice(0, 5).map((transaction, index) => renderTransactionItem(transaction, index)) 
+                }
             </Table>
 
         </Item>

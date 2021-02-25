@@ -155,29 +155,6 @@ const NavigationLabel = styled.div`
     }
 `
 
-const RenderAction = props => {
-    const [ showList, setShowList ] = useState(false)
-    const { id, icon, ListComponent, iconStyle } = props
-    const container = useRef()
-
-    useOnClickOutside(container, () => setShowList(false))
-
-    return (
-        <IconContainer
-            showList={showList}
-            onClick={() => setShowList(prev => !prev)}
-            key={id}
-            ref={container}
-            iconStyle={iconStyle}
-        >
-            <FontAwesomeIcon icon={icon} size="lg"/>  
-            {showList && ListComponent && (
-                <ListComponent/>
-            ) }
-        </IconContainer>
-    )
-}
-
 
 
 const Header = props => {
@@ -189,11 +166,31 @@ const Header = props => {
 
     const location = useLocation()
 
-    const actions = [
-        { id: "haha", icon: faUser, ListComponent: ProfileDropDown },
-        { id: "other", icon: "plus", ListComponent: ActionDropdown, iconStyle: "primary" },
-    ]
+    const profile = useRef()
+    const action = useRef()
 
+    const [showList, setShowList] = useState(null)
+
+
+
+    // const onIconClickOustideHandler = value => {
+    //     if(showList === value){
+    //         setShowList(null)
+    //     }
+    // }
+
+    const onIconClickHandler = value => {
+        if(showList !== value){
+            setShowList(value)
+        }
+        //  else {
+        //     setShowList(null)
+        // }
+    }
+
+
+    // useOnClickOutside(profile, () => onIconClickOustideHandler('profile'))
+    // useOnClickOutside(action, () => onIconClickOustideHandler('action'))
 
     const renderSectionLink = link => {
         return (
@@ -207,21 +204,15 @@ const Header = props => {
             </NavigationItem>
         )
     }
-
-    const links = [
-        { label: text.general, section: text.link_general},
-        {label: text.account,  section: text["link_my-account"]}
-    ]
-
-    useEffect(() => {
-       console.log("mounted header")
-    }, [])
-
     const renderSearchBarNav = () => {
         if(!_.isEmpty(transactions)){
             if(location.pathname.substr(1) !== text.link_settings){
                 return <SearchBar />
             } else {
+                const links = [
+                    { label: text.general, section: text.link_general},
+                    {label: text.account,  section: text["link_my-account"]}
+                ]
                 return <Navigation>{links.map(renderSectionLink)}</Navigation>
             }
         } else {
@@ -229,6 +220,7 @@ const Header = props => {
         }
 
     }
+
 
     return (
         <Container>
@@ -239,7 +231,8 @@ const Header = props => {
                 <>
                     {renderSearchBarNav()}
                     <ActionContainer>
-                        {actions.map(action => <RenderAction {...action} />)}
+                        <ProfileDropDown />
+                        <ActionDropdown />
                     </ActionContainer>
                 </>
             )}

@@ -77,9 +77,9 @@ const ThisPeriod = () => {
 
     transactions.forEach(transaction => {
         if(transaction.type === "income"){
-            income += transaction.amount
+            income += parseFloat(transaction.amount) 
         } else {
-            expense += transaction.amount
+            expense += parseFloat(transaction.amount)
         }
     })
 

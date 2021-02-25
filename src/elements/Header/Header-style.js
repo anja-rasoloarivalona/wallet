@@ -121,6 +121,48 @@ const LanguageToggleListItem = styled.li`
     background: ${props => props.theme.surface};
 `
 
+const IconContainer = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    svg {
+        color:  ${props => props.theme.text};
+    }
+
+    :hover {
+        background: ${props => props.theme.background};
+    }
+    ${props => {
+        // if(props.iconStyle === "primary"){
+        //     return {
+        //         background: props.theme.primary,
+        //         width: "4rem",
+        //         height: "4rem",
+        //         svg: {
+        //             color: props.theme.surface,
+        //             fontSize: "2rem"
+        //         },
+        //         ":hover": {
+        //             background: props.theme.text_light,
+        //             svg: {
+        //                 color: props.theme.primary,
+        //             },
+        //         }
+        //     }
+        // }
+    }}
+
+
+`
+
 export {
     HeaderContainer,
     HeaderSection,
@@ -133,5 +175,6 @@ export {
     LanguageToggleIcon,
 
     LanguageToggleList,
-    LanguageToggleListItem
+    LanguageToggleListItem,
+    IconContainer
 }

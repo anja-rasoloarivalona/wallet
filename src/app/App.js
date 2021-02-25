@@ -8,6 +8,8 @@ import * as actions from '../store/actions'
 import { BrowserRouter } from 'react-router-dom'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
+
+import { } from '@fortawesome/react-fontawesome'
 import { GlobalStyle, Container, Background } from './AppStyle'
 library.add(fas)
 
