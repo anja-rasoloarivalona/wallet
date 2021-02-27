@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setDate, client } from '../../functions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Content, Top, TopText } from '../Form-Style'
-import { Form, formFunctions } from '../../components/form/index'
+import { Form, formFunctions } from '../../components/form/index.js'
 
 const BudgetForm = props => {
     const dispatch = useDispatch()
