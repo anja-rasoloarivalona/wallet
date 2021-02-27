@@ -2,7 +2,7 @@ import React from 'react'
 import { Section, Title} from '../../Settings-style'
 import { useSelector , useDispatch } from 'react-redux'
 import * as actions from '../../../../store/actions'
-import { SelectInput } from '../../../../functions/form'
+import { Select } from '../../../../components/form/unvalidate'
 
 const Theme = () => {
     const dispatch = useDispatch()
@@ -12,7 +12,7 @@ const Theme = () => {
     } = useSelector(state => state)
 
     const toggleTheme = theme => {
-        dispatch(actions.updateTheme(theme.value))
+        dispatch(actions.updateTheme(theme))
     }
 
     const options = [
@@ -23,11 +23,13 @@ const Theme = () => {
     return (
         <Section >
             <Title>Theme</Title>
-            <SelectInput 
-                id="theme"
-                options={options}
+            <Select
+                input={{
+                    id:"theme",
+                    options,
+                    isSearchable: false
+                }}
                 onChange={toggleTheme}
-                placeholder="Theme"
                 currentValue={theme}
             />            
         </Section>

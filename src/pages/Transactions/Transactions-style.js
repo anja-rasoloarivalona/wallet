@@ -1,6 +1,21 @@
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Button } from '../../components'
 
+const AddTransactionContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 2rem;
+    width: 90%;
+`
+
+const AddTransaction = styled(Button)`
+    background: #1d8d1d;
+    min-width: unset;
+    padding: 2rem;
+    margin: 0;
+`
 
 const Container = styled.div`
     grid-column: 1 / -1;
@@ -13,7 +28,7 @@ const Container = styled.div`
     background: ${props => props.theme.background};
     position: relative;
     z-index: 2;
-    min-height: 100vh;
+    min-height: calc(100vh - 5.4rem);
 `
 
 const Table = styled.div`
@@ -169,5 +184,7 @@ export {
     TableRowItem,
     Cta,
     FilterContainer,
-    Icon
+    Icon,
+    AddTransaction,
+    AddTransactionContainer
 }

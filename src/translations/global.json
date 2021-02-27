@@ -388,6 +388,10 @@
     "theme": {
         "fr": "Thème",
         "en": "Theme"
+    },
+    "modify_password": {
+        "fr": "Modifier mot de passe",
+        "en": "Modify password"
     }
   
 }

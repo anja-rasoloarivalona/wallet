@@ -23,7 +23,7 @@ const Section = styled.div`
 
 const Title = styled.div`
     font-size: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: ${props => props.margin ? "3rem" : "2rem"};
     color: ${props => props.theme.text_light};
 `
 

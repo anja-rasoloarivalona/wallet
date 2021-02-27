@@ -3,7 +3,7 @@ import { Container, Label, AppInput } from '../style'
 
 const Input = props => {
 
-    const { id, placeholder, value, onChange, label } = props
+    const { id, placeholder, value, onChangeHandler, label } = props
 
     return (
         // <Container key={id}>
@@ -20,7 +20,7 @@ const Input = props => {
         // </Container>
         <AppInput 
             value={value}
-            onChange={e => onChange(e.target.value)}
+            onChange={e => onChangeHandler(e.target.value)}
             placeholder={placeholder}
             {...props}
         />

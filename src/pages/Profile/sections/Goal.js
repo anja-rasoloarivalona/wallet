@@ -1,22 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React, {useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { Title } from '../Dashboard-style'
-import GaugeChart from 'react-gauge-chart'
-import { useSelector, useDispatch  } from 'react-redux'
+import { Title, TitleText } from '../Profile-style'
+import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../../store/actions'
+import GaugeChart from 'react-gauge-chart'
+import { FontAwesomeIcon  } from '@fortawesome/react-fontawesome'
 
 const Container = styled.div`
-    width: 100%;
-    height: 100%;
-    background: ${props => props.theme.surface};
-    padding: 2rem;
-    border-radius: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    // overflow: hidden;
+    margin-bottom: 6rem;
 `
 
+const GoalCta = styled.div`
+    cursor: pointer;
+    svg {
+        color: ${props => props.theme.text_light};
+    }
+    :hover {
+        svg {
+            color: ${props => props.theme.primary};
+        }
+    }
+`
 
 
 const ChartContainer = styled.div`
@@ -24,6 +28,9 @@ const ChartContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 60rem;
+    height: 40rem;
+    background: ${props => props.theme.surface};
 
     .text-group {
         text {
@@ -56,52 +63,12 @@ const ChartContainer = styled.div`
     }
 `
 
-const Cta = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    z-index: 3;
-    transition: all .3s ease-in;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-    :hover {
-        background: rgba(0, 0,0, .6);
-    }
-`
-
-const CtaText = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    * {
-        line-height: 1.4;
-    }
-`
-
-const CtaTextMain = styled.div`
-    font-size: 24px;
-    color: ${props => props.theme.white};
-`
-
-const CtaTextSub = styled.div`
-    font-size: 16px;
-    color: ${props => props.theme.text_light};
-`
-
-
 const Goal = () => {
+    const dispatch = useDispatch()
     const {
         user: { goal, assets },
-        ui: { dashboard, sidebar }
+        ui: { sidebar }
     } = useSelector(state => state)
-    const dispatch = useDispatch()
 
     const [trigger, setTrigger] = useState(0)
 
@@ -110,7 +77,6 @@ const Goal = () => {
         balance += asset.amount
     })
 
-
     const levels = 40
     let activeLevels = 0
 
@@ -118,40 +84,21 @@ const Goal = () => {
         activeLevels = levels * balance / goal.amount
     }
 
-
+    
     useEffect(() => {
         setTrigger(Math.random())
     },[sidebar.isShown])
 
-
-
-    const chartStyle = () => {
-        if(!sidebar.isShown){
-            return {
-                width: "80%",
-                height: "80%",
-            }
-        } else {
-            return {
-                width: "100%",
-                height: "100%"
-            }
-        }
-    }
-
     return (
         <Container>
-            <Title>Goal</Title>
-            {!goal && !dashboard.isManaging && (
-                <Cta onClick={() => dispatch(actions.toggleForm())}>
-                    <CtaText>
-                        <CtaTextMain>
-                            Click to  set your goal 
-                        </CtaTextMain>
-                    </CtaText>
-                </Cta>
-            )}
-
+            <Title>
+                <TitleText>Goal</TitleText>
+                <GoalCta onClick={() => dispatch(actions.toggleForm({form: "goalForm"}))}>
+                    <FontAwesomeIcon 
+                        icon="pencil-alt"
+                    />
+                </GoalCta>
+            </Title>
             <ChartContainer levels={levels} activeLevels={activeLevels} inActiveLevels={levels - activeLevels}>
                 <GaugeChart 
                     nrOfLevels={levels} 
@@ -161,7 +108,7 @@ const Goal = () => {
                     arcPadding={0.02}
                     id="goal"
                     animate={false}
-                    style={chartStyle()}
+                    // style={chartStyle()}
                 />
             </ChartContainer>
         </Container>

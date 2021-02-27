@@ -2,7 +2,7 @@ import React from 'react'
 import { Section, Title} from '../../Settings-style'
 import { useSelector , useDispatch } from 'react-redux'
 import * as actions from '../../../../store/actions'
-import { SelectInput } from '../../../../functions/form'
+import { Select } from '../../../../components/form/unvalidate'
 
 const Language = () => {
     const dispatch = useDispatch()
@@ -12,7 +12,7 @@ const Language = () => {
     } = useSelector(state => state)
 
     const toggleLanguage = lang => {
-        dispatch(actions.setLang(lang.value))
+        dispatch(actions.setLang(lang))
     }
 
     const options = [
@@ -23,13 +23,15 @@ const Language = () => {
     return (
         <Section >
             <Title>Language</Title>
-            <SelectInput 
-                id="lang"
-                options={options}
-                onChange={toggleLanguage}
-                placeholder="Language"
+            <Select 
+                input={{
+                    id: "lang",
+                    options,
+                    isSearchable: false,
+                }}
                 currentValue={lang}
-            />            
+                onChange={toggleLanguage}
+            />
         </Section>
     )
 }

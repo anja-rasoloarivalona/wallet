@@ -1,15 +1,16 @@
 import React from 'react'
-import { Container, Title, Content } from './Profile-style'
+import { Container, Content } from './Profile-style'
 import Assets from './sections/Assets'
 import Budget from './sections/Budget'
+import Goal from './sections/Goal'
 
 const Profile = () => {
     return (
         <Container>
-            <Title>Profile</Title>
             <Content>
                 <Assets />
                 <Budget /> 
+                <Goal />
             </Content>
         </Container>
     )

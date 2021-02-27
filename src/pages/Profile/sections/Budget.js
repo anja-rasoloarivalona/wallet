@@ -5,17 +5,15 @@ import * as actions from '../../../store/actions'
 import { Amount } from '../../../components/Amount'
 import { RenderLabel } from '../../../functions/form'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Title, TitleText, TitleCta } from '../Profile-style'
 
 
 const Container = styled.div`
     width: 100%;
     height: 100%;
     position : relative;
-    max-width: 80rem;
-`
-const Title = styled.div`
-    font-size: 2rem;
-    padding: 3rem 0;
+    max-width: 60rem;
+    margin-bottom: 3rem;
 `
 
 const Content = styled.div`
@@ -149,7 +147,14 @@ const Budget = () => {
 
     return (
         <Container>
-            <Title>Budget per month</Title>
+            <Title>
+                <TitleText>Budget per month</TitleText>
+                <TitleCta onClick={() => dispatch(actions.toggleForm({form: "budgetForm"}))}>
+                    <FontAwesomeIcon 
+                        icon="plus"
+                    />
+                </TitleCta>
+            </Title>
             <Content>
                 <BudgetTable>
                     <BudgetHeader>

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Section, Title, TextContainer, Text} from '../../Settings-style'
 import { useSelector, useDispatch } from 'react-redux'
-import { AppInput } from '../../../../functions/form-style'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Button, Loader, Tail, Modal, Success } from '../../../../components'
 import { client } from '../../../../functions'
 import { withRouter } from 'react-router-dom'
 import * as actions from '../../../../store/actions'
+import { Input } from '../../../../components/form/unvalidate'
+
 
 const SectionItem = styled.div`
     position: relative;
@@ -169,7 +170,7 @@ const Password = props => {
 
     const validatePasswordNode = (
         <SectionItem>
-            <AppInput 
+            <Input 
                 value={currentPassword}
                 onChange={e => setCurrentPassword(e.target.value)}
                 id="password"
@@ -188,7 +189,7 @@ const Password = props => {
     const changePasswordNode = (
         <>
             <SectionItem>
-                <AppInput 
+                <Input 
                     value={newPassword}
                     onChange={e => setNewPassword(e.target.value)}
                     id="new_password"
@@ -203,7 +204,7 @@ const Password = props => {
                 {!passwordIsValid && renderTail(passwordRequirement)}
             </SectionItem>
             <SectionItem>
-                <AppInput 
+                <Input 
                     value={confirmNewPassword}
                     onChange={e => setConfirmNewPassword(e.target.value)}
                     id="confirm_new_password"
@@ -248,7 +249,7 @@ const Password = props => {
 
     return (
             <Section>
-                <Title>{text.password}</Title>
+                <Title>{text.modify_password}</Title>
                 <TextContainer>
                     <Text>{text.enter_current_password}</Text>
                 </TextContainer>

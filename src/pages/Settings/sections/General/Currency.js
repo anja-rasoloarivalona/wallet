@@ -1,18 +1,13 @@
-import React, { useEffect }  from 'react'
-import { withFormik, Form as FormikForm } from 'formik'
+import React from 'react'
+import { useSelector , useDispatch } from 'react-redux'
+import { Select } from '../../../../components/form/unvalidate'
+import * as actions from '../../../../store/actions'
 import { Section, Title, TextContainer, Text} from '../../Settings-style'
-import { renderInput } from '../../../../functions'
-import { useSelector  } from 'react-redux'
 import { currencies } from '../../../../assets/currencies'
-import styled from 'styled-components'
+import { client } from '../../../../functions'
 
-const Button = styled.button`
-    display: none;
-`
-
-
-const Form = props => {
-    const { errors, touched, handleChange, values, handleBlur, setFieldValue } = props
+const Currency = () => {
+    const dispatch = useDispatch()
 
     const {
         settings: { currency },
@@ -28,71 +23,46 @@ const Form = props => {
         })
     })
 
-    const input = {
-        id: "currency",
-        input_type: "select",
-        name: "currency",
-        label: text.currency,
-        placeholder: text.choose_currency,
-        options: currenciesOptions,
-        isSearchable: true,
-        labelStyle: {
-            display: "none"
+    const selectCurrencyHandler = async value => {
+        const chosen = currencies[value]
+        dispatch(actions.setCurrency(chosen))
+        try {
+            await client.post("/settings/currency", {currency: chosen})
+        } catch(err){
+            console.log(err)
         }
     }
 
-    useEffect(() => {
-        const { currency : _currency } = values
-        if(_currency !== "" && currencies[_currency].name !== currency.name){
-            const submit = document.getElementById("change_currency")
-            submit.click()
+    let currentValue = null
+    if(currency){
+        const currentIndex = currencies.findIndex(curr => curr.cc === currency.cc)
+        if(currentIndex > -1){
+            currentValue = currentIndex
         }
-    },[values])
+    }
 
-    useEffect(() => {
-            if(currency){
-                const index = currencies.findIndex(item => item.name === currency.name)
-                setFieldValue("currency", index)
-            }
-    },[currency])
-
+    
     return (
-        <Section showList>
+        <Section>
             <Title>{text.currency}</Title>
             <TextContainer>
                 <Text>{text.currency_text_a}</Text>
                 <Text>{text.currency_text_b}</Text>
             </TextContainer>
-            <FormikForm>
-                {renderInput({
-                    input,
-                    index: 0,
-                    errors,
-                    touched,
-                    handleChange,
-                    values,
-                    onBlur: handleBlur,
-                    onChange: setFieldValue
-                })}
-                <Button type="submit" id="change_currency"/>
-            </FormikForm>
+            <Select 
+                input={{
+                    id: "currency",
+                    options: currenciesOptions,
+                    isSearchable: true,
+                }}
+                currentValue={currentValue}
+                onChange={selectCurrencyHandler}
+            />
             
         </Section>
     )
-}
 
-const Currency = withFormik({
-    mapPropsToValues: () => {
-        return {
-            currency: ""
-        }
-    },
-    handleSubmit: (values, {props}) => {
-        const { currency } = values
-        const { changeCurrency } = props
-        const data = currencies[currency]
-        changeCurrency(data)
-    }
-})(Form)
+
+}
 
 export default Currency

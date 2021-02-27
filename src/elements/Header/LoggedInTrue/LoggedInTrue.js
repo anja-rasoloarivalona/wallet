@@ -12,6 +12,11 @@ import ActionDropdown from './ActionDropdown'
 import DashboardManager from './DashboardManager'
 import _ from 'lodash'
 import { useOnClickOutside } from '../../../functions'
+import logo from '../../../assets/logo.png'
+
+
+
+
 
 const Container = styled(HeaderContainer)`
     background: ${props => props.theme.surface};
@@ -66,9 +71,13 @@ const IconContainer = styled.div`
 
 const LogoContainer = styled(HeaderSection)`
     width: 25rem;
+    padding-left: 2rem;
 `
 
-const Logo = styled.div``
+const Logo = styled.img`
+    width: 19rem;
+    object-fit: contain;
+`
 
 const Menu = styled.div`
     position: absolute;
@@ -166,32 +175,6 @@ const Header = props => {
 
     const location = useLocation()
 
-    const profile = useRef()
-    const action = useRef()
-
-    const [showList, setShowList] = useState(null)
-
-
-
-    // const onIconClickOustideHandler = value => {
-    //     if(showList === value){
-    //         setShowList(null)
-    //     }
-    // }
-
-    const onIconClickHandler = value => {
-        if(showList !== value){
-            setShowList(value)
-        }
-        //  else {
-        //     setShowList(null)
-        // }
-    }
-
-
-    // useOnClickOutside(profile, () => onIconClickOustideHandler('profile'))
-    // useOnClickOutside(action, () => onIconClickOustideHandler('action'))
-
     const renderSectionLink = link => {
         return (
             <NavigationItem
@@ -204,20 +187,20 @@ const Header = props => {
             </NavigationItem>
         )
     }
+
     const renderSearchBarNav = () => {
-        if(!_.isEmpty(transactions)){
-            if(location.pathname.substr(1) !== text.link_settings){
-                return <SearchBar />
-            } else {
-                const links = [
-                    { label: text.general, section: text.link_general},
-                    {label: text.account,  section: text["link_my-account"]}
-                ]
-                return <Navigation>{links.map(renderSectionLink)}</Navigation>
-            }
-        } else {
-            return <div></div>
+        if(location.pathname.substr(1) === text.link_settings){
+            const links = [
+                { label: text.general, section: text.link_general},
+                {label: text.account,  section: text["link_my-account"]}
+            ]
+            return <Navigation>{links.map(renderSectionLink)}</Navigation>
         }
+        if(!_.isEmpty(transactions)){
+            return <SearchBar />
+        }
+
+        return <div>Found nothing</div>
 
     }
 
@@ -225,7 +208,9 @@ const Header = props => {
     return (
         <Container>
             <LogoContainer>
-                <Logo>Monetor</Logo>
+                <Logo 
+                    src={logo}
+                />
             </LogoContainer>
             {!dashboard.isManaging && (
                 <>

@@ -8,11 +8,18 @@ import logoDark from '../../assets/logo-dark-man.png'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 
+
 const Logo = styled.img`
-    width: 5rem;
-    height: 5rem;
-    object-fit: cover;
+    object-fit: contain;
+    width: 23rem;
+    margin-left: 13rem;
+    margin-top: 1.5rem;
     cursor: pointer;
+
+    @media (max-width: 1343px){
+        margin-left: 6rem;
+    }
+
 `
 
 const Header = props => {
@@ -108,7 +115,8 @@ const Header = props => {
     return (
         <HeaderContainer>
             <HeaderSection>
-                {/* <Logo src={logoDark} alt="logo" onClick={() => props.history.push("/")}/> */}
+            <Logo src={logo} alt="logo" onClick={() => props.history.push("/")}/>
+
             </HeaderSection>
             <HeaderSection>
                 {items.map(item => renderItem(item))}

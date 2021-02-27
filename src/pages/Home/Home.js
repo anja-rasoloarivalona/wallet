@@ -16,7 +16,7 @@ const Container = styled.div`
     height: calc(100vh - 5.4rem);
     display: flex;
     justify-content: center;
-    background: ${props => props.theme.surface};
+    background: ${props => props.theme.background};
     width: 100vw;
     overflow-x: hidden;
     position: relative;
@@ -82,7 +82,6 @@ const Section = styled.div`
 
 const Icons = styled.div`
     width: 50vw;
-    background: ${props => props.theme.surface};
     display: flex;
     align-items: center;
     justify-content: center;

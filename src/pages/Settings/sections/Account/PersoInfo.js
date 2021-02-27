@@ -1,14 +1,10 @@
-import React, { useState } from 'react'
-import { Section, Title, TextContainer, Text} from '../../Settings-style'
+import React, { useState, useEffect } from 'react'
+import { Section, Title } from '../../Settings-style'
 import { useSelector } from 'react-redux'
-import { AppInput, Label } from '../../../../functions/form-style'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-const SectionItem = styled.div`
-    position: relative;
-    margin-top: 5rem;
-`
+import { Input } from '../../../../components/form/unvalidate'
+import { Label, Container } from '../../../../components/form/style'
 
 const EmailVerified = styled.div`
     position: absolute;
@@ -33,35 +29,42 @@ const PersoInfo = () => {
         text: { currentPage: text }
     } = useSelector(state => state)
 
-    const [ userData, setUserData ] = useState(user)
+    
+
+    const [userName, setUserName] = useState(user.username)
+
 
     return (
             <Section>
-                <Title>Personnal information</Title>
-                <SectionItem>
-                    <AppInput 
-                        value={userData.username}
-                        onChange={e => setUserData( prev => ({ ...prev, username: e.target.value}))}
+                <Title margin>Personnal information</Title>
+                <Container>
+                    <Label shown>{text.username}</Label>
+                    <Input 
+                        id="username"
+                        value={userName}
+                        onChange={e => setUserName(e.target.value)}
                         placeholder={text.username}
-                        id="username"
                     />
-                    <Label htmlFor="username" shown>{text.username}</Label>
-                </SectionItem>
-                <SectionItem>
-                    <AppInput 
-                        value={userData.email}
-                        id="username"
+                </Container>
+                <Container>
+                    <Label shown style={{
+                        transform: "translateY(-23px) translateX(5px)",
+                    }}>
+                        {text.email}
+                    </Label>
+                    <Input 
+                        id="useremail"
+                        value={user.email}
                         disabled
                     />
-                    <EmailVerified>
+                </Container>
+                {/* <EmailVerified>
                         <FontAwesomeIcon 
                             icon="check-circle"
                             size="1x"
                         />
                         Email verified
-                    </EmailVerified>
-                    <Label htmlFor="username" shown>{text.email}</Label>
-                </SectionItem>
+                </EmailVerified> */}
             </Section>
     )
 }

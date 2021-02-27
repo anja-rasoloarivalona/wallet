@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { Icon, FilterContainer, Container , Table, TableHeader, TableHeaderItem, TableRow, TableRowItem, Cta } from './Transactions-style'
+import {AddTransactionContainer, AddTransaction, Icon, FilterContainer, Container , Table, TableHeader, TableHeaderItem, TableRow, TableRowItem, Cta } from './Transactions-style'
 import { useSelector, useDispatch } from 'react-redux'
 import { useOnClickOutside, usePrevious, setDate } from '../../functions'
 import { RenderLabel, SelectList, SelectListItem } from '../../functions/form'
 import { Amount, AppDate } from '../../components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import * as actions from '../../store/actions'
-import SearchBar from './Searchbar'
+
 
 const  Transactions = () => {
     const dispatch = useDispatch()
@@ -15,7 +15,7 @@ const  Transactions = () => {
         date: "down",
         type: "all"
     })
-    const [search, setSearch ] = useState("")
+
 
     const prevFilters = usePrevious(filters)
 
@@ -46,46 +46,6 @@ const  Transactions = () => {
         {label: text.amount}
     ]
 
-    useEffect(() => {
-            if(search !== ""){
-                let data = search.split(" ")
-                const keys = []
-                data.forEach(i => {
-                    if(i !== ""){
-                        keys.push(i.toLocaleLowerCase())
-                    }
-                })
-
-                const res = []
-                const resIndexes = []
-                backup.forEach((transaction, index) => {
-                    const d = [
-                            setDate(transaction.date, "dd mm", lang, "short").toLowerCase(),
-                            transaction.type.toLowerCase(),
-                            text[transaction.category.sub_name].toLowerCase(),
-                            transaction.asset.name.toLowerCase(),
-                            transaction.counterparty.toLowerCase(),
-                            transaction.amount.toString().toLowerCase()
-                    ]
- 
-                    const agreggate = d.join(" ");
-                    let correct = true
-                    keys.forEach(key => {
-                        if(!agreggate.includes(key)){
-                            correct = false
-                        }
-                    })
-
-                    if(correct && !resIndexes.includes(index)){
-                        res.push(transaction)
-                        resIndexes.push(index)
-                    }
-                })
-                setTransactions(res)
-            } else {
-                setTransactions(backup)
-            }
-    },[search])
 
     useEffect(() => {
         let result = transactions.map(transaction => ({...transaction}))
@@ -237,10 +197,11 @@ const  Transactions = () => {
     
     return (
         <Container>
-                <SearchBar 
-                    search={search}
-                    setSearch={setSearch}
-                />
+                <AddTransactionContainer onClick={() => dispatch(actions.toggleForm({form: "transactionForm"}))}>
+                    <AddTransaction square >
+                        New transaction
+                    </AddTransaction>
+                </AddTransactionContainer>
                <Table>
                    <TableHeader>
                         {header.map(item => renderHeaderItem(item))}

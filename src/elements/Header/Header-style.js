@@ -11,7 +11,7 @@ const HeaderContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: ${props => props.theme.surface};
+    // background: ${props => props.theme.surface};
     color: ${props => props.theme.text};
     z-index: 14;
 `

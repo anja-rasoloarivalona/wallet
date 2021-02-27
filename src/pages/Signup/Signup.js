@@ -12,7 +12,7 @@ import EmailSent from './EmailSent'
 
 const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
-const Signup = () => {
+const Signup = props => {
     const dispatch = useDispatch()
     const {
         text: { currentPage: text, errors: errorText },
@@ -84,7 +84,19 @@ const Signup = () => {
             if(res.status !== 201){
                 return dispatch(actions.setError({error: errorText.signup_failed}))
             }
-            setUserEmail(data.email)
+
+            const resData = res.data.data
+            const _data = {
+                ...resData.userData,
+                token: resData.token
+            }
+            dispatch(actions.updateApp(_data))
+            props.history.push(`/${text.link_setup}`)
+
+            // console.log({
+            //     res
+            // })
+            // setUserEmail(data.email)
         } catch(error){
             const { response } = error
 
