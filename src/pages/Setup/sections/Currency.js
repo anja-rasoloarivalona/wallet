@@ -3,7 +3,7 @@ import { currencies } from '../../../assets/currencies'
 import { Section, Text } from '../Setup-style'
 import { useSelector, useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { Form } from '../../../components/form/index'
+import { Form } from '../../../components/Form/index'
 import * as actions from '../../../store/actions'
 
 const SectionCurrency = styled(Section)`

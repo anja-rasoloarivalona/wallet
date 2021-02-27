@@ -7,7 +7,7 @@ import { Button, Loader, Tail, Modal, Success } from '../../../../components'
 import { client } from '../../../../functions'
 import { withRouter } from 'react-router-dom'
 import * as actions from '../../../../store/actions'
-import { Input } from '../../../../components/form/unvalidate'
+import { Input } from '../../../../components/Form/unvalidate'
 
 
 const SectionItem = styled.div`

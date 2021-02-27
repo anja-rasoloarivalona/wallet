@@ -3,7 +3,7 @@ import { Container, Content, Top, TopText } from '../Form-Style'
 import * as actions from '../../store/actions'
 import { useSelector, useDispatch } from 'react-redux'
 import { client } from '../../functions'
-import { Form } from '../../components/form/index.js'
+import { Form } from '../../components/Form/index.js'
 import _ from 'lodash'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 

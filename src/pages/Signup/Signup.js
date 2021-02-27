@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {Container, Modal, Title, OrTextContainer, OrText, OrTextLine, SignupOther, PasswordReqList, Disclaimer } from './Signup-style'
 import { Tail } from '../../components'
-import { Form, formFunctions } from '../../components/form/index'
+import { Form, formFunctions } from '../../components/Form/index'
 import { useSelector, useDispatch } from 'react-redux'
 import * as Yup from 'yup'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

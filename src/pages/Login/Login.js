@@ -1,7 +1,7 @@
 import React from 'react'
 import {Container, Modal, Title, ForgotPassword } from './Login-style'
 import * as Yup from 'yup'
-import { Form, formFunctions } from '../../components/form/index'
+import { Form, formFunctions } from '../../components/Form/index'
 import { useSelector, useDispatch } from 'react-redux'
 import {client  } from '../../functions'
 import * as actions from '../../store/actions'

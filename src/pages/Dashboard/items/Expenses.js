@@ -5,8 +5,8 @@ import { Doughnut } from "react-chartjs-2";
 import styled from "styled-components";
 import { Amount } from "../../../components";
 import { renderAmount } from "../../../functions";
-import { CategoryLabel } from "../../../components/form/custom/CategoryInput-style";
-import { Select } from "../../../components/form/unvalidate";
+import { CategoryLabel } from "../../../components/Form/custom/CategoryInput-style";
+import { Select } from "../../../components/Form/unvalidate";
 import _ from "lodash";
 
 const Container = styled(Item)`

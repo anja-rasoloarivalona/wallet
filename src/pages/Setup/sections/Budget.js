@@ -3,11 +3,11 @@ import { Section, Text, ButtonContainer } from '../Setup-style'
 import * as Yup from 'yup'
 import { useSelector, useDispatch } from 'react-redux'
 import { Button } from '../../../components'
-import { CategoryLabel } from '../../../components/form/custom/CategoryInput-style'
+import { CategoryLabel } from '../../../components/Form/custom/CategoryInput-style'
 import styled from 'styled-components'
 import { Loader, Amount } from '../../../components'
 import { setDate } from '../../../functions'
-import { Form } from '../../../components/form/index'
+import { Form } from '../../../components/Form/index'
 import * as actions from '../../../store/actions'
 
 const Container = styled(Section)`

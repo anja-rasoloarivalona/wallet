@@ -2,7 +2,7 @@ import React from 'react'
 import { Section, Title} from '../../Settings-style'
 import { useSelector , useDispatch } from 'react-redux'
 import * as actions from '../../../../store/actions'
-import { Select } from '../../../../components/form/unvalidate'
+import { Select } from '../../../../components/Form/unvalidate'
 
 const Theme = () => {
     const dispatch = useDispatch()

@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import { client } from '../../functions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Container, Content, Top, TopText } from '../Form-Style'
-import { Form, formFunctions } from '../../components/form/index.js'
+import { Form, formFunctions } from '../../components/Form/index.js'
 
 const TransactionForm = props => {
 

@@ -3,8 +3,8 @@ import { Section, Title } from '../../Settings-style'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Input } from '../../../../components/form/unvalidate'
-import { Label, Container } from '../../../../components/form/style'
+import { Input } from '../../../../components/Form/unvalidate'
+import { Label, Container } from '../../../../components/Form/style'
 
 const EmailVerified = styled.div`
     position: absolute;

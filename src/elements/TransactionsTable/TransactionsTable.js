@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Table, TableHeader, TableHeaderItem, TableRow, TableRowItem, Cta } from './TransactionsTable-style'
 import { useSelector } from 'react-redux'
-import { CategoryLabel } from '../../components/form/custom/CategoryInput-style'
+import { CategoryLabel } from '../../components/Form/custom/CategoryInput-style'
 import { AppDate, Amount } from '../../components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
