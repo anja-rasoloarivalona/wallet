@@ -72,7 +72,7 @@ const App = () => {
                 <Container full={sidebar.isShown} isLoggedIn={isLoggedIn}>
                     <Header />
                     <Sidebar />
-                    <Background  show={form.isOpened} />
+                    <Background  show={form.isOpened} onClick={() => dispatch(actions.toggleForm())}/>
                     {CurrentForm && (
                         <CurrentForm 
                             errorText={errorText}

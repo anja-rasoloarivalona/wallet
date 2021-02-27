@@ -14,6 +14,11 @@ const Container = styled.div`
     position : relative;
     max-width: 60rem;
     margin-bottom: 3rem;
+
+
+    @media screen and (max-width: 767px){
+        max-width: unset;
+    }
 `
 
 const Content = styled.div`

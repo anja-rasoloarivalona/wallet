@@ -10,6 +10,10 @@ const Container = styled.div`
     padding-right: 5rem;
     display: flex;
     flex-direction: column;
+
+    @media screen and (max-width: 767px){
+        padding: 0 4rem;
+    }
 `
 
 const Title = styled.div`
@@ -23,6 +27,9 @@ const Title = styled.div`
     justify-content: space-between;
     margin-bottom: 3rem;
 
+    @media screen and (max-width: 767px){
+        max-width: unset;
+    }
 
 
     &:after {

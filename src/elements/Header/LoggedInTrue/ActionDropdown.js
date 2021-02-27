@@ -30,6 +30,7 @@ const List = styled.div`
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px;
     padding: 2rem 0;
     display:  ${props => props.show ? "block" : "none"};
+    z-index: 1;
 
 `
 

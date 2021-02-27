@@ -1,21 +1,17 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React from 'react'
 import { HeaderContainer, HeaderSection } from '../Header-style'
-import { useSelector, useDispatch } from 'react-redux'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useSelector} from 'react-redux'
 import styled from 'styled-components'
-import { faBell } from  '@fortawesome/free-regular-svg-icons'
-import {  faUser } from '@fortawesome/free-regular-svg-icons'
 import SearchBar from './SearchBar'
 import { useLocation, withRouter } from 'react-router-dom'
 import ProfileDropDown from './ProfileDropDown'
 import ActionDropdown from './ActionDropdown'
 import DashboardManager from './DashboardManager'
+import MobileMenu from './MobileMenu'
 import _ from 'lodash'
-import { useOnClickOutside } from '../../../functions'
-import logo from '../../../assets/logo.png'
-
-
-
+import { useWindowSize } from '../../../functions'
+import logoDark from '../../../assets/logo-dark.png'
+import logoLight from '../../../assets/logo-light.png'
 
 
 const Container = styled(HeaderContainer)`
@@ -24,49 +20,11 @@ const Container = styled(HeaderContainer)`
     width: 100vw;
     box-shadow: 0px 1px 2px -1px rgb(113 113 113 / 75%);
     z-index: 26;
-`
-
-const IconContainer = styled.div`
-    position: relative;
-    cursor: pointer;
-    margin-left: 2rem;
-    width: 4rem;
-    height: 4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
 
 
-    svg {
-        color:  ${props => props.theme.text};
+    @media screen and (max-width: 767px){
+        background: ${props => props.theme.primary}
     }
-
-    :hover {
-        background: ${props => props.theme.background};
-    }
-
-    ${props => {
-        // if(props.iconStyle === "primary"){
-        //     return {
-        //         background: props.theme.primary,
-        //         width: "4rem",
-        //         height: "4rem",
-        //         svg: {
-        //             color: props.theme.surface,
-        //             fontSize: "2rem"
-        //         },
-        //         ":hover": {
-        //             background: props.theme.text_light,
-        //             svg: {
-        //                 color: props.theme.primary,
-        //             },
-        //         }
-        //     }
-        // }
-    }}
-
-
 `
 
 const LogoContainer = styled(HeaderSection)`
@@ -77,6 +35,10 @@ const LogoContainer = styled(HeaderSection)`
 const Logo = styled.img`
     width: 19rem;
     object-fit: contain;
+
+    @media screen and (max-width: 767px){
+        width: 15rem;
+    }
 `
 
 const Menu = styled.div`
@@ -90,43 +52,6 @@ const Menu = styled.div`
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px 
 `
 
-const MenuItem = styled.div`
-    padding: 1rem;
-    color: ${props => props.theme.text};   
-`
-
-const Dynamic = styled(HeaderSection)`
-    width: 100%;
-
-    div {
-        margin-right: 4rem;
-    }
-`
-const Salutation = styled(HeaderSection)`
-    width: 45rem;
-    // background: blue
-`
-
-const Avatar = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-transform: capitalize;
-    cursor: pointer;
-    color:  ${props => props.theme.active_text};
-    margin-left: 2rem;
-    font-size: 1.6rem;
-
-    svg {
-        margin-left: 1rem;
-        height: min-content;
-    }
-
-
-    // :hover {
-    //     color:  ${props => props.theme.active_text};
-    // }
-`
 const ActionContainer = styled(HeaderSection)`
     padding-right: 3rem;
     width: 25rem;
@@ -164,6 +89,8 @@ const NavigationLabel = styled.div`
     }
 `
 
+const MobileMenuIcon = styled.div``
+
 
 
 const Header = props => {
@@ -174,6 +101,7 @@ const Header = props => {
     } = useSelector(state => state)
 
     const location = useLocation()
+    const { windowWidth } = useWindowSize()
 
     const renderSectionLink = link => {
         return (
@@ -189,7 +117,7 @@ const Header = props => {
     }
 
     const renderSearchBarNav = () => {
-        if(location.pathname.substr(1) === text.link_settings){
+        if(location.pathname.substr(1) === text.link_settings && windowWidth > 767){
             const links = [
                 { label: text.general, section: text.link_general},
                 {label: text.account,  section: text["link_my-account"]}
@@ -200,7 +128,7 @@ const Header = props => {
             return <SearchBar />
         }
 
-        return <div>Found nothing</div>
+        return <div></div>
 
     }
 
@@ -209,7 +137,7 @@ const Header = props => {
         <Container>
             <LogoContainer>
                 <Logo 
-                    src={logo}
+                    src={windowWidth > 767 ? logoDark : logoLight}
                 />
             </LogoContainer>
             {!dashboard.isManaging && (
@@ -218,12 +146,14 @@ const Header = props => {
                     <ActionContainer>
                         <ProfileDropDown />
                         <ActionDropdown />
+                        {windowWidth <= 767 && <MobileMenu />}
                     </ActionContainer>
                 </>
             )}
             {dashboard.isManaging && (
                 <DashboardManager />
             )}
+   
 
 
 

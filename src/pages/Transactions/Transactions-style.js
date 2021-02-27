@@ -29,6 +29,11 @@ const Container = styled.div`
     position: relative;
     z-index: 2;
     min-height: calc(100vh - 5.4rem);
+
+    @media screen and (max-width: 767px){
+        padding-top: 2rem;
+        padding-left: 0;
+    }
 `
 
 const Table = styled.div`
@@ -77,6 +82,27 @@ const TableHeader = styled.div`
         // background: grey;
         justify-content: flex-end;
     }
+
+    @media screen and (max-width: 767px){
+        > div:nth-child(1) {
+            width: 30%;
+        }
+        > div:nth-child(2) {
+            display: none;
+        }
+        > div:nth-child(1) {
+            width: 30%;
+        }
+        > div:nth-child(4) {
+            display: none;
+        }
+        > div:nth-child(5) {
+            display: none;
+        }
+        > div:nth-child(6) {
+            width: 40%;
+        }
+    }
 `
 
 const TableHeaderItem = styled.div`
@@ -98,32 +124,47 @@ const TableRow = styled.div`
 
     > div:nth-child(1) {
         width: 10%;
-        // background: red;
     }
 
     > div:nth-child(2) {
         width: 10%;
-        // background: salmon;
     }
     > div:nth-child(3) {
         width: 30%;
-        // background: orange;
     }
     > div:nth-child(4) {
         width: 15%;
-        // background: violet;
     }
     > div:nth-child(5) {
         width: 20%;
-        // background: brown;
     }
     > div:nth-child(6) {
         width: 15%;
-        // background: grey;
         justify-content: flex-end;
         color: ${props => props.theme.active_text};
-    }
+    };
 
+
+    @media screen and (max-width: 767px){
+        > div:nth-child(1) {
+            width: 30%;
+        }
+        > div:nth-child(2) {
+            display: none;
+        }
+        > div:nth-child(1) {
+            width: 30%;
+        }
+        > div:nth-child(4) {
+            display: none;
+        }
+        > div:nth-child(5) {
+            display: none;
+        }
+        > div:nth-child(6) {
+            width: 40%;
+        }
+    }
 
 
 `

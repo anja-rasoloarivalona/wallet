@@ -4,24 +4,39 @@ import { Form } from 'formik'
 const Container = styled.div`
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    right: 0;
+    width: 40vw;
+    min-width: 50rem;
+    min-height: 100vh;
     z-index: 31;
+    overflow-y: overlay;
+    display: flex;
+
+
+    @media screen and (max-width: 600px){
+        width: 100vw;
+        min-width: unset;
+    }
 `
 
 const Content = styled.div`
+background: ${props => props.theme.surface};
     width: 40vw;
+    min-width: 50rem;
     height: 100%;
     position: absolute;
     top: 0;
     right: 0;
-    background: ${props => props.theme.surface};
     transform: translateX(40vw);
     transition: all .3s ease-in;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @media screen and (max-width: 600px){
+        width: 100vw;
+        min-width: unset;
+    }
 
     ${props => {
         if(props.mounted){
@@ -35,6 +50,8 @@ const Content = styled.div`
         width: 90%;
         max-width: 57rem;
     }
+
+
 `
 
 const Top = styled.div`

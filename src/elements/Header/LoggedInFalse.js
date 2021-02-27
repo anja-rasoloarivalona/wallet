@@ -3,8 +3,8 @@ import { HeaderContainer, HeaderSection, HeaderSectionItem, HeaderSectionLink, H
 import { useSelector, useDispatch } from 'react-redux'
 import * as actions from '../../store/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import logo from '../../assets/logo.png'
-import logoDark from '../../assets/logo-dark-man.png'
+import logoDark from '../../assets/logo-dark.png'
+// import logoDark from '../../assets/logo-dark-man.png'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 
@@ -115,7 +115,7 @@ const Header = props => {
     return (
         <HeaderContainer>
             <HeaderSection>
-            <Logo src={logo} alt="logo" onClick={() => props.history.push("/")}/>
+            <Logo src={logoDark} alt="logo" onClick={() => props.history.push("/")}/>
 
             </HeaderSection>
             <HeaderSection>

@@ -132,33 +132,26 @@ const IconContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    svg {
-        color:  ${props => props.theme.text};
-    }
 
     :hover {
         background: ${props => props.theme.background};
     }
-    ${props => {
-        // if(props.iconStyle === "primary"){
-        //     return {
-        //         background: props.theme.primary,
-        //         width: "4rem",
-        //         height: "4rem",
-        //         svg: {
-        //             color: props.theme.surface,
-        //             fontSize: "2rem"
-        //         },
-        //         ":hover": {
-        //             background: props.theme.text_light,
-        //             svg: {
-        //                 color: props.theme.primary,
-        //             },
-        //         }
-        //     }
-        // }
-    }}
+    
+    svg {
+        color:  ${props => props.theme.text};
+        @media screen and (max-width: 767px){
+            color: ${(props) => props.theme.background};
+          }
+    }
+
+    @media screen and (max-width: 767px){
+        :hover {
+            background: unset;
+        }
+    }
+
+
+
 
 
 `
