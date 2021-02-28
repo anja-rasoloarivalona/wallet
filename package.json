@@ -1,4 +1,5 @@
 {
+  "homepage": "https://monetor.herokuapp.com",
   "name": "wallet",
   "version": "0.1.0",
   "engines": {
