@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/wallet/static/css/main.0908bc59.chunk.css",
+    "main.js": "/wallet/static/js/main.3be66f47.chunk.js",
+    "main.js.map": "/wallet/static/js/main.3be66f47.chunk.js.map",
+    "runtime-main.js": "/wallet/static/js/runtime-main.fcf84cac.js",
+    "runtime-main.js.map": "/wallet/static/js/runtime-main.fcf84cac.js.map",
+    "static/css/2.67991252.chunk.css": "/wallet/static/css/2.67991252.chunk.css",
+    "static/js/2.4dbd6028.chunk.js": "/wallet/static/js/2.4dbd6028.chunk.js",
+    "static/js/2.4dbd6028.chunk.js.map": "/wallet/static/js/2.4dbd6028.chunk.js.map",
+    "index.html": "/wallet/index.html",
+    "static/css/2.67991252.chunk.css.map": "/wallet/static/css/2.67991252.chunk.css.map",
+    "static/css/main.0908bc59.chunk.css.map": "/wallet/static/css/main.0908bc59.chunk.css.map",
+    "static/js/2.4dbd6028.chunk.js.LICENSE.txt": "/wallet/static/js/2.4dbd6028.chunk.js.LICENSE.txt",
+    "static/media/money.834a66e3.svg": "/wallet/static/media/money.834a66e3.svg",
+    "static/media/sim-card.a757b663.svg": "/wallet/static/media/sim-card.a757b663.svg",
+    "static/media/slick-theme.css": "/wallet/static/media/slick.c94f7671.ttf"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fcf84cac.js",
+    "static/css/2.67991252.chunk.css",
+    "static/js/2.4dbd6028.chunk.js",
+    "static/css/main.0908bc59.chunk.css",
+    "static/js/main.3be66f47.chunk.js"
+  ]
+}
